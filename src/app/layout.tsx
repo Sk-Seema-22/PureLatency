@@ -9,7 +9,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'NCS Singapore | Digital and Technology Services',
+  title: 'PureLatency Singapore | Digital and Technology Services',
   description: 'Leading digital and technology services company in Singapore and Southeast Asia.',
 }
 
