@@ -1,7 +1,12 @@
-import Services from '@/components/sections/Services';
-import WhyUs from '@/components/sections/WhyUs';
-import Process from '@/components/sections/Process';
-import CTABanner from '@/components/sections/CTABanner';
+import Head from 'next/head';
+import Navbar from '../layout/Navbar'; // Added missing import
+import Hero from '../layout/sections/Hero'; // Added missing import
+import Services from '../pages/services';
+import WhyUs from '../layout/sections/WhyUs'; // Changed to dash-case
+import Process from '../pages/process';
+import CTABanner from '../layout/sections/CTABanner';
+import Footer from '../layout/Footer'; // Added missing import
+import { NextPage } from 'next';
 
 const HomePage: NextPage = () => {
   return (

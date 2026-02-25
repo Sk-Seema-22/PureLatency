@@ -4,8 +4,8 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import Container from '@/components/ui/Container';
-import Button from '@/components/ui/Button';
+import Container from '../layout/ui/Container';
+import Button from '../layout/ui/Button';
 
 interface BlogPost {
   id: number;

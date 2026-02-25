@@ -3,8 +3,8 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import Container from '@/components/ui/Container';
-import { ProcessStep } from '@/types';
+import Container from '../layout/ui/Container';
+import { ProcessStep } from '../types/TS index';
 
 const ProcessPage: NextPage = () => {
   const steps: ProcessStep[] = [

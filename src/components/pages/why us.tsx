@@ -3,7 +3,8 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import Container from '@/components/ui/Container';
+import Container from '../layout/ui/Container';
+
 
 const WhyUsPage: NextPage = () => {
   const values = [

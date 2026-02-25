@@ -6,7 +6,6 @@ import Partners from '../components/layout/sections/Partners';
 import Accreditations from '../components/layout/sections/Accreditations';
 import CTASection from '../components/layout/sections/CTABanner';
 import Contact from '../components/layout/sections/Contact';
-
 export default function Home() {
   return (
     <>

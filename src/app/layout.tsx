@@ -9,8 +9,13 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'NCS Singapore | Digital and Technology Services',
-  description: 'Leading digital and technology services company in Singapore and Southeast Asia.',
+  title: 'PureLatency',
+  description: 'Leading digital and technology services company in Hyderabad, India.',
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
+  },
 }
 
 export default function RootLayout({
@@ -21,7 +26,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        />
       </head>
       <body className="font-sans">
         {children}
