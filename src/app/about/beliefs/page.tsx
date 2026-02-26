@@ -713,7 +713,7 @@ export default function BeliefsPage() {
               marginBottom: '20px',
             }}
           >
-            contact us
+            Contact us
           </h2>
 
           <p
@@ -742,7 +742,7 @@ export default function BeliefsPage() {
               transition: 'all 0.3s ease',
             }}
           >
-            contact us
+            Contact us
           </Link>
         </section>
 
