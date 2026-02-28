@@ -3,6 +3,7 @@
 import Navbar from "@/components/layout/Navbar";
 import { useState } from "react";
 
+
 export default function ContactPage() {
   const [formData, setFormData] = useState({
     fullName: "",

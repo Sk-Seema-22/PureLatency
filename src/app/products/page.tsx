@@ -2,11 +2,25 @@
 
 import Navbar from '@/components/layout/Navbar';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function ProductsPage() {
   const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
+  // Check if mobile on client side
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // ============ DATA ARRAYS ============
+  // These hold all the content for the page
+  
   const products = [
     {
       id: 'starling-post',
@@ -105,15 +119,10 @@ export default function ProductsPage() {
   ];
 
   const technologies = [
-    // Frontend
     'React', 'Next.js 14', 'TypeScript', 'Tailwind CSS',
-    // Backend
     'Node.js', 'Python', 'Go', 'GraphQL',
-    // Infrastructure
     'AWS', 'Kubernetes', 'Docker', 'Terraform',
-    // AI/ML
     'TensorFlow', 'PyTorch', 'OpenAI', 'LangChain',
-    // Database
     'PostgreSQL', 'Redis', 'MongoDB', 'Elasticsearch'
   ];
 
@@ -132,16 +141,142 @@ export default function ProductsPage() {
     }
   ];
 
+  // ============ STYLE OBJECTS ============
+  // IMPORTANT: In TypeScript, CSS properties need specific types
+  // We use 'as const' or type assertions to fix TypeScript errors
+  
+  // Container layout
+  const containerStyle = {
+    maxWidth: '1280px',
+    margin: '0 auto',
+    padding: isMobile ? '5rem 1rem 2rem' : '6rem 2rem 4rem',
+  };
+
+  // Hero section grid
+  const heroGridStyle = {
+    display: 'grid',
+    gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+    gap: isMobile ? '2rem' : '4rem',
+    marginBottom: isMobile ? '3rem' : '6rem',
+    alignItems: 'center',
+  };
+
+  // Hero title - FIXED: textAlign needs type assertion
+  // The error was here: TypeScript doesn't know if 'center' or 'left' is valid
+  // We add 'as "center" | "left"' to tell TypeScript these are the only valid values
+  const heroTitleStyle = {
+    fontSize: isMobile ? '2.5rem' : '4rem',
+    fontWeight: 300,
+    color: '#1d1d1f',
+    marginBottom: '1.5rem',
+    lineHeight: '1.2',
+    textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
+  };
+
+  // Hero text - FIXED: textAlign needs type assertion
+  const heroTextStyle = {
+    color: '#86868b',
+    fontSize: isMobile ? '1rem' : '1.2rem',
+    lineHeight: '1.7',
+    marginBottom: '2rem',
+    textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
+    padding: isMobile ? '0 1rem' : '0',
+  };
+
+  // Button group - FIXED: flexDirection and justifyContent need type assertions
+  const buttonGroupStyle = {
+    display: 'flex',
+    gap: '1rem',
+    flexDirection: (isMobile ? 'column' : 'row') as 'column' | 'row',
+    justifyContent: (isMobile ? 'center' : 'flex-start') as 'center' | 'flex-start',
+  };
+
+  // Individual button style - FIXED: textAlign uses 'as const' for literal type
+  const buttonStyle = (isPrimary: boolean) => ({
+    background: isPrimary ? '#0066cc' : 'transparent',
+    color: isPrimary ? 'white' : '#1d1d1f',
+    padding: isMobile ? '0.875rem 1.5rem' : '1rem 2rem',
+    borderRadius: '40px',
+    textDecoration: 'none',
+    fontWeight: 500,
+    textAlign: 'center' as const, // 'as const' makes this exactly "center" not just string
+    border: isPrimary ? 'none' : '1px solid #e6e6e9',
+    width: isMobile ? '100%' : 'auto',
+  });
+
+  // Stats grid
+  const statsGridStyle = {
+    display: 'grid',
+    gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+    gap: isMobile ? '1.5rem' : '2rem',
+    marginBottom: isMobile ? '3rem' : '6rem',
+    padding: isMobile ? '2rem' : '3rem',
+    background: 'linear-gradient(135deg, #1d1d1f 0%, #2d2d2f 100%)',
+    borderRadius: '20px',
+    color: 'white',
+  };
+
+  // Products grid
+  const productsGridStyle = {
+    display: 'grid',
+    gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+    gap: '2rem',
+    marginBottom: isMobile ? '3rem' : '6rem',
+  };
+
+  // Features grid
+  const featuresGridStyle = {
+    display: 'grid',
+    gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
+    gap: '2rem',
+    marginBottom: isMobile ? '3rem' : '6rem',
+  };
+
+  // Roadmap grid - FIXED: position needs type assertion
+  const roadmapGridStyle = {
+    display: 'grid',
+    gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
+    gap: '2rem',
+    marginBottom: isMobile ? '3rem' : '6rem',
+    position: 'relative' as const, // 'as const' makes this exactly "relative"
+  };
+
+  // Testimonials grid
+  const testimonialsGridStyle = {
+    display: 'grid',
+    gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
+    gap: '2rem',
+    marginBottom: isMobile ? '3rem' : '6rem',
+  };
+
+  // Footer grid - FIXED: textAlign needs type assertion
+  const footerGridStyle = {
+    display: 'grid',
+    gridTemplateColumns: isMobile ? '1fr' : '2fr 1fr 1fr 1fr',
+    gap: isMobile ? '2rem' : '4rem',
+    marginBottom: '4rem',
+    textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
+  };
+
   return (
     <>
       <Navbar />
 
-      <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '6rem 2rem 4rem' }}>
-        {/* Social Media */}
-        <section style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '3rem' }}>
-          <div style={{ display: 'flex', gap: '24px' }}>
+      <main style={containerStyle}>
+        {/* ============ SOCIAL MEDIA SECTION ============ */}
+        <section style={{ 
+          display: 'flex', 
+          justifyContent: isMobile ? 'center' : 'flex-end', 
+          marginBottom: '2rem',
+          flexWrap: 'wrap'
+        }}>
+          <div style={{ 
+            display: 'flex', 
+            gap: isMobile ? '16px' : '24px',
+            flexWrap: 'wrap',
+            justifyContent: 'center'
+          }}>
             {[
-             
               { name: 'Instagram', href: 'https://instagram.com/purelatency', color: '#E4405F' },
               { name: 'Twitter', href: 'https://twitter.com/purelatency', color: '#1DA1F2' },
               { name: 'Facebook', href: 'https://facebook.com/purelatency', color: '#111' }
@@ -149,7 +284,12 @@ export default function ProductsPage() {
               <a
                 key={social.name}
                 href={social.href}
-                style={{ color: social.color, textDecoration: 'none', fontWeight: 500 }}
+                style={{ 
+                  color: social.color, 
+                  textDecoration: 'none', 
+                  fontWeight: 500,
+                  fontSize: isMobile ? '0.85rem' : '0.9rem'
+                }}
               >
                 {social.name}
               </a>
@@ -157,94 +297,82 @@ export default function ProductsPage() {
           </div>
         </section>
 
-        {/* Breadcrumb */}
-        <div style={{ color: '#86868b', marginBottom: '2rem', fontSize: '0.9rem' }}>
+        {/* ============ BREADCRUMB ============ */}
+        <div style={{ 
+          color: '#86868b', 
+          marginBottom: '2rem', 
+          fontSize: isMobile ? '0.85rem' : '0.9rem',
+          textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left', // FIXED: type assertion
+        }}>
           <Link href="/" style={{ color: '#86868b', textDecoration: 'none' }}>Home</Link> / 
           <span style={{ color: '#1d1d1f' }}> Products</span>
         </div>
 
-        {/* Hero Section */}
-        <div style={{ 
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '4rem',
-          marginBottom: '6rem',
-          alignItems: 'center'
-        }}>
+        {/* ============ HERO SECTION ============ */}
+        <div style={heroGridStyle}>
+          {/* Left Column - Text */}
           <div>
+            {/* Badge - FIXED: textAlign type assertion */}
             <div style={{ 
               display: 'inline-block',
               background: 'rgba(0,102,204,0.1)',
               color: '#0066cc',
-              padding: '0.5rem 1.5rem',
+              padding: isMobile ? '0.4rem 1.2rem' : '0.5rem 1.5rem',
               borderRadius: '30px',
-              fontSize: '0.9rem',
-              marginBottom: '1.5rem'
+              fontSize: isMobile ? '0.85rem' : '0.9rem',
+              marginBottom: '1.5rem',
+              textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
+              width: isMobile ? '100%' : 'auto',
             }}>
               ✨ Products Built for Impact
             </div>
-            <h1 style={{ 
-              fontSize: '4rem', 
-              fontWeight: 300, 
-              color: '#1d1d1f', 
-              marginBottom: '1.5rem',
-              lineHeight: '1.2'
-            }}>
-              Software that<br />
+            
+            {/* Title - FIXED: Removed redundant ternary */}
+            <h1 style={heroTitleStyle}>
+              Software that{!isMobile && <br />}
               <span style={{ 
                 background: 'linear-gradient(135deg, #0066cc 0%, #7C3AED 100%)',
                 WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
+                WebkitTextFillColor: 'transparent',
+                display: 'inline-block'
               }}>
-                solves real problems
+                solves real problems  {/* FIXED: Removed isMobile ? 'x' : 'x' */}
               </span>
             </h1>
-            <p style={{ color: '#86868b', fontSize: '1.2rem', lineHeight: '1.7', marginBottom: '2rem' }}>
+            
+            {/* Description */}
+            <p style={heroTextStyle}>
               Every PureLatency product is crafted with intention—built to address specific challenges 
               that teams face every day. From communication to automation, we build tools that make work better.
             </p>
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <Link
-                href="#products"
-                style={{
-                  background: '#0066cc',
-                  color: 'white',
-                  padding: '1rem 2rem',
-                  borderRadius: '40px',
-                  textDecoration: 'none',
-                  fontWeight: 500
-                }}
-              >
+            
+            {/* Buttons */}
+            <div style={buttonGroupStyle}>
+              <Link href="#products" style={buttonStyle(true)}>
                 Explore Products ↓
               </Link>
-              <Link
-                href="/contact"
-                style={{
-                  background: 'transparent',
-                  color: '#1d1d1f',
-                  padding: '1rem 2rem',
-                  borderRadius: '40px',
-                  textDecoration: 'none',
-                  border: '1px solid #e6e6e9'
-                }}
-              >
+              <Link href="/contact" style={buttonStyle(false)}>
                 Request Early Access
               </Link>
             </div>
           </div>
+
+          {/* Right Column - Stats Card */}
           <div style={{
             background: 'linear-gradient(135deg, #f5f5f7 0%, #e6e6e9 100%)',
             borderRadius: '30px',
-            padding: '3rem',
+            padding: isMobile ? '2rem' : '3rem',
             position: 'relative',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            marginTop: isMobile ? '1rem' : '0',
           }}>
+            {/* Background circles */}
             <div style={{
               position: 'absolute',
               top: '-50px',
               right: '-50px',
-              width: '200px',
-              height: '200px',
+              width: isMobile ? '150px' : '200px',
+              height: isMobile ? '150px' : '200px',
               background: 'rgba(0,102,204,0.1)',
               borderRadius: '50%'
             }} />
@@ -252,14 +380,23 @@ export default function ProductsPage() {
               position: 'absolute',
               bottom: '-50px',
               left: '-50px',
-              width: '200px',
-              height: '200px',
+              width: isMobile ? '150px' : '200px',
+              height: isMobile ? '150px' : '200px',
               background: 'rgba(124,58,237,0.1)',
               borderRadius: '50%'
             }} />
+            
+            {/* Content */}
             <div style={{ position: 'relative', zIndex: 2 }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1.5rem' }}>📊</div>
-              <h3 style={{ fontSize: '1.8rem', fontWeight: 400, marginBottom: '1rem' }}>By the Numbers</h3>
+              <div style={{ fontSize: isMobile ? '2.5rem' : '3rem', marginBottom: '1.5rem', textAlign: 'center' }}>📊</div>
+              <h3 style={{ 
+                fontSize: isMobile ? '1.5rem' : '1.8rem', 
+                fontWeight: 400, 
+                marginBottom: '1rem',
+                textAlign: 'center'
+              }}>By the Numbers</h3>
+              
+              {/* Stats list - FIXED: justifyContent was isMobile ? 'center' : 'center' which is redundant */}
               <ul style={{ listStyle: 'none', padding: 0 }}>
                 {[
                   '3 products and counting',
@@ -271,7 +408,9 @@ export default function ProductsPage() {
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.5rem',
-                    color: '#86868b'
+                    color: '#86868b',
+                    justifyContent: 'center', // FIXED: Simplified from isMobile ? 'center' : 'center'
+                    fontSize: isMobile ? '0.95rem' : '1rem',
                   }}>
                     <span style={{ color: '#0066cc' }}>✓</span>
                     {item}
@@ -282,32 +421,32 @@ export default function ProductsPage() {
           </div>
         </div>
 
-        {/* Stats Banner */}
-        <section style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '2rem',
-          marginBottom: '6rem',
-          padding: '3rem',
-          background: 'linear-gradient(135deg, #1d1d1f 0%, #2d2d2f 100%)',
-          borderRadius: '20px',
-          color: 'white'
-        }}>
+        {/* ============ STATS BANNER ============ */}
+        <section style={statsGridStyle}>
           {stats.map(stat => (
             <div key={stat.label} style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{stat.icon}</div>
-              <div style={{ fontSize: '2.5rem', fontWeight: 300, color: '#0066cc', marginBottom: '0.3rem' }}>
+              <div style={{ fontSize: isMobile ? '1.5rem' : '2rem', marginBottom: '0.5rem' }}>{stat.icon}</div>
+              <div style={{ 
+                fontSize: isMobile ? '1.8rem' : '2.5rem', 
+                fontWeight: 300, 
+                color: '#0066cc', 
+                marginBottom: '0.3rem' 
+              }}>
                 {stat.value}
               </div>
-              <div style={{ color: '#aaa', fontSize: '0.9rem' }}>{stat.label}</div>
+              <div style={{ 
+                color: '#aaa', 
+                fontSize: isMobile ? '0.75rem' : '0.9rem' 
+              }}>{stat.label}</div>
             </div>
           ))}
         </section>
 
-        {/* Products Grid */}
-        <section id="products" style={{ marginBottom: '6rem' }}>
+        {/* ============ PRODUCTS GRID ============ */}
+        <section id="products" style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
+          {/* Section Header */}
           <h2 style={{ 
-            fontSize: '2.5rem', 
+            fontSize: isMobile ? '2rem' : '2.5rem', 
             fontWeight: 300, 
             color: '#1d1d1f', 
             marginBottom: '1rem',
@@ -317,42 +456,52 @@ export default function ProductsPage() {
           </h2>
           <p style={{ 
             color: '#86868b', 
-            fontSize: '1.2rem', 
+            fontSize: isMobile ? '1rem' : '1.2rem', 
             textAlign: 'center',
             maxWidth: '800px',
-            margin: '0 auto 3rem'
+            margin: '0 auto 2rem',
+            padding: isMobile ? '0 1rem' : '0'
           }}>
             Purpose-built tools designed to solve specific challenges and improve how you work
           </p>
-          <div style={{ 
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '2rem'
-          }}>
+          
+          {/* Products Grid */}
+          <div style={productsGridStyle}>
             {products.map(product => (
               <Link
                 key={product.id}
                 href={product.status === 'Live' ? `/products/${product.id}` : '#'}
                 style={{ textDecoration: 'none', cursor: product.status === 'Live' ? 'pointer' : 'default' }}
               >
+                {/* Product Card */}
                 <div
                   style={{
-                    padding: '2rem',
+                    padding: isMobile ? '1.5rem' : '2rem',
                     borderRadius: '20px',
                     background: 'white',
                     border: hoveredProduct === product.id ? `2px solid ${product.color}` : '1px solid #e6e6e9',
                     transition: 'all 0.2s ease',
                     height: '100%',
-                    transform: hoveredProduct === product.id && product.status === 'Live' ? 'translateY(-4px)' : 'translateY(0)',
-                    boxShadow: hoveredProduct === product.id && product.status === 'Live' ? '0 10px 25px rgba(0,0,0,0.1)' : 'none',
+                    transform: hoveredProduct === product.id && product.status === 'Live' && !isMobile ? 'translateY(-4px)' : 'translateY(0)',
+                    boxShadow: hoveredProduct === product.id && product.status === 'Live' && !isMobile ? '0 10px 25px rgba(0,0,0,0.1)' : 'none',
                     opacity: product.status === 'Coming Soon' ? 0.8 : 1
                   }}
-                  onMouseEnter={() => setHoveredProduct(product.id)}
-                  onMouseLeave={() => setHoveredProduct(null)}
+                  onMouseEnter={() => !isMobile && setHoveredProduct(product.id)}
+                  onMouseLeave={() => !isMobile && setHoveredProduct(null)}
                 >
-                  <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{product.icon}</div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                    <h3 style={{ fontSize: '1.3rem', color: '#1d1d1f' }}>
+                  {/* Icon */}
+                  <div style={{ fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '1rem', textAlign: 'center' }}>{product.icon}</div>
+                  
+                  {/* Title and Status */}
+                  <div style={{ 
+                    display: 'flex', 
+                    flexDirection: isMobile ? 'column' : 'row',
+                    justifyContent: 'space-between', 
+                    alignItems: isMobile ? 'flex-start' : 'center', 
+                    marginBottom: '0.5rem',
+                    gap: '0.5rem'
+                  }}>
+                    <h3 style={{ fontSize: isMobile ? '1.2rem' : '1.3rem', color: '#1d1d1f' }}>
                       {product.title}
                     </h3>
                     <span style={{
@@ -361,16 +510,27 @@ export default function ProductsPage() {
                       padding: '0.2rem 0.8rem',
                       borderRadius: '20px',
                       fontSize: '0.7rem',
-                      fontWeight: 500
+                      fontWeight: 500,
+                      alignSelf: isMobile ? 'flex-start' : 'auto'
                     }}>
                       {product.status}
                     </span>
                   </div>
+                  
+                  {/* Tagline and Description */}
                   <p style={{ color: '#86868b', fontSize: '0.85rem', marginBottom: '0.5rem' }}>{product.tagline}</p>
                   <p style={{ color: '#86868b', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '1rem' }}>
                     {product.desc}
                   </p>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
+                  
+                  {/* Metrics */}
+                  <div style={{ 
+                    display: 'flex', 
+                    flexWrap: 'wrap', 
+                    gap: '0.5rem', 
+                    marginBottom: '1rem',
+                    justifyContent: isMobile ? 'center' : 'flex-start'
+                  }}>
                     {product.metrics.map(metric => (
                       <span
                         key={metric}
@@ -379,14 +539,22 @@ export default function ProductsPage() {
                           color: '#666',
                           padding: '0.2rem 0.8rem',
                           borderRadius: '20px',
-                          fontSize: '0.8rem'
+                          fontSize: '0.75rem'
                         }}
                       >
                         {metric}
                       </span>
                     ))}
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  
+                  {/* Footer */}
+                  <div style={{ 
+                    display: 'flex', 
+                    flexDirection: isMobile ? 'column' : 'row',
+                    justifyContent: 'space-between', 
+                    alignItems: isMobile ? 'flex-start' : 'center',
+                    gap: '0.5rem'
+                  }}>
                     <span style={{ color: '#86868b', fontSize: '0.8rem' }}>{product.launchDate}</span>
                     {product.status === 'Live' && (
                       <span style={{ color: product.color, fontWeight: 500, fontSize: '0.9rem' }}>
@@ -400,10 +568,10 @@ export default function ProductsPage() {
           </div>
         </section>
 
-        {/* Key Features */}
-        <section style={{ marginBottom: '6rem' }}>
+        {/* ============ KEY FEATURES ============ */}
+        <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
           <h2 style={{ 
-            fontSize: '2.5rem', 
+            fontSize: isMobile ? '2rem' : '2.5rem', 
             fontWeight: 300, 
             color: '#1d1d1f', 
             marginBottom: '1rem',
@@ -413,34 +581,32 @@ export default function ProductsPage() {
           </h2>
           <p style={{ 
             color: '#86868b', 
-            fontSize: '1.2rem', 
+            fontSize: isMobile ? '1rem' : '1.2rem', 
             textAlign: 'center',
             maxWidth: '800px',
-            margin: '0 auto 3rem'
+            margin: '0 auto 2rem',
+            padding: isMobile ? '0 1rem' : '0'
           }}>
             Consistent quality and thoughtful design in everything we build
           </p>
-          <div style={{ 
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '2rem'
-          }}>
+          
+          <div style={featuresGridStyle}>
             {features.map(feature => (
               <div
                 key={feature.title}
                 style={{
-                  padding: '2rem',
+                  padding: isMobile ? '1.5rem' : '2rem',
                   borderRadius: '20px',
                   background: '#fafafa',
                   border: '1px solid #e6e6e9',
                   textAlign: 'center'
                 }}
               >
-                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{feature.icon}</div>
-                <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#1d1d1f' }}>
+                <div style={{ fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '1rem' }}>{feature.icon}</div>
+                <h3 style={{ fontSize: isMobile ? '1.1rem' : '1.2rem', marginBottom: '0.5rem', color: '#1d1d1f' }}>
                   {feature.title}
                 </h3>
-                <p style={{ color: '#86868b', fontSize: '0.95rem', lineHeight: '1.6' }}>
+                <p style={{ color: '#86868b', fontSize: isMobile ? '0.9rem' : '0.95rem', lineHeight: '1.6' }}>
                   {feature.desc}
                 </p>
               </div>
@@ -448,10 +614,10 @@ export default function ProductsPage() {
           </div>
         </section>
 
-        {/* Product Roadmap */}
-        <section style={{ marginBottom: '6rem' }}>
+        {/* ============ PRODUCT ROADMAP ============ */}
+        <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
           <h2 style={{ 
-            fontSize: '2.5rem', 
+            fontSize: isMobile ? '2rem' : '2.5rem', 
             fontWeight: 300, 
             color: '#1d1d1f', 
             marginBottom: '1rem',
@@ -461,27 +627,26 @@ export default function ProductsPage() {
           </h2>
           <p style={{ 
             color: '#86868b', 
-            fontSize: '1.2rem', 
+            fontSize: isMobile ? '1rem' : '1.2rem', 
             textAlign: 'center',
             maxWidth: '800px',
-            margin: '0 auto 3rem'
+            margin: '0 auto 2rem',
+            padding: isMobile ? '0 1rem' : '0'
           }}>
             What's coming next from PureLatency
           </p>
-          <div style={{ 
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '2rem'
-          }}>
+          
+          <div style={roadmapGridStyle}>
             {roadmap.map((quarter, index) => (
               <div key={quarter.quarter} style={{ 
-                padding: '2rem',
+                padding: isMobile ? '1.5rem' : '2rem',
                 borderRadius: '20px',
                 background: '#fafafa',
                 border: '1px solid #e6e6e9',
                 position: 'relative'
               }}>
-                {index < roadmap.length - 1 && (
+                {/* Connecting line between roadmap items (desktop only) */}
+                {!isMobile && index < roadmap.length - 1 && (
                   <div style={{
                     position: 'absolute',
                     top: '50%',
@@ -493,8 +658,17 @@ export default function ProductsPage() {
                     zIndex: 1
                   }} />
                 )}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                  <h3 style={{ fontSize: '1.3rem', color: '#1d1d1f' }}>
+                
+                {/* Header */}
+                <div style={{ 
+                  display: 'flex', 
+                  flexDirection: isMobile ? 'column' : 'row',
+                  justifyContent: 'space-between', 
+                  alignItems: isMobile ? 'flex-start' : 'center', 
+                  marginBottom: '1rem',
+                  gap: '0.5rem'
+                }}>
+                  <h3 style={{ fontSize: isMobile ? '1.2rem' : '1.3rem', color: '#1d1d1f' }}>
                     {quarter.quarter}
                   </h3>
                   <span style={{
@@ -503,16 +677,19 @@ export default function ProductsPage() {
                     padding: '0.2rem 0.8rem',
                     borderRadius: '20px',
                     fontSize: '0.7rem',
-                    fontWeight: 500
+                    fontWeight: 500,
+                    alignSelf: isMobile ? 'flex-start' : 'auto'
                   }}>
                     {quarter.status}
                   </span>
                 </div>
+                
+                {/* Items List */}
                 <ul style={{ listStyle: 'none', padding: 0 }}>
                   {quarter.items.map(item => (
                     <li key={item} style={{ 
                       color: '#86868b', 
-                      fontSize: '0.9rem',
+                      fontSize: isMobile ? '0.85rem' : '0.9rem',
                       marginBottom: '0.5rem',
                       display: 'flex',
                       alignItems: 'center',
@@ -528,34 +705,37 @@ export default function ProductsPage() {
           </div>
         </section>
 
-        {/* Technology Stack */}
-        <section style={{ marginBottom: '6rem' }}>
+        {/* ============ TECHNOLOGY STACK ============ */}
+        <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
           <h2 style={{ 
-            fontSize: '2.5rem', 
+            fontSize: isMobile ? '2rem' : '2.5rem', 
             fontWeight: 300, 
             color: '#1d1d1f', 
-            marginBottom: '2rem',
+            marginBottom: '1rem',
             textAlign: 'center'
           }}>
             Built With
           </h2>
           <p style={{ 
             color: '#86868b', 
-            fontSize: '1.2rem', 
+            fontSize: isMobile ? '1rem' : '1.2rem', 
             textAlign: 'center',
             maxWidth: '800px',
-            margin: '0 auto 3rem'
+            margin: '0 auto 2rem',
+            padding: isMobile ? '0 1rem' : '0'
           }}>
             Modern technologies powering our products
           </p>
+          
           <div style={{
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'center',
-            gap: '1rem',
-            padding: '2rem',
+            gap: isMobile ? '0.5rem' : '1rem',
+            padding: isMobile ? '1.5rem' : '2rem',
             background: '#fafafa',
-            borderRadius: '20px'
+            borderRadius: '20px',
+            margin: isMobile ? '0 0.5rem' : '0'
           }}>
             {technologies.map(tech => (
               <span
@@ -563,11 +743,13 @@ export default function ProductsPage() {
                 style={{
                   background: 'white',
                   color: '#1d1d1f',
-                  padding: '0.6rem 1.2rem',
+                  padding: isMobile ? '0.4rem 0.8rem' : '0.6rem 1.2rem',
                   borderRadius: '30px',
-                  fontSize: '0.9rem',
+                  fontSize: isMobile ? '0.8rem' : '0.9rem',
                   border: '1px solid #e6e6e9',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.02)',
+                  textAlign: 'center',
+                  flex: isMobile ? '1 1 auto' : '0 1 auto',
                 }}
               >
                 {tech}
@@ -576,37 +758,53 @@ export default function ProductsPage() {
           </div>
         </section>
 
-        {/* Testimonials */}
-        <section style={{ marginBottom: '6rem' }}>
+        {/* ============ TESTIMONIALS ============ */}
+        <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
           <h2 style={{ 
-            fontSize: '2.5rem', 
+            fontSize: isMobile ? '2rem' : '2.5rem', 
             fontWeight: 300, 
             color: '#1d1d1f', 
-            marginBottom: '2rem',
+            marginBottom: '1rem',
             textAlign: 'center'
           }}>
             What Our Users Say
           </h2>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '2rem'
-          }}>
+          
+          <div style={testimonialsGridStyle}>
             {testimonials.map((testimonial, index) => (
               <div key={index} style={{
-                padding: '2rem',
+                padding: isMobile ? '1.5rem' : '2rem',
                 background: '#fafafa',
                 borderRadius: '20px',
                 border: '1px solid #e6e6e9',
                 position: 'relative'
               }}>
-                <span style={{ fontSize: '4rem', color: '#0066cc', opacity: 0.2, position: 'absolute', top: '10px', left: '20px' }}>"</span>
-                <p style={{ color: '#1d1d1f', fontSize: '1rem', lineHeight: '1.8', marginBottom: '1.5rem', position: 'relative', zIndex: 2 }}>
+                {/* Quote mark */}
+                <span style={{ 
+                  fontSize: isMobile ? '3rem' : '4rem', 
+                  color: '#0066cc', 
+                  opacity: 0.2, 
+                  position: 'absolute', 
+                  top: '10px', 
+                  left: '20px' 
+                }}>"</span>
+                
+                {/* Quote */}
+                <p style={{ 
+                  color: '#1d1d1f', 
+                  fontSize: isMobile ? '0.95rem' : '1rem', 
+                  lineHeight: '1.8', 
+                  marginBottom: '1.5rem', 
+                  position: 'relative', 
+                  zIndex: 2 
+                }}>
                   {testimonial.quote}
                 </p>
+                
+                {/* Author */}
                 <div>
-                  <strong style={{ color: '#1d1d1f' }}>{testimonial.author}</strong>
-                  <p style={{ color: '#86868b', fontSize: '0.9rem', margin: '0.2rem 0 0 0' }}>
+                  <strong style={{ color: '#1d1d1f', fontSize: isMobile ? '0.95rem' : '1rem' }}>{testimonial.author}</strong>
+                  <p style={{ color: '#86868b', fontSize: isMobile ? '0.85rem' : '0.9rem', margin: '0.2rem 0 0 0' }}>
                     {testimonial.role} · {testimonial.product}
                   </p>
                 </div>
@@ -615,78 +813,74 @@ export default function ProductsPage() {
           </div>
         </section>
 
-        {/* Contact Section */}
-       <section
-  style={{
-    marginTop: '4rem',
-    display: 'flex',
-    justifyContent: 'center'
-  }}
->
-  <div
-    style={{
-      width: '100%',
-      maxWidth: '1200px',
-      padding: '4rem 2rem',   // reduced height
-      borderRadius: '28px',
-      textAlign: 'center',
-       background: `
-              radial-gradient(circle at 20% 30%, #7a3cff 0%, transparent 40%),
-              radial-gradient(circle at 80% 10%, #ff2e88 0%, transparent 40%),
-              linear-gradient(180deg, #0b1c48 0%, #2a1e5c 100%)
-            `,
-            color: '#ffffff',
-    }}
-  >
-    <h2
-      style={{
-        fontSize: '3rem',
-        fontWeight: 400,
-        marginBottom: '1rem'
-      }}
-    >
-      Contact Us
-    </h2>
-
-    <p
-      style={{
-        fontSize: '1.25rem',
-        marginBottom: '2.2rem',
-        opacity: 0.95
-      }}
-    >
-      Be always in front line, get in touch today.
-    </p>
-
-    <Link
-     
-                 href="/contact"
+        {/* ============ CONTACT SECTION ============ */}
+        <section style={{
+          marginTop: '2rem',
+          display: 'flex',
+          justifyContent: 'center',
+          padding: isMobile ? '0 1rem' : '0'
+        }}>
+          <div
             style={{
-              display: 'inline-block',
-              padding: '18px 60px',
-              borderRadius: '70px 70px 0 70px',
-              border: '3px solid #ffffff',
+              width: '100%',
+              maxWidth: '1200px',
+              padding: isMobile ? '3rem 1.5rem' : '4rem 2rem',
+              borderRadius: '28px',
+              textAlign: 'center',
+              background: `
+                radial-gradient(circle at 20% 30%, #7a3cff 0%, transparent 40%),
+                radial-gradient(circle at 80% 10%, #ff2e88 0%, transparent 40%),
+                linear-gradient(180deg, #0b1c48 0%, #2a1e5c 100%)
+              `,
               color: '#ffffff',
-              fontWeight: 600,
-              fontSize: '1.1rem',
-              textDecoration: 'none',
-              transition: 'all 0.3s ease',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.background = '#ffffff';
-        e.currentTarget.style.color = '#111';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.background = 'transparent';
-        e.currentTarget.style.color = '#ffffff';
-      }}
-    >
-      Contact Us
-    </Link>
-  </div>
-</section>
+            }}
+          >
+            <h2 style={{
+              fontSize: isMobile ? '2rem' : '3rem',
+              fontWeight: 400,
+              marginBottom: '1rem'
+            }}>
+              Contact Us
+            </h2>
 
-        {/* Back to Home */}
+            <p style={{
+              fontSize: isMobile ? '1rem' : '1.25rem',
+              marginBottom: '2rem',
+              opacity: 0.95
+            }}>
+              Be always in front line, get in touch today.
+            </p>
+
+            <Link
+              href="/contact"
+              style={{
+                display: 'inline-block',
+                padding: isMobile ? '14px 40px' : '18px 60px',
+                borderRadius: '70px 70px 0 70px',
+                border: '3px solid #ffffff',
+                color: '#ffffff',
+                fontWeight: 600,
+                fontSize: isMobile ? '1rem' : '1.1rem',
+                textDecoration: 'none',
+                transition: 'all 0.3s ease',
+                width: isMobile ? '100%' : 'auto',
+                maxWidth: isMobile ? '300px' : 'none',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#ffffff';
+                e.currentTarget.style.color = '#111';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'transparent';
+                e.currentTarget.style.color = '#ffffff';
+              }}
+            >
+              Contact Us
+            </Link>
+          </div>
+        </section>
+
+        {/* ============ BACK TO HOME ============ */}
         <div style={{ 
           borderTop: '1px solid #e6e6e9',
           paddingTop: '2rem',
@@ -698,7 +892,7 @@ export default function ProductsPage() {
             style={{ 
               color: '#86868b', 
               textDecoration: 'none', 
-              fontSize: '0.9rem',
+              fontSize: isMobile ? '0.85rem' : '0.9rem',
               display: 'inline-block'
             }}
           >
@@ -707,64 +901,73 @@ export default function ProductsPage() {
         </div>
       </main>
 
-      {/* Footer */}
+      {/* ============ FOOTER ============ */}
       <footer
         style={{
           background: '#111',
           color: '#aaa',
-          padding: '4rem 2rem',
+          padding: isMobile ? '3rem 1rem' : '4rem 2rem',
           marginTop: '4rem'
         }}
       >
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-          <div style={{ 
-            display: 'grid',
-            gridTemplateColumns: '2fr 1fr 1fr 1fr',
-            gap: '4rem',
-            marginBottom: '4rem'
-          }}>
+          <div style={footerGridStyle}>
+            {/* Company Info */}
             <div>
-              <div style={{ fontSize: '1.5rem', color: '#fff', marginBottom: '1rem' }}>PureLatency</div>
-              <p style={{ color: '#666', lineHeight: '1.7' }}>
+              <div style={{ fontSize: isMobile ? '1.3rem' : '1.5rem', color: '#fff', marginBottom: '1rem' }}>PureLatency</div>
+              <p style={{ color: '#666', lineHeight: '1.7', fontSize: isMobile ? '0.9rem' : '1rem' }}>
                 Building software that solves real problems and makes work better.
               </p>
             </div>
+            
+            {/* Products Links */}
             <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem' }}>Products</h4>
+              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Products</h4>
               <ul style={{ listStyle: 'none', padding: 0 }}>
                 {products.map(product => (
                   <li key={product.id} style={{ marginBottom: '0.5rem' }}>
-                    <Link href={`/products/${product.id}`} style={{ color: '#aaa', textDecoration: 'none' }}>{product.title}</Link>
+                    <Link href={`/products/${product.id}`} style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>
+                      {product.title}
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
+            
+            {/* Company Links */}
             <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem' }}>Company</h4>
+              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Company</h4>
               <ul style={{ listStyle: 'none', padding: 0 }}>
                 {['About', 'Careers', 'Blog', 'Contact'].map(item => (
                   <li key={item} style={{ marginBottom: '0.5rem' }}>
-                    <Link href={`/${item.toLowerCase()}`} style={{ color: '#aaa', textDecoration: 'none' }}>{item}</Link>
+                    <Link href={`/${item.toLowerCase()}`} style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>
+                      {item}
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
+            
+            {/* Social Links */}
             <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem' }}>Connect</h4>
+              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Connect</h4>
               <ul style={{ listStyle: 'none', padding: 0 }}>
-                {['Facebook', 'Twitter','Instagram'].map(item => (
+                {['Facebook', 'Twitter', 'Instagram'].map(item => (
                   <li key={item} style={{ marginBottom: '0.5rem' }}>
-                    <a href="#" style={{ color: '#aaa', textDecoration: 'none' }}>{item}</a>
+                    <a href="#" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>{item}</a>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
+          
+          {/* Copyright */}
           <div style={{ 
             borderTop: '1px solid #333', 
             paddingTop: '2rem',
             textAlign: 'center',
-            color: '#666'
+            color: '#666',
+            fontSize: isMobile ? '0.8rem' : '0.9rem'
           }}>
             © 2026 PureLatency. All rights reserved. Crafted with precision in San Francisco.
           </div>
