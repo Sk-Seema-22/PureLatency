@@ -62,9 +62,9 @@ export default function ServicesPage() {
   ];
 
   const stats = [
-    { value: '120+', label: 'Successful Projects', icon: '🏆' },
+    { value: '2+', label: 'Successful Projects', icon: '🏆' },
     { value: '98%', label: 'Client Retention Rate', icon: '🤝' },
-    { value: '8+', label: 'Years of Innovation', icon: '⏳' },
+    { value: '1+', label: 'Years of Innovation', icon: '⏳' },
     { value: '24/7', label: 'Expert Support', icon: '🌙' }
   ];
 
@@ -162,18 +162,19 @@ export default function ServicesPage() {
       icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg',
       color: '#E4405F'
     },
-    { 
-      name: 'Facebook', 
-      href: 'https://facebook.com/purelatency',
-      icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg',
-      color: '#1877F2'
-    },
-    { 
-      name: 'LinkedIn', 
-      href: 'https://linkedin.com/company/purelatency',
-      icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg',
-      color: '#0A66C2'
+  { 
+    name: 'Facebook', 
+    href: 'https://facebook.com/purelatency',
+    icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg',
+    color: '#1877F2'
+  },
+  { 
+      name: 'Twitter', 
+      href: 'https://twitter.com/purelatency',
+      icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg',
+      color: '#000000'
     }
+
   ];
 
   // Responsive styles
@@ -431,9 +432,9 @@ export default function ServicesPage() {
               }}>Why Companies Choose Us</h3>
               <ul style={{ listStyle: 'none', padding: 0 }}>
                 {[
-                  '120+ successful projects delivered',
+                  '2+ successful projects delivered',
                   '98% client retention rate',
-                  '8+ years of innovation'
+                  '1+ years of innovation'
                 ].map((item, i) => (
                   <li key={i} style={{ 
                     marginBottom: '1rem',
@@ -779,71 +780,78 @@ export default function ServicesPage() {
         </section>
 
         {/* Contact Section */}
-        <section style={{
-          marginTop: isMobile ? '2rem' : '4rem',
-          display: 'flex',
-          justifyContent: 'center',
-          padding: isMobile ? '0 1rem' : '0'
-        }}>
-          <div
-            style={{
-              width: '100%',
-              maxWidth: '1200px',
-              padding: isMobile ? '3rem 1.5rem' : '4rem 2rem',
-              borderRadius: '28px',
-              textAlign: 'center',
-              background: `
-                radial-gradient(circle at 20% 30%, #7a3cff 0%, transparent 40%),
-                radial-gradient(circle at 80% 10%, #ff2e88 0%, transparent 40%),
-                linear-gradient(180deg, #0b1c48 0%, #2a1e5c 100%)
-              `,
-              color: '#ffffff',
-            }}
-          >
-            <h2 style={{
-              fontSize: isMobile ? '2rem' : '3rem',
-              fontWeight: 400,
-              marginBottom: '1rem'
-            }}>
-              Contact Us
-            </h2>
+      <section
+  style={{
+    marginTop: isMobile ? '1.5rem' : '3rem',          // was 2rem / 4rem
+    display: 'flex',
+    justifyContent: 'center',
+    padding: isMobile ? '0 1rem' : '0',
+  }}
+>
+  <div
+    style={{
+      width: '100%',
+      maxWidth: '1200px',
+      padding: isMobile ? '2rem 1.25rem' : '2.5rem 1.75rem', // smaller vertical padding
+      borderRadius: '24px',
+      textAlign: 'center',
+      background: `
+        radial-gradient(circle at 20% 30%, #7a3cff 0%, transparent 40%),
+        radial-gradient(circle at 80% 10%, #ff2e88 0%, transparent 40%),
+        linear-gradient(180deg, #0b1c48 0%, #2a1e5c 100%)
+      `,
+      color: '#ffffff',
+    }}
+  >
+    <h2
+      style={{
+        fontSize: isMobile ? '1.7rem' : '2.4rem',     // slightly smaller text
+        fontWeight: 400,
+        marginBottom: '0.5rem',                      // less space below title
+      }}
+    >
+      Contact Us
+    </h2>
 
-            <p style={{
-              fontSize: isMobile ? '1rem' : '1.25rem',
-              marginBottom: '2rem',
-              opacity: 0.95
-            }}>
-              Be always in front line, get in touch today.
-            </p>
+    <p
+      style={{
+        fontSize: isMobile ? '0.95rem' : '1.1rem',
+        marginBottom: '1.5rem',                      // less paragraph bottom margin
+        opacity: 0.95,
+        color: '#ffffff',
+      }}
+    >
+      Be always in front line, get in touch today.
+    </p>
 
-            <Link
-              href="/contact"
-              style={{
-                display: 'inline-block',
-                padding: isMobile ? '14px 40px' : '18px 60px',
-                borderRadius: '70px 70px 0 70px',
-                border: '3px solid #ffffff',
-                color: '#ffffff',
-                fontWeight: 600,
-                fontSize: isMobile ? '1rem' : '1.1rem',
-                textDecoration: 'none',
-                transition: 'all 0.3s ease',
-                width: isMobile ? '100%' : 'auto',
-                maxWidth: isMobile ? '300px' : 'none',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#ffffff';
-                e.currentTarget.style.color = '#111';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'transparent';
-                e.currentTarget.style.color = '#ffffff';
-              }}
-            >
-              Contact Us
-            </Link>
-          </div>
-        </section>
+    <Link
+      href="/contact"
+      style={{
+        display: 'inline-block',
+        padding: isMobile ? '10px 32px' : '12px 48px', // smaller button
+        borderRadius: '70px 70px 0 70px',
+        border: '2px solid #ffffff',
+        color: '#ffffff',
+        fontWeight: 600,
+        fontSize: isMobile ? '0.95rem' : '1rem',
+        textDecoration: 'none',
+        transition: 'all 0.3s ease',
+        width: isMobile ? '100%' : 'auto',
+        maxWidth: isMobile ? '260px' : 'none',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = '#ffffff';
+        e.currentTarget.style.color = '#111';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = 'transparent';
+        e.currentTarget.style.color = '#ffffff';
+      }}
+    >
+      Contact Us
+    </Link>
+  </div>
+</section>
 
         {/* Back to Home */}
         <div style={{ 
@@ -878,7 +886,7 @@ export default function ServicesPage() {
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div style={footerGridStyle}>
             <div>
-              <div style={{ fontSize: isMobile ? '1.3rem' : '1.5rem', color: '#fff', marginBottom: '1rem' }}>PureLatency</div>
+              <div style={{ fontSize: isMobile ? '1.3rem' : '1.5rem', color: '#fff', marginBottom: '1rem' }}>Pure Latency</div>
               <p style={{ color: '#666', lineHeight: '1.7', fontSize: isMobile ? '0.9rem' : '1rem' }}>
                 Engineering exceptional digital products that drive real business growth.
               </p>

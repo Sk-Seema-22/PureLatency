@@ -46,13 +46,13 @@ const Footer: React.FC = () => {
               Leading digital and technology services company in Singapore and Southeast Asia.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <i className="fab fa-linkedin text-xl"></i>
+              <a href="https://instagram.com/purelatency" className="text-gray-400 hover:text-white transition-colors">
+                <i className="fab fa-instagram text-xl"></i>
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://twitter.com/purelatency" className="text-gray-400 hover:text-white transition-colors">
                 <i className="fab fa-twitter text-xl"></i>
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://facebook.com/purelatency" className="text-gray-400 hover:text-white transition-colors">
                 <i className="fab fa-facebook text-xl"></i>
               </a>
             </div>

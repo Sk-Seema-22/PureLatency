@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -10,7 +10,14 @@ const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+
+  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -31,8 +38,25 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? 'hidden' : 'unset';
-    return () => { document.body.style.overflow = 'unset'; };
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    return () => {
+      if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+    };
+  }, []);
+
+  const isActive = (href: string) => pathname === href;
+  const isParentActive = (item: (typeof navItems)[number]) => {
+    if (pathname === item.href) return true;
+    if (item.dropdown) {
+      return item.dropdown.some((drop) => pathname === drop.href);
+    }
+    return false;
+  };
 
   const navItems = [
     { label: 'Home', href: '/' },
@@ -51,7 +75,7 @@ const Navbar: React.FC = () => {
         { label: 'Data and AI', href: '/services/data-ai' },
         { label: 'Cloud and DevOps', href: '/services/cloud-devops' },
         { label: 'Infrastructure', href: '/services/infrastructure' },
-        { label: 'Quantum computer', href: '/services/quantum-computer' },
+        { label: 'Quantum Compute', href: '/services/quantum-compute' },
         { label: 'Fiber Optics', href: '/services/fiber-optics' },
       ],
     },
@@ -81,10 +105,25 @@ const Navbar: React.FC = () => {
   ];
 
   const socialMedia = [
-    { name: 'Instagram', href: 'https://instagram.com/purelatency', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg', color: '#E4405F' },
-    { name: 'Facebook', href: 'https://facebook.com/purelatency', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg', color: '#1877F2' },
-    { name: 'LinkedIn', href: 'https://linkedin.com/company/purelatency', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg', color: '#0A66C2' },
+    { name: 'Instagram', href: 'https://instagram.com/purelatency', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg' },
+    { name: 'Facebook', href: 'https://facebook.com/purelatency', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg' },
+    { name: 'Twitter',
+      href: 'https://twitter.com/pureltency',
+      icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg',
+      color: '#000000'
+    }
   ];
+
+  const handleMouseEnter = (label: string) => {
+    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+    setActiveDropdown(label);
+  };
+
+  const handleMouseLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 150);
+  };
 
   const navStyle: React.CSSProperties = {
     position: 'fixed',
@@ -111,7 +150,7 @@ const Navbar: React.FC = () => {
   };
 
   const desktopNavStyle: React.CSSProperties = {
-    display: isMobile ? 'none' : 'flex',
+    display: !mounted || isMobile ? 'none' : 'flex',
     alignItems: 'center',
     gap: '2rem',
   };
@@ -147,19 +186,20 @@ const Navbar: React.FC = () => {
     background: active ? '#f9fafb' : 'transparent',
   });
 
+  // Desktop Contact Us button – more space below text
   const contactButtonStyle: React.CSSProperties = {
-    background: '#0066cc',
-    color: 'white',
-    padding: '0.5rem 1.5rem',
-    borderRadius: '40px',
-    textDecoration: 'none',
-    fontWeight: 500,
-    fontSize: '0.875rem',
-    display: isMobile ? 'none' : 'inline-block',
-  };
-
+  background: '#0066cc',
+  color: 'white',
+  padding: '0.75rem 1.5rem',   // equal top & bottom
+  borderRadius: '40px',
+  textDecoration: 'none',
+  fontWeight: 500,
+  fontSize: '0.875rem',
+  lineHeight: 1,               // avoid extra vertical space
+  display: !mounted || isMobile ? 'none' : 'inline-block',
+};
   const mobileMenuButtonStyle: React.CSSProperties = {
-    display: isMobile ? 'block' : 'none',
+    display: !mounted || isMobile ? 'block' : 'none',
     fontSize: '1.5rem',
     padding: '0.5rem',
     borderRadius: '8px',
@@ -184,7 +224,8 @@ const Navbar: React.FC = () => {
     width: '300px',
     height: '100%',
     background: 'white',
-    boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)',
+    boxShadow:
+      '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)',
     zIndex: 50,
     overflowY: 'auto',
     animation: 'slideIn 0.3s ease-out forwards',
@@ -226,18 +267,21 @@ const Navbar: React.FC = () => {
     marginBottom: '0.5rem',
   });
 
+  // Mobile Contact Us button – more space below text
   const mobileContactButtonStyle: React.CSSProperties = {
-    display: 'block',
-    width: '100%',
-    textAlign: 'center',
-    background: '#0066cc',
-    color: 'white',
-    padding: '0.75rem 1rem',
-    borderRadius: '40px',
-    textDecoration: 'none',
-    fontWeight: 500,
-    marginTop: '2rem',
-  };
+  display: 'block',
+  width: '100%',
+  textAlign: 'center',
+  background: '#0066cc',
+  color: 'white',
+  padding: '0.9rem 1rem',      // equal top & bottom
+  borderRadius: '40px',
+  textDecoration: 'none',
+  fontWeight: 500,
+  fontSize: '0.9rem',
+  lineHeight: 1,               // center text vertically
+  marginTop: '2rem',
+};
 
   const mobileSocialStyle: React.CSSProperties = {
     display: 'flex',
@@ -256,41 +300,65 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <nav style={navStyle}>
+      <nav style={navStyle} aria-label="Main navigation">
         <div style={containerStyle}>
           <div style={headerStyle}>
-            <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
+            <Link
+              href="/"
+              style={{ display: 'flex', alignItems: 'center' }}
+              aria-label="Home"
+            >
               <Image
                 src="/images/logo.png"
                 alt="Pure Latency Logo"
-                width={100}
-                height={40}
+                width={80}
+                height={32}
                 priority
                 style={{
                   objectFit: 'contain',
-                  filter: 'brightness(1.1)',
                   width: 'auto',
-                  height: isMobile ? '40px' : '60px',
+                  height: mounted && isMobile ? '28px' : '40px',
                 }}
               />
             </Link>
 
-            <div style={desktopNavStyle}>
+            {/* Desktop navigation */}
+            <div style={desktopNavStyle} role="list">
               {navItems.map((item) => (
                 <div
                   key={item.label}
                   style={{ position: 'relative' }}
-                  onMouseEnter={() => setActiveDropdown(item.label)}
-                  onMouseLeave={() => setActiveDropdown(null)}
+                  onMouseEnter={() => handleMouseEnter(item.label)}
+                  onMouseLeave={handleMouseLeave}
+                  role="listitem"
                 >
-                  <Link href={item.href} style={navLinkStyle(pathname === item.href)}>
+                  <Link
+                    href={item.href}
+                    style={navLinkStyle(isParentActive(item))}
+                    aria-expanded={activeDropdown === item.label}
+                    aria-haspopup={item.dropdown ? 'true' : undefined}
+                  >
                     {item.label}
-                    {item.dropdown && <i className="fas fa-chevron-down" style={{ fontSize: '0.75rem', marginLeft: '0.25rem' }} />}
+                    {item.dropdown && (
+                      <i
+                        className="fas fa-chevron-down"
+                        style={{
+                          fontSize: '0.75rem',
+                          marginLeft: '0.25rem',
+                        }}
+                        aria-hidden="true"
+                      />
+                    )}
                   </Link>
                   {item.dropdown && activeDropdown === item.label && (
-                    <div style={dropdownStyle}>
+                    <div style={dropdownStyle} role="menu">
                       {item.dropdown.map((drop) => (
-                        <Link key={drop.label} href={drop.href} style={dropdownItemStyle(pathname === drop.href)}>
+                        <Link
+                          key={drop.label}
+                          href={drop.href}
+                          style={dropdownItemStyle(isActive(drop.href))}
+                          role="menuitem"
+                        >
                           {drop.label}
                         </Link>
                       ))}
@@ -300,37 +368,86 @@ const Navbar: React.FC = () => {
               ))}
             </div>
 
-            <Link href="/contact" style={contactButtonStyle}>Contact Us</Link>
+            <Link href="/contact" style={contactButtonStyle}>
+              Contact Us
+            </Link>
 
-            <button style={mobileMenuButtonStyle} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-              <i className={`fas fa-${isMobileMenuOpen ? 'times' : 'bars'}`} />
+            {/* Mobile menu button */}
+            <button
+              style={mobileMenuButtonStyle}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={isMobileMenuOpen}
+            >
+              <i
+                className={`fas fa-${isMobileMenuOpen ? 'times' : 'bars'}`}
+                aria-hidden="true"
+              />
             </button>
           </div>
         </div>
 
+        {/* Mobile menu panel */}
         {isMobileMenuOpen && (
           <>
-            <div style={overlayStyle} onClick={() => setIsMobileMenuOpen(false)} />
-            <div style={mobileMenuPanelStyle}>
+            <div
+              style={overlayStyle}
+              onClick={() => setIsMobileMenuOpen(false)}
+              aria-hidden="true"
+            />
+            <div
+              style={mobileMenuPanelStyle}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile navigation menu"
+            >
               <div style={mobileHeaderStyle}>
-                <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Image src="/images/logo.png" alt="Logo" width={140} height={45} style={{ objectFit: 'contain' }} />
+                <Link
+                  href="/"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  aria-label="Home"
+                >
+                  <Image
+                    src="/images/logo.png"
+                    alt="Pure Latency Logo"
+                    width={140}
+                    height={45}
+                    style={{ objectFit: 'contain' }}
+                  />
                 </Link>
-                <button onClick={() => setIsMobileMenuOpen(false)} style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}>
-                  <i className="fas fa-times" />
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    fontSize: '1.5rem',
+                    cursor: 'pointer',
+                  }}
+                  aria-label="Close menu"
+                >
+                  <i className="fas fa-times" aria-hidden="true" />
                 </button>
               </div>
 
               <div style={mobileNavStyle}>
                 {navItems.map((item) => (
                   <div key={item.label} style={mobileNavItemStyle}>
-                    <Link href={item.href} style={mobileNavLinkStyle(pathname === item.href)} onClick={() => setIsMobileMenuOpen(false)}>
+                    <Link
+                      href={item.href}
+                      style={mobileNavLinkStyle(isParentActive(item))}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
                       {item.label}
                     </Link>
                     {item.dropdown && (
                       <div style={{ paddingLeft: '1rem' }}>
                         {item.dropdown.map((drop) => (
-                          <Link key={drop.label} href={drop.href} style={mobileDropdownItemStyle(pathname === drop.href)} onClick={() => setIsMobileMenuOpen(false)}>
+                          <Link
+                            key={drop.label}
+                            href={drop.href}
+                            style={mobileDropdownItemStyle(isActive(drop.href))}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
                             {drop.label}
                           </Link>
                         ))}
@@ -341,7 +458,11 @@ const Navbar: React.FC = () => {
               </div>
 
               <div style={{ padding: '0 1.5rem' }}>
-                <Link href="/contact" style={mobileContactButtonStyle} onClick={() => setIsMobileMenuOpen(false)}>
+                <Link
+                  href="/contact"
+                  style={mobileContactButtonStyle}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
                   Contact Us
                 </Link>
               </div>
@@ -353,11 +474,15 @@ const Navbar: React.FC = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={social.name}
                     style={{ display: 'flex' }}
-                    onMouseEnter={(e) => (e.currentTarget.firstChild as HTMLElement).style.filter = 'brightness(1)'}
-                    onMouseLeave={(e) => (e.currentTarget.firstChild as HTMLElement).style.filter = 'brightness(0.8)'}
+                    className="social-icon"
                   >
-                    <img src={social.icon} alt={social.name} style={mobileSocialImgStyle} />
+                    <img
+                      src={social.icon}
+                      alt=""
+                      style={mobileSocialImgStyle}
+                    />
                   </a>
                 ))}
               </div>
@@ -367,8 +492,15 @@ const Navbar: React.FC = () => {
       </nav>
       <style jsx>{`
         @keyframes slideIn {
-          from { transform: translateX(100%); }
-          to { transform: translateX(0); }
+          from {
+            transform: translateX(100%);
+          }
+          to {
+            transform: translateX(0);
+          }
+        }
+        .social-icon:hover img {
+          filter: brightness(1) !important;
         }
       `}</style>
     </>

@@ -183,12 +183,12 @@ export default function PartnersOverviewPage() {
       icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg',
       color: '#1877F2'
     },
-    { 
-      name: 'LinkedIn', 
-      href: 'https://linkedin.com/company/purelatency',
-      icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg',
-      color: '#0A66C2'
-    }
+    {
+    name: 'Twitter',
+    href: 'https://twitter.com/purelatency', // use your real handle
+    icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg',
+    color: '#000000',
+  }
   ];
 
   // Responsive styles
@@ -833,71 +833,79 @@ export default function PartnersOverviewPage() {
         )}
 
         {/* CTA Section */}
-        <section style={{
-          marginTop: isMobile ? '2rem' : '4rem',
-          display: 'flex',
-          justifyContent: 'center',
-          padding: isMobile ? '0 1rem' : '0'
-        }}>
-          <div
-            style={{
-              width: '100%',
-              maxWidth: '1200px',
-              padding: isMobile ? '3rem 1.5rem' : '4rem 2rem',
-              borderRadius: '28px',
-              textAlign: 'center',
-              background: `
-                radial-gradient(circle at 20% 30%, #7a3cff 0%, transparent 40%),
-                radial-gradient(circle at 80% 10%, #ff2e88 0%, transparent 40%),
-                linear-gradient(180deg, #0b1c48 0%, #2a1e5c 100%)
-              `,
-              color: '#ffffff',
-            }}
-          >
-            <h2 style={{
-              fontSize: isMobile ? '2rem' : '3rem',
-              fontWeight: 400,
-              marginBottom: '1rem'
-            }}>
-              Contact Us
-            </h2>
+       <section
+  style={{
+    marginTop: isMobile ? '1.5rem' : '3rem',          // was 2rem / 4rem
+    display: 'flex',
+    justifyContent: 'center',
+    padding: isMobile ? '0 1rem' : '0',
+  }}
+>
+  <div
+    style={{
+      width: '100%',
+      maxWidth: '1200px',
+      padding: isMobile ? '2rem 1.25rem' : '2.5rem 1.75rem', // smaller vertical padding
+      borderRadius: '24px',
+      textAlign: 'center',
+      background: `
+        radial-gradient(circle at 20% 30%, #7a3cff 0%, transparent 40%),
+        radial-gradient(circle at 80% 10%, #ff2e88 0%, transparent 40%),
+        linear-gradient(180deg, #0b1c48 0%, #2a1e5c 100%)
+      `,
+      color: '#ffffff',
+    }}
+  >
+    <h2
+      style={{
+        fontSize: isMobile ? '1.7rem' : '2.4rem',     // slightly smaller text
+        fontWeight: 400,
+        marginBottom: '0.5rem',                      // less space below title
+      }}
+    >
+      Contact Us
+    </h2>
 
-            <p style={{
-              fontSize: isMobile ? '1rem' : '1.25rem',
-              marginBottom: '2rem',
-              opacity: 0.95
-            }}>
-              Be always in front line, get in touch today.
-            </p>
+    <p
+      style={{
+        fontSize: isMobile ? '0.95rem' : '1.1rem',
+        marginBottom: '1.5rem',                      // less paragraph bottom margin
+        opacity: 0.95,
+        color: '#ffffff',
+      }}
+    >
+      Be always in front line, get in touch today.
+    </p>
 
-            <Link
-              href="/contact"
-              style={{
-                display: 'inline-block',
-                padding: isMobile ? '14px 40px' : '18px 60px',
-                borderRadius: '70px 70px 0 70px',
-                border: '3px solid #ffffff',
-                color: '#ffffff',
-                fontWeight: 600,
-                fontSize: isMobile ? '1rem' : '1.1rem',
-                textDecoration: 'none',
-                transition: 'all 0.3s ease',
-                width: isMobile ? '100%' : 'auto',
-                maxWidth: isMobile ? '300px' : 'none',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#ffffff';
-                e.currentTarget.style.color = '#111';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'transparent';
-                e.currentTarget.style.color = '#ffffff';
-              }}
-            >
-              Contact Us
-            </Link>
-          </div>
-        </section>
+    <Link
+      href="/contact"
+      style={{
+        display: 'inline-block',
+        padding: isMobile ? '10px 32px' : '12px 48px', // smaller button
+        borderRadius: '70px 70px 0 70px',
+        border: '2px solid #ffffff',
+        color: '#ffffff',
+        fontWeight: 600,
+        fontSize: isMobile ? '0.95rem' : '1rem',
+        textDecoration: 'none',
+        transition: 'all 0.3s ease',
+        width: isMobile ? '100%' : 'auto',
+        maxWidth: isMobile ? '260px' : 'none',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = '#ffffff';
+        e.currentTarget.style.color = '#111';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = 'transparent';
+        e.currentTarget.style.color = '#ffffff';
+      }}
+    >
+      Contact Us
+    </Link>
+  </div>
+</section>
+
 
         {/* Back to Partners */}
         <div style={{ 
@@ -920,7 +928,7 @@ export default function PartnersOverviewPage() {
         </div>
       </main>
 
-      {/* Footer */}
+    {/* Footer */}
       <footer
         style={{
           background: '#111',
@@ -932,33 +940,25 @@ export default function PartnersOverviewPage() {
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div style={footerGridStyle}>
             <div>
-              <div style={{ fontSize: isMobile ? '1.3rem' : '1.5rem', color: '#fff', marginBottom: '1rem' }}>PureLatency</div>
+              <div style={{ fontSize: isMobile ? '1.3rem' : '1.5rem', color: '#fff', marginBottom: '1rem' }}>Pure Latency</div>
               <p style={{ color: '#666', lineHeight: '1.7', fontSize: isMobile ? '0.9rem' : '1rem' }}>
-                Building the future through powerful partnerships.
+                Building exceptional software that makes a difference.
               </p>
             </div>
             <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Explore</h4>
+              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Company</h4>
               <ul style={{ listStyle: 'none', padding: 0 }}>
                 <li style={{ marginBottom: '0.5rem' }}>
                   <Link href="/about" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>About</Link>
                 </li>
                 <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/services" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Services</Link>
+                  <Link href="/careers" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Careers</Link>
                 </li>
                 <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/products" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Products</Link>
+                  <Link href="/blog" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Blog</Link>
                 </li>
-              </ul>
-            </div>
-            <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Connect</h4>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
                 <li style={{ marginBottom: '0.5rem' }}>
                   <Link href="/contact" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Contact</Link>
-                </li>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/careers" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Careers</Link>
                 </li>
               </ul>
             </div>
@@ -973,6 +973,42 @@ export default function PartnersOverviewPage() {
                 </li>
               </ul>
             </div>
+            <div>
+              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Connect</h4>
+              <ul style={{ listStyle: 'none', padding: 0 }}>
+                {socialMedia.map(social => (
+                  <li key={social.name} style={{ marginBottom: '0.8rem' }}>
+                    <a 
+                      href={social.href} 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ 
+                        color: '#aaa', 
+                        textDecoration: 'none',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        justifyContent: isMobile ? 'center' : 'flex-start',
+                        transition: 'color 0.2s ease',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = social.color;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color = '#aaa';
+                      }}
+                    >
+                      <img 
+                        src={social.icon} 
+                        alt={social.name}
+                        style={{ width: '20px', height: '20px' }}
+                      />
+                      <span style={{ fontSize: isMobile ? '0.9rem' : '1rem' }}>{social.name}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
           <div style={{ 
             borderTop: '1px solid #333', 
@@ -981,7 +1017,7 @@ export default function PartnersOverviewPage() {
             color: '#666',
             fontSize: isMobile ? '0.8rem' : '0.9rem'
           }}>
-            © 2026 PureLatency. Partnerships that make a difference.
+            © 2026 PureLatency. All rights reserved. Crafted with precision in San Francisco.
           </div>
         </div>
       </footer>

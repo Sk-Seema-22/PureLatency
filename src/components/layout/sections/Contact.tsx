@@ -30,26 +30,15 @@ const Contact: React.FC = () => {
             </p>
 
             <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                  <i className="fas fa-phone text-primary"></i>
-                </div>
-                <div>
-                  <h4 className="text-lg font-semibold">Call us</h4>
-                  <a href="tel:+6565568000" className="text-primary hover:underline">
-                    6556 8000
-                  </a>
-                </div>
-              </div>
-
+              {/* Email only – call section removed */}
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
                   <i className="fas fa-envelope text-primary"></i>
                 </div>
                 <div>
                   <h4 className="text-lg font-semibold">Email us</h4>
-                  <a href="mailto:reachus@ncs.com.sg" className="text-primary hover:underline">
-                    reachus@ncs.com.sg
+                  <a href="mailto:reachus@purelatency.com" className="text-primary hover:underline">
+                    reachus@purelatency.com
                   </a>
                 </div>
               </div>
@@ -114,9 +103,8 @@ const Contact: React.FC = () => {
                     <option value="">Select a purpose</option>
                     <option value="general">General Inquiry</option>
                     <option value="sales">Sales</option>
-                    <option value="support">Technical Support</option>
+                    <option value="support">Support</option>   {/* Added Support, removed Technical Support and Careers */}
                     <option value="partnership">Partnership</option>
-                    <option value="careers">Careers</option>
                   </select>
                 </div>
 
