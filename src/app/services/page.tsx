@@ -45,6 +45,22 @@ export default function ServicesPage() {
       icon: '⚙️',
       color: '#6366F1',
       metrics: ['High availability', 'Enterprise security', 'Auto-scaling']
+    },
+    {
+      title: 'Fiber Optics',
+      href: '/services/fiber-optics',
+      desc: 'High-speed, reliable fiber optic solutions for telecommunications, data centers, and enterprise networks.',
+      icon: '🔆',
+      color: '#F97316',
+      metrics: ['10k+ miles deployed', '99.99% uptime', 'Future-proof']
+    },
+    {
+      title: 'Quantum Computer',
+      href: '/services/quantum-computer',
+      desc: 'Cutting-edge quantum computing solutions for complex problem-solving, from drug discovery to financial modeling.',
+      icon: '⚛️',
+      color: '#5f2b9c',
+      metrics: ['Exponential speed', 'Quantum advantage', 'Expert support']
     }
   ];
 
@@ -269,9 +285,6 @@ export default function ServicesPage() {
                 key={service.title}
                 href={service.href}
                 className={styles.serviceCard}
-                style={{
-                  borderColor: '1px solid #e6e6e9', // default, will be overridden on hover
-                }}
               >
                 <div className={styles.serviceIcon}>{service.icon}</div>
                 <h3 className={styles.serviceTitle}>{service.title}</h3>
