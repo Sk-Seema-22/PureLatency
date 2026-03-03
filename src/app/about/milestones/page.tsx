@@ -2,21 +2,11 @@
 
 import Link from 'next/link';
 import Navbar from '@/components/layout/Navbar';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import styles from './Milestones.module.css'; // adjust path as needed
 
 export default function MilestonesPage() {
   const [activeTab, setActiveTab] = useState('achieved');
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Check if mobile on client side
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   const stats = [
     { value: '12', label: 'Major Milestones', icon: '🏆' },
@@ -238,7 +228,6 @@ export default function MilestonesPage() {
     }
   ];
 
-  // Social media icons with image URLs
   const socialMedia = [
     { 
       name: 'Instagram', 
@@ -252,300 +241,91 @@ export default function MilestonesPage() {
       icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg',
       color: '#1877F2'
     }, 
-      { 
+    { 
       name: 'Twitter', 
       href: 'https://twitter.com/purelatency',
       icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg',
       color: '#000000'
     }
-    
   ];
-
-  // Responsive styles
-  const containerStyle = {
-    maxWidth: '1280px',
-    margin: '0 auto',
-    padding: isMobile ? '5rem 1rem 2rem' : '6rem 2rem 4rem',
-  };
-
-  const heroGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-    gap: isMobile ? '2rem' : '4rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-    alignItems: 'center',
-  };
-
-  const heroTitleStyle = {
-    fontSize: isMobile ? '2.5rem' : '4rem',
-    fontWeight: 300,
-    color: '#1d1d1f',
-    marginBottom: '1.5rem',
-    lineHeight: '1.2',
-    textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-  };
-
-  const statsGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
-    gap: isMobile ? '1.5rem' : '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-    padding: isMobile ? '2rem' : '3rem',
-    background: 'linear-gradient(135deg, #1d1d1f 0%, #2d2d2f 100%)',
-    borderRadius: '20px',
-    color: 'white',
-  };
-
-  const achievedGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const upcomingGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
-    gap: isMobile ? '1.5rem' : '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const storiesGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const timelineStyle = {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    gap: isMobile ? '1rem' : '1.5rem',
-  };
-
-  const timelineItemStyle = {
-    display: 'flex',
-    flexDirection: isMobile ? 'column' as const : 'row' as const,
-    alignItems: isMobile ? 'flex-start' as const : 'center' as const,
-    gap: isMobile ? '0.5rem' : '2rem',
-  };
-
-  const footerGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : '2fr 1fr 1fr 1fr',
-    gap: isMobile ? '2rem' : '4rem',
-    marginBottom: '4rem',
-    textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-  };
-
-  const tabsContainerStyle = {
-    display: 'flex',
-    gap: isMobile ? '0.5rem' : '2rem',
-    justifyContent: 'center',
-    marginBottom: '3rem',
-    borderBottom: '1px solid #e6e6e9',
-    paddingBottom: '1rem',
-    flexWrap: 'wrap' as const,
-  };
 
   return (
     <>
       <Navbar />
 
-      <main style={containerStyle}>
-        {/* Social Media - With Icons */}
-        <section style={{ 
-          display: 'flex', 
-          justifyContent: isMobile ? 'center' : 'flex-end', 
-          marginBottom: '2rem',
-          flexWrap: 'wrap'
-        }}>
-          <div style={{ 
-            display: 'flex', 
-            gap: isMobile ? '20px' : '24px',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
+      <main className={styles.container}>
+        {/* Social Media */}
+        <section className={styles.socialSection}>
+          <div className={styles.socialLinks}>
             {socialMedia.map((social) => (
               <a
                 key={social.name}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ 
-                  textDecoration: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  transition: 'transform 0.2s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                }}
+                className={styles.socialLink}
+                style={{ color: social.color }}
               >
                 <img 
                   src={social.icon} 
                   alt={social.name}
-                  style={{ 
-                    width: isMobile ? '24px' : '28px', 
-                    height: isMobile ? '24px' : '28px',
-                  }}
+                  className={styles.socialIcon}
                 />
-                {!isMobile && (
-                  <span style={{ 
-                    color: social.color, 
-                    fontWeight: 500,
-                    fontSize: '0.9rem'
-                  }}>
-                    {social.name}
-                  </span>
-                )}
+                <span className={styles.socialName}>{social.name}</span>
               </a>
             ))}
           </div>
         </section>
 
         {/* Breadcrumb */}
-        <div style={{ 
-          color: '#86868b', 
-          marginBottom: '2rem', 
-          fontSize: isMobile ? '0.85rem' : '0.9rem',
-          textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-        }}>
-          <Link href="/" style={{ color: '#86868b', textDecoration: 'none' }}>Home</Link> / 
-          <Link href="/about" style={{ color: '#86868b', textDecoration: 'none' }}> About</Link> / 
-          <span style={{ color: '#1d1d1f' }}> Milestones</span>
+        <div className={styles.breadcrumb}>
+          <Link href="/" className={styles.breadcrumbLink}>Home</Link> / 
+          <Link href="/about" className={styles.breadcrumbLink}> About</Link> / 
+          <span className={styles.breadcrumbCurrent}> Milestones</span>
         </div>
 
         {/* Hero Section */}
-        <div style={heroGridStyle}>
+        <div className={styles.heroGrid}>
           <div>
-            <div style={{ 
-              display: 'inline-block',
-              background: 'rgba(0,102,204,0.1)',
-              color: '#0066cc',
-              padding: isMobile ? '0.4rem 1.2rem' : '0.5rem 1.5rem',
-              borderRadius: '30px',
-              fontSize: isMobile ? '0.85rem' : '0.9rem',
-              marginBottom: '1.5rem',
-              textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-              width: isMobile ? '100%' : 'auto',
-            }}>
+            <div className={styles.heroBadge}>
               📅 The Journey So Far
             </div>
-            <h1 style={heroTitleStyle}>
+            <h1 className={styles.heroTitle}>
               Every milestone<br />
-              <span style={{ 
-                background: 'linear-gradient(135deg, #0066cc 0%, #7C3AED 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}>
+              <span className={styles.heroTitleGradient}>
                 has a story behind it
               </span>
             </h1>
-            <p style={{ 
-              color: '#86868b', 
-              fontSize: isMobile ? '1rem' : '1.2rem', 
-              lineHeight: '1.7', 
-              marginBottom: '2rem',
-              textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-            }}>
+            <p className={styles.heroText}>
               We believe in celebrating the journey, not just the destination. Every line of code, 
               every client, every late-night breakthrough — they all matter. Here are the moments 
               that shaped us, the ones we're proud of, and the ones still to come.
             </p>
-            <div style={{ 
-              display: 'flex', 
-              gap: '1rem',
-              flexDirection: isMobile ? 'column' : 'row',
-              justifyContent: isMobile ? 'center' : 'flex-start',
-            }}>
-              <Link
-                href="#achieved"
-                style={{
-                  background: '#0066cc',
-                  color: 'white',
-                  padding: isMobile ? '0.875rem 1.5rem' : '1rem 2rem',
-                  borderRadius: '40px',
-                  textDecoration: 'none',
-                  fontWeight: 500,
-                  textAlign: 'center' as const,
-                  width: isMobile ? '100%' : 'auto',
-                }}
-              >
+            <div className={styles.buttonGroup}>
+              <Link href="#achieved" className={styles.buttonPrimary}>
                 See Our Journey
               </Link>
-              <Link
-                href="#upcoming"
-                style={{
-                  background: 'transparent',
-                  color: '#1d1d1f',
-                  padding: isMobile ? '0.875rem 1.5rem' : '1rem 2rem',
-                  borderRadius: '40px',
-                  textDecoration: 'none',
-                  border: '1px solid #e6e6e9',
-                  textAlign: 'center' as const,
-                  width: isMobile ? '100%' : 'auto',
-                }}
-              >
+              <Link href="#upcoming" className={styles.buttonSecondary}>
                 What's Next ↓
               </Link>
             </div>
           </div>
-          <div style={{
-            background: 'linear-gradient(135deg, #f5f5f7 0%, #e6e6e9 100%)',
-            borderRadius: '30px',
-            padding: isMobile ? '2rem' : '3rem',
-            position: 'relative',
-            overflow: 'hidden',
-            marginTop: isMobile ? '1rem' : '0',
-          }}>
-            <div style={{
-              position: 'absolute',
-              top: '-50px',
-              right: '-50px',
-              width: isMobile ? '150px' : '200px',
-              height: isMobile ? '150px' : '200px',
-              background: 'rgba(0,102,204,0.1)',
-              borderRadius: '50%'
-            }} />
-            <div style={{
-              position: 'absolute',
-              bottom: '-50px',
-              left: '-50px',
-              width: isMobile ? '150px' : '200px',
-              height: isMobile ? '150px' : '200px',
-              background: 'rgba(124,58,237,0.1)',
-              borderRadius: '50%'
-            }} />
-            <div style={{ position: 'relative', zIndex: 2 }}>
-              <div style={{ fontSize: isMobile ? '2.5rem' : '3rem', marginBottom: '1.5rem', textAlign: 'center' }}>🎯</div>
-              <h3 style={{ 
-                fontSize: isMobile ? '1.5rem' : '1.8rem', 
-                fontWeight: 400, 
-                marginBottom: '1rem',
-                textAlign: 'center'
-              }}>By the Numbers</h3>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
+
+          {/* Right Card */}
+          <div className={styles.heroCard}>
+            <div className={styles.heroCardBg1} />
+            <div className={styles.heroCardBg2} />
+            <div className={styles.heroCardContent}>
+              <div className={styles.heroCardIcon}>🎯</div>
+              <h3 className={styles.heroCardTitle}>By the Numbers</h3>
+              <ul className={styles.heroCardList}>
                 {[
                   '12 major milestones achieved',
                   '8 upcoming in 2027',
                   'Countless memories made'
                 ].map((item, i) => (
-                  <li key={i} style={{ 
-                    marginBottom: '1rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    color: '#86868b',
-                    justifyContent: 'center',
-                    fontSize: isMobile ? '0.95rem' : '1rem',
-                  }}>
-                    <span style={{ color: '#0066cc' }}>✓</span>
+                  <li key={i} className={styles.heroCardItem}>
+                    <span className={styles.heroCardCheck}>✓</span>
                     {item}
                   </li>
                 ))}
@@ -555,43 +335,23 @@ export default function MilestonesPage() {
         </div>
 
         {/* Stats Banner */}
-        <section style={statsGridStyle}>
+        <section className={styles.statsBanner}>
           {stats.map(stat => (
-            <div key={stat.label} style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: isMobile ? '1.5rem' : '2rem', marginBottom: '0.5rem' }}>{stat.icon}</div>
-              <div style={{ 
-                fontSize: isMobile ? '1.8rem' : '2.5rem', 
-                fontWeight: 300, 
-                color: '#0066cc', 
-                marginBottom: '0.3rem' 
-              }}>
-                {stat.value}
-              </div>
-              <div style={{ 
-                color: '#aaa', 
-                fontSize: isMobile ? '0.75rem' : '0.9rem' 
-              }}>{stat.label}</div>
+            <div key={stat.label} className={styles.statItem}>
+              <div className={styles.statIcon}>{stat.icon}</div>
+              <div className={styles.statValue}>{stat.value}</div>
+              <div className={styles.statLabel}>{stat.label}</div>
             </div>
           ))}
         </section>
 
         {/* Navigation Tabs */}
-        <div style={tabsContainerStyle}>
+        <div className={styles.tabsContainer}>
           {['achieved', 'upcoming', 'stories'].map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              style={{
-                background: 'none',
-                border: 'none',
-                padding: isMobile ? '0.5rem 0.8rem' : '0.5rem 1rem',
-                fontSize: isMobile ? '0.9rem' : '1rem',
-                fontWeight: activeTab === tab ? 600 : 400,
-                color: activeTab === tab ? '#0066cc' : '#86868b',
-                cursor: 'pointer',
-                borderBottom: activeTab === tab ? '2px solid #0066cc' : 'none',
-                textTransform: 'capitalize'
-              }}
+              className={`${styles.tabButton} ${activeTab === tab ? styles.active : ''}`}
             >
               {tab === 'achieved' ? 'Achieved' : tab === 'upcoming' ? 'Upcoming' : 'Stories'}
             </button>
@@ -600,78 +360,29 @@ export default function MilestonesPage() {
 
         {/* Tab Content */}
         {activeTab === 'achieved' && (
-          <section id="achieved" style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-            <h2 style={{ 
-              fontSize: isMobile ? '2rem' : '2.5rem', 
-              fontWeight: 300, 
-              color: '#1d1d1f', 
-              marginBottom: '1rem',
-              textAlign: 'center'
-            }}>
-              Milestones We've Reached
-            </h2>
-            <p style={{ 
-              color: '#86868b', 
-              fontSize: isMobile ? '1rem' : '1.2rem', 
-              textAlign: 'center',
-              maxWidth: '800px',
-              margin: '0 auto 2rem',
-              padding: isMobile ? '0 1rem' : '0'
-            }}>
+          <section id="achieved" style={{ marginBottom: '6rem' }}>
+            <h2 className={styles.sectionTitle}>Milestones We've Reached</h2>
+            <p className={styles.sectionSubtitle}>
               Each one a memory, each one a reason to celebrate
             </p>
-            <div style={achievedGridStyle}>
+            <div className={styles.achievedGrid}>
               {achievedMilestones.map((milestone, index) => (
-                <div
-                  key={milestone.title}
-                  style={{
-                    padding: isMobile ? '1.5rem' : '2rem',
-                    borderRadius: '20px',
-                    background: '#fafafa',
-                    border: '1px solid #e6e6e9',
-                    position: 'relative',
-                    transition: 'transform 0.2s'
-                  }}
-                >
-                  <div style={{ 
-                    position: 'absolute',
-                    top: '1rem',
-                    right: '1rem',
-                    background: milestone.color,
-                    color: 'white',
-                    padding: '0.2rem 0.6rem',
-                    borderRadius: '20px',
-                    fontSize: '0.65rem',
-                    fontWeight: 500
-                  }}>
+                <div key={milestone.title} className={styles.milestoneCard}>
+                  <div 
+                    className={styles.milestoneNumber}
+                    style={{ backgroundColor: milestone.color }}
+                  >
                     #{index + 1}
                   </div>
-                  <div style={{ fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '1rem' }}>{milestone.icon}</div>
-                  <div style={{ 
-                    fontSize: '0.8rem',
-                    color: milestone.color,
-                    fontWeight: 500,
-                    marginBottom: '0.5rem'
-                  }}>
+                  <div className={styles.milestoneIcon}>{milestone.icon}</div>
+                  <div className={styles.milestoneDate} style={{ color: milestone.color }}>
                     {milestone.date}
                   </div>
-                  <h3 style={{ fontSize: isMobile ? '1.2rem' : '1.3rem', marginBottom: '0.5rem', color: '#1d1d1f' }}>
-                    {milestone.title}
-                  </h3>
-                  <p style={{ color: '#86868b', fontSize: isMobile ? '0.9rem' : '0.95rem', lineHeight: '1.6', marginBottom: '1rem' }}>
-                    {milestone.desc}
-                  </p>
-                  <div style={{ 
-                    display: 'flex',
-                    flexDirection: isMobile ? 'column' : 'row',
-                    justifyContent: 'space-between',
-                    borderTop: '1px solid #e6e6e9',
-                    paddingTop: '0.8rem',
-                    gap: '0.5rem',
-                    fontSize: '0.8rem'
-                  }}>
-                    <span style={{ color: '#86868b' }}>🎯 {milestone.impact}</span>
-                    <span style={{ color: '#0066cc' }}>👥 {milestone.people}</span>
+                  <h3 className={styles.milestoneTitle}>{milestone.title}</h3>
+                  <p className={styles.milestoneDesc}>{milestone.desc}</p>
+                  <div className={styles.milestoneFooter}>
+                    <span className={styles.milestoneImpact}>🎯 {milestone.impact}</span>
+                    <span className={styles.milestonePeople}>👥 {milestone.people}</span>
                   </div>
                 </div>
               ))}
@@ -680,87 +391,32 @@ export default function MilestonesPage() {
         )}
 
         {activeTab === 'upcoming' && (
-          <section id="upcoming" style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-            <h2 style={{ 
-              fontSize: isMobile ? '2rem' : '2.5rem', 
-              fontWeight: 300, 
-              color: '#1d1d1f', 
-              marginBottom: '1rem',
-              textAlign: 'center'
-            }}>
-              What's Next
-            </h2>
-            <p style={{ 
-              color: '#86868b', 
-              fontSize: isMobile ? '1rem' : '1.2rem', 
-              textAlign: 'center',
-              maxWidth: '800px',
-              margin: '0 auto 2rem',
-              padding: isMobile ? '0 1rem' : '0'
-            }}>
+          <section id="upcoming" style={{ marginBottom: '6rem' }}>
+            <h2 className={styles.sectionTitle}>What's Next</h2>
+            <p className={styles.sectionSubtitle}>
               The journey continues. Here's what we're building toward.
             </p>
-            <div style={upcomingGridStyle}>
+            <div className={styles.upcomingGrid}>
               {theUpcoming.map((item, index) => (
-                <div
-                  key={item.title}
-                  style={{
-                    padding: isMobile ? '1.5rem' : '2rem',
-                    borderRadius: '20px',
-                    background: '#fafafa',
-                    border: '1px solid #e6e6e9',
-                    position: 'relative'
-                  }}
-                >
-                  {!isMobile && index < theUpcoming.length - 4 && (
-                    <div style={{
-                      position: 'absolute',
-                      top: '50%',
-                      right: '-20px',
-                      width: '40px',
-                      height: '2px',
-                      background: '#e6e6e9',
-                      transform: 'translateY(-50%)',
-                      zIndex: 1
-                    }} />
-                  )}
-                  <div style={{ fontSize: isMobile ? '1.8rem' : '2rem', marginBottom: '0.5rem' }}>{item.icon}</div>
-                  <div style={{ 
-                    fontSize: '0.75rem',
-                    color: item.color,
-                    fontWeight: 500,
-                    marginBottom: '0.3rem'
-                  }}>
+                <div key={item.title} className={styles.upcomingCard}>
+                  {index < theUpcoming.length - 4 && <div className={styles.upcomingConnector} />}
+                  <div className={styles.upcomingIcon}>{item.icon}</div>
+                  <div className={styles.upcomingQuarter} style={{ color: item.color }}>
                     {item.quarter}
                   </div>
-                  <h3 style={{ fontSize: isMobile ? '1.1rem' : '1.2rem', marginBottom: '0.3rem', color: '#1d1d1f' }}>
-                    {item.title}
-                  </h3>
-                  <p style={{ color: '#86868b', fontSize: '0.8rem', lineHeight: '1.5', marginBottom: '1rem' }}>
-                    {item.desc}
-                  </p>
-                  <div style={{ 
-                    display: 'flex',
-                    flexDirection: isMobile ? 'column' : 'row',
-                    justifyContent: 'space-between',
-                    alignItems: isMobile ? 'flex-start' : 'center',
-                    borderTop: '1px solid #e6e6e9',
-                    paddingTop: '0.8rem',
-                    gap: '0.5rem'
-                  }}>
-                    <span style={{
-                      background: `${item.color}20`,
-                      color: item.color,
-                      padding: '0.2rem 0.6rem',
-                      borderRadius: '20px',
-                      fontSize: '0.65rem',
-                      fontWeight: 500
-                    }}>
+                  <h3 className={styles.upcomingTitle}>{item.title}</h3>
+                  <p className={styles.upcomingDesc}>{item.desc}</p>
+                  <div className={styles.upcomingFooter}>
+                    <span 
+                      className={styles.upcomingStatus}
+                      style={{ 
+                        backgroundColor: `${item.color}20`, 
+                        color: item.color 
+                      }}
+                    >
                       {item.status}
                     </span>
-                    <span style={{ color: '#86868b', fontSize: '0.65rem' }}>
-                      {item.eta}
-                    </span>
+                    <span className={styles.upcomingEta}>{item.eta}</span>
                   </div>
                 </div>
               ))}
@@ -769,117 +425,37 @@ export default function MilestonesPage() {
         )}
 
         {activeTab === 'stories' && (
-          <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-            <h2 style={{ 
-              fontSize: isMobile ? '2rem' : '2.5rem', 
-              fontWeight: 300, 
-              color: '#1d1d1f', 
-              marginBottom: '1rem',
-              textAlign: 'center'
-            }}>
-              Behind the Milestones
-            </h2>
-            <p style={{ 
-              color: '#86868b', 
-              fontSize: isMobile ? '1rem' : '1.2rem', 
-              textAlign: 'center',
-              maxWidth: '800px',
-              margin: '0 auto 2rem',
-              padding: isMobile ? '0 1rem' : '0'
-            }}>
+          <section style={{ marginBottom: '6rem' }}>
+            <h2 className={styles.sectionTitle}>Behind the Milestones</h2>
+            <p className={styles.sectionSubtitle}>
               The real stories our team remembers
             </p>
-            <div style={storiesGridStyle}>
+            <div className={styles.storiesGrid}>
               {theStories.map(story => (
-                <div
-                  key={story.milestone}
-                  style={{
-                    padding: isMobile ? '1.5rem' : '2rem',
-                    borderRadius: '20px',
-                    background: '#fafafa',
-                    border: '1px solid #e6e6e9',
-                    position: 'relative'
-                  }}
-                >
-                  <span style={{ fontSize: isMobile ? '2.5rem' : '3rem', position: 'absolute', top: '1rem', right: '1rem', opacity: 0.2 }}>
-                    {story.emotion}
-                  </span>
-                  <div style={{ marginBottom: '0.8rem' }}>
-                    <span style={{
-                      background: '#0066cc20',
-                      color: '#0066cc',
-                      padding: '0.2rem 0.8rem',
-                      borderRadius: '20px',
-                      fontSize: '0.75rem',
-                      fontWeight: 500
-                    }}>
-                      {story.milestone}
-                    </span>
-                  </div>
-                  <p style={{ color: '#1d1d1f', fontSize: isMobile ? '0.95rem' : '1rem', lineHeight: '1.7', fontStyle: 'italic', marginBottom: '1rem' }}>
-                    "{story.story}"
-                  </p>
-                  <div style={{ color: '#86868b', fontSize: '0.85rem' }}>
-                    — {story.author}
-                  </div>
+                <div key={story.milestone} className={styles.storyCard}>
+                  <span className={styles.storyEmotion}>{story.emotion}</span>
+                  <div className={styles.storyTag}>{story.milestone}</div>
+                  <p className={styles.storyText}>"{story.story}"</p>
+                  <div className={styles.storyAuthor}>— {story.author}</div>
                 </div>
               ))}
             </div>
 
             {/* Timeline Preview */}
-            <div style={{ 
-              marginTop: '3rem',
-              padding: isMobile ? '1.5rem' : '3rem',
-              background: '#fafafa',
-              borderRadius: '20px',
-              border: '1px solid #e6e6e9'
-            }}>
-              <h3 style={{ 
-                fontSize: isMobile ? '1.3rem' : '1.5rem', 
-                fontWeight: 300, 
-                color: '#1d1d1f', 
-                marginBottom: '1.5rem',
-                textAlign: 'center'
-              }}>
-                Our Journey Visualized
-              </h3>
-              <div style={timelineStyle}>
+            <div className={styles.timelineSection}>
+              <h3 className={styles.timelineTitle}>Our Journey Visualized</h3>
+              <div className={styles.timeline}>
                 {achievedMilestones.slice(0, 6).map((milestone, i) => (
-                  <div key={i} style={timelineItemStyle}>
-                    <div style={{ 
-                      minWidth: isMobile ? '100%' : '100px',
-                      color: milestone.color,
-                      fontWeight: 500,
-                      fontSize: '0.85rem'
-                    }}>
+                  <div key={i} className={styles.timelineItem}>
+                    <div className={styles.timelineDate} style={{ color: milestone.color }}>
                       {milestone.date}
                     </div>
-                    {!isMobile && (
-                      <div style={{ 
-                        width: '12px',
-                        height: '12px',
-                        background: milestone.color,
-                        borderRadius: '50%',
-                        position: 'relative'
-                      }}>
-                        {i < 5 && (
-                          <div style={{
-                            position: 'absolute',
-                            top: '12px',
-                            left: '5px',
-                            width: '2px',
-                            height: isMobile ? '30px' : '60px',
-                            background: '#e6e6e9',
-                            zIndex: 1
-                          }} />
-                        )}
-                      </div>
-                    )}
-                    <div style={{ flex: 1 }}>
-                      <strong style={{ color: '#1d1d1f', fontSize: isMobile ? '0.95rem' : '1rem' }}>{milestone.title}</strong>
-                      <p style={{ color: '#86868b', fontSize: '0.85rem', margin: '0.2rem 0 0 0' }}>
-                        {milestone.impact}
-                      </p>
+                    <div className={styles.timelineDot} style={{ backgroundColor: milestone.color }}>
+                      {i < 5 && <div className={styles.timelineLine} />}
+                    </div>
+                    <div className={styles.timelineContent}>
+                      <div className={styles.timelineContentTitle}>{milestone.title}</div>
+                      <p className={styles.timelineContentImpact}>{milestone.impact}</p>
                     </div>
                   </div>
                 ))}
@@ -889,164 +465,73 @@ export default function MilestonesPage() {
         )}
 
         {/* CTA Section */}
-       <section
-  style={{
-    marginTop: isMobile ? '1.5rem' : '3rem',          // was 2rem / 4rem
-    display: 'flex',
-    justifyContent: 'center',
-    padding: isMobile ? '0 1rem' : '0',
-  }}
->
-  <div
-    style={{
-      width: '100%',
-      maxWidth: '1200px',
-      padding: isMobile ? '2rem 1.25rem' : '2.5rem 1.75rem', // smaller vertical padding
-      borderRadius: '24px',
-      textAlign: 'center',
-      background: `
-        radial-gradient(circle at 20% 30%, #7a3cff 0%, transparent 40%),
-        radial-gradient(circle at 80% 10%, #ff2e88 0%, transparent 40%),
-        linear-gradient(180deg, #0b1c48 0%, #2a1e5c 100%)
-      `,
-      color: '#ffffff',
-    }}
-  >
-    <h2
-      style={{
-        fontSize: isMobile ? '1.7rem' : '2.4rem',     // slightly smaller text
-        fontWeight: 400,
-        marginBottom: '0.5rem',                      // less space below title
-      }}
-    >
-      Contact Us
-    </h2>
-
-    <p
-      style={{
-        fontSize: isMobile ? '0.95rem' : '1.1rem',
-        marginBottom: '1.5rem',                      // less paragraph bottom margin
-        opacity: 0.95,
-        color: '#ffffff',
-      }}
-    >
-      Be always in front line, get in touch today.
-    </p>
-
-    <Link
-      href="/contact"
-      style={{
-        display: 'inline-block',
-        padding: isMobile ? '10px 32px' : '12px 48px', // smaller button
-        borderRadius: '70px 70px 0 70px',
-        border: '2px solid #ffffff',
-        color: '#ffffff',
-        fontWeight: 600,
-        fontSize: isMobile ? '0.95rem' : '1rem',
-        textDecoration: 'none',
-        transition: 'all 0.3s ease',
-        width: isMobile ? '100%' : 'auto',
-        maxWidth: isMobile ? '260px' : 'none',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.background = '#ffffff';
-        e.currentTarget.style.color = '#111';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.background = 'transparent';
-        e.currentTarget.style.color = '#ffffff';
-      }}
-    >
-      Contact Us
-    </Link>
-  </div>
-</section>
-
+        <section className={styles.ctaSection}>
+          <div className={styles.ctaCard}>
+            <h2 className={styles.ctaTitle}>Contact Us</h2>
+            <p className={styles.ctaText}>Be always in front line, get in touch today.</p>
+            <Link href="/contact" className={styles.ctaButton}>
+              Contact Us
+            </Link>
+          </div>
+        </section>
 
         {/* Back to About */}
-        <div style={{ 
-          borderTop: '1px solid #e6e6e9',
-          paddingTop: '2rem',
-          textAlign: 'center',
-          marginTop: '2rem'
-        }}>
-          <Link 
-            href="/about" 
-            style={{ 
-              color: '#86868b', 
-              textDecoration: 'none', 
-              fontSize: isMobile ? '0.85rem' : '0.9rem',
-              display: 'inline-block'
-            }}
-          >
+        <div className={styles.backLinkContainer}>
+          <Link href="/about" className={styles.backLink}>
             ← Back to About
           </Link>
         </div>
       </main>
 
-     {/* Footer */}
-      <footer
-        style={{
-          background: '#111',
-          color: '#aaa',
-          padding: isMobile ? '3rem 1rem' : '4rem 2rem',
-          marginTop: '4rem'
-        }}
-      >
-        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-          <div style={footerGridStyle}>
+      {/* Footer */}
+      <footer className={styles.footer}>
+        <div className={styles.footerContainer}>
+          <div className={styles.footerGrid}>
             <div>
-              <div style={{ fontSize: isMobile ? '1.3rem' : '1.5rem', color: '#fff', marginBottom: '1rem' }}>Pure Latency</div>
-              <p style={{ color: '#666', lineHeight: '1.7', fontSize: isMobile ? '0.9rem' : '1rem' }}>
+              <div className={styles.footerLogo}>Pure Latency</div>
+              <p className={styles.footerText}>
                 Building exceptional software that makes a difference.
               </p>
             </div>
             <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Company</h4>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/about" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>About</Link>
+              <h4 className={styles.footerHeading}>Company</h4>
+              <ul className={styles.footerList}>
+                <li className={styles.footerListItem}>
+                  <Link href="/about" className={styles.footerLink}>About</Link>
                 </li>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/careers" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Careers</Link>
+                <li className={styles.footerListItem}>
+                  <Link href="/careers" className={styles.footerLink}>Careers</Link>
                 </li>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/blog" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Blog</Link>
+                <li className={styles.footerListItem}>
+                  <Link href="/blog" className={styles.footerLink}>Blog</Link>
                 </li>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/contact" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Contact</Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Legal</h4>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/privacy" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Privacy</Link>
-                </li>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/terms" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Terms</Link>
+                <li className={styles.footerListItem}>
+                  <Link href="/contact" className={styles.footerLink}>Contact</Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Connect</h4>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
+              <h4 className={styles.footerHeading}>Legal</h4>
+              <ul className={styles.footerList}>
+                <li className={styles.footerListItem}>
+                  <Link href="/privacy" className={styles.footerLink}>Privacy</Link>
+                </li>
+                <li className={styles.footerListItem}>
+                  <Link href="/terms" className={styles.footerLink}>Terms</Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className={styles.footerHeading}>Connect</h4>
+              <ul className={styles.footerList}>
                 {socialMedia.map(social => (
-                  <li key={social.name} style={{ marginBottom: '0.8rem' }}>
+                  <li key={social.name} className={styles.footerListItem}>
                     <a 
                       href={social.href} 
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{ 
-                        color: '#aaa', 
-                        textDecoration: 'none',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        justifyContent: isMobile ? 'center' : 'flex-start',
-                        transition: 'color 0.2s ease',
-                      }}
+                      className={styles.footerSocialLink}
+                      style={{ color: '#aaa' }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.color = social.color;
                       }}
@@ -1057,22 +542,16 @@ export default function MilestonesPage() {
                       <img 
                         src={social.icon} 
                         alt={social.name}
-                        style={{ width: '20px', height: '20px' }}
+                        className={styles.footerSocialIcon}
                       />
-                      <span style={{ fontSize: isMobile ? '0.9rem' : '1rem' }}>{social.name}</span>
+                      <span>{social.name}</span>
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
-          <div style={{ 
-            borderTop: '1px solid #333', 
-            paddingTop: '2rem',
-            textAlign: 'center',
-            color: '#666',
-            fontSize: isMobile ? '0.8rem' : '0.9rem'
-          }}>
+          <div className={styles.footerBottom}>
             © 2026 PureLatency. All rights reserved. Crafted with precision in San Francisco.
           </div>
         </div>

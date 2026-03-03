@@ -2,21 +2,11 @@
 
 import Link from 'next/link';
 import Navbar from '@/components/layout/Navbar';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import styles from './Beliefs.module.css'; // adjust path as needed
 
 export default function BeliefsPage() {
   const [activeTab, setActiveTab] = useState('purpose');
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Check if mobile on client side
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   const stats = [
     { value: '10', label: 'Core Beliefs', icon: '📜' },
@@ -195,7 +185,6 @@ export default function BeliefsPage() {
     }
   ];
 
-  // Social media icons with image URLs
   const socialMedia = [
     { 
       name: 'Instagram', 
@@ -209,7 +198,7 @@ export default function BeliefsPage() {
       icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg',
       color: '#1877F2'
     },
-     { 
+    { 
       name: 'Twitter', 
       href: 'https://twitter.com/purelatency',
       icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg',
@@ -217,298 +206,83 @@ export default function BeliefsPage() {
     }
   ];
 
-  // Responsive styles
-  const containerStyle = {
-    maxWidth: '1280px',
-    margin: '0 auto',
-    padding: isMobile ? '5rem 1rem 2rem' : '6rem 2rem 4rem',
-  };
-
-  const heroGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-    gap: isMobile ? '2rem' : '4rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-    alignItems: 'center',
-  };
-
-  const heroTitleStyle = {
-    fontSize: isMobile ? '2.5rem' : '4rem',
-    fontWeight: 300,
-    color: '#1d1d1f',
-    marginBottom: '1.5rem',
-    lineHeight: '1.2',
-    textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-  };
-
-  const statsGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
-    gap: isMobile ? '1.5rem' : '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-    padding: isMobile ? '2rem' : '3rem',
-    background: 'linear-gradient(135deg, #1d1d1f 0%, #2d2d2f 100%)',
-    borderRadius: '20px',
-    color: 'white',
-  };
-
-  const purposeGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const paradoxesGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-    gap: '2rem',
-    marginTop: '4rem',
-  };
-
-  const beliefsGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const manifestoGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const practicesGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
-    gap: '2rem',
-    marginBottom: '4rem',
-  };
-
-  const storiesGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-    gap: '2rem',
-  };
-
-  const footerGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : '2fr 1fr 1fr 1fr',
-    gap: isMobile ? '2rem' : '4rem',
-    marginBottom: '4rem',
-    textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-  };
-
-  const tabsContainerStyle = {
-    display: 'flex',
-    gap: isMobile ? '0.5rem' : '2rem',
-    justifyContent: 'center',
-    marginBottom: '3rem',
-    borderBottom: '1px solid #e6e6e9',
-    paddingBottom: '1rem',
-    flexWrap: 'wrap' as const,
-  };
-
   return (
     <>
       <Navbar />
 
-      <main style={containerStyle}>
-        {/* Social Media - With Icons */}
-        <section style={{ 
-          display: 'flex', 
-          justifyContent: isMobile ? 'center' : 'flex-end', 
-          marginBottom: '2rem',
-          flexWrap: 'wrap'
-        }}>
-          <div style={{ 
-            display: 'flex', 
-            gap: isMobile ? '20px' : '24px',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
+      <main className={styles.container}>
+        {/* Social Media */}
+        <section className={styles.socialSection}>
+          <div className={styles.socialLinks}>
             {socialMedia.map((social) => (
               <a
                 key={social.name}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ 
-                  textDecoration: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  transition: 'transform 0.2s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                }}
+                className={styles.socialLink}
+                style={{ color: social.color }}
               >
                 <img 
                   src={social.icon} 
                   alt={social.name}
-                  style={{ 
-                    width: isMobile ? '24px' : '28px', 
-                    height: isMobile ? '24px' : '28px',
-                  }}
+                  className={styles.socialIcon}
                 />
-                {!isMobile && (
-                  <span style={{ 
-                    color: social.color, 
-                    fontWeight: 500,
-                    fontSize: '0.9rem'
-                  }}>
-                    {social.name}
-                  </span>
-                )}
+                <span className={styles.socialName}>{social.name}</span>
               </a>
             ))}
           </div>
         </section>
 
         {/* Breadcrumb */}
-        <div style={{ 
-          color: '#86868b', 
-          marginBottom: '2rem', 
-          fontSize: isMobile ? '0.85rem' : '0.9rem',
-          textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-        }}>
-          <Link href="/" style={{ color: '#86868b', textDecoration: 'none' }}>Home</Link> / 
-          <Link href="/about" style={{ color: '#86868b', textDecoration: 'none' }}> About</Link> / 
-          <span style={{ color: '#1d1d1f' }}> Purpose and Beliefs</span>
+        <div className={styles.breadcrumb}>
+          <Link href="/" className={styles.breadcrumbLink}>Home</Link> / 
+          <Link href="/about" className={styles.breadcrumbLink}> About</Link> / 
+          <span className={styles.breadcrumbCurrent}> Purpose and Beliefs</span>
         </div>
 
         {/* Hero Section */}
-        <div style={heroGridStyle}>
+        <div className={styles.heroGrid}>
           <div>
-            <div style={{ 
-              display: 'inline-block',
-              background: 'rgba(0,102,204,0.1)',
-              color: '#0066cc',
-              padding: isMobile ? '0.4rem 1.2rem' : '0.5rem 1.5rem',
-              borderRadius: '30px',
-              fontSize: isMobile ? '0.85rem' : '0.9rem',
-              marginBottom: '1.5rem',
-              textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-              width: isMobile ? '100%' : 'auto',
-            }}>
+            <div className={styles.heroBadge}>
               📜 Not Just Words on a Wall
             </div>
-            <h1 style={heroTitleStyle}>
+            <h1 className={styles.heroTitle}>
               What we believe<br />
-              <span style={{ 
-                background: 'linear-gradient(135deg, #0066cc 0%, #7C3AED 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}>
+              <span className={styles.heroTitleGradient}>
                 and why it matters
               </span>
             </h1>
-            <p style={{ 
-              color: '#86868b', 
-              fontSize: isMobile ? '1rem' : '1.2rem', 
-              lineHeight: '1.7', 
-              marginBottom: '2rem',
-              textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-            }}>
+            <p className={styles.heroText}>
               Every company has values. Most are forgettable words on a "Culture" page. 
               Ours are different — they're lived, argued about, and occasionally broken 
               (then fixed). Here's what we actually believe.
             </p>
-            <div style={{ 
-              display: 'flex', 
-              gap: '1rem',
-              flexDirection: isMobile ? 'column' : 'row',
-              justifyContent: isMobile ? 'center' : 'flex-start',
-            }}>
-              <Link
-                href="#beliefs"
-                style={{
-                  background: '#0066cc',
-                  color: 'white',
-                  padding: isMobile ? '0.875rem 1.5rem' : '1rem 2rem',
-                  borderRadius: '40px',
-                  textDecoration: 'none',
-                  fontWeight: 500,
-                  textAlign: 'center' as const,
-                  width: isMobile ? '100%' : 'auto',
-                }}
-              >
+            <div className={styles.buttonGroup}>
+              <Link href="#beliefs" className={styles.buttonPrimary}>
                 Read Our Beliefs
               </Link>
-              <Link
-                href="#manifesto"
-                style={{
-                  background: 'transparent',
-                  color: '#1d1d1f',
-                  padding: isMobile ? '0.875rem 1.5rem' : '1rem 2rem',
-                  borderRadius: '40px',
-                  textDecoration: 'none',
-                  border: '1px solid #e6e6e9',
-                  textAlign: 'center' as const,
-                  width: isMobile ? '100%' : 'auto',
-                }}
-              >
+              <Link href="#manifesto" className={styles.buttonSecondary}>
                 The Manifesto ↓
               </Link>
             </div>
           </div>
-          <div style={{
-            background: 'linear-gradient(135deg, #f5f5f7 0%, #e6e6e9 100%)',
-            borderRadius: '30px',
-            padding: isMobile ? '2rem' : '3rem',
-            position: 'relative',
-            overflow: 'hidden',
-            marginTop: isMobile ? '1rem' : '0',
-          }}>
-            <div style={{
-              position: 'absolute',
-              top: '-50px',
-              right: '-50px',
-              width: isMobile ? '150px' : '200px',
-              height: isMobile ? '150px' : '200px',
-              background: 'rgba(0,102,204,0.1)',
-              borderRadius: '50%'
-            }} />
-            <div style={{
-              position: 'absolute',
-              bottom: '-50px',
-              left: '-50px',
-              width: isMobile ? '150px' : '200px',
-              height: isMobile ? '150px' : '200px',
-              background: 'rgba(124,58,237,0.1)',
-              borderRadius: '50%'
-            }} />
-            <div style={{ position: 'relative', zIndex: 2 }}>
-              <div style={{ fontSize: isMobile ? '2.5rem' : '3rem', marginBottom: '1.5rem', textAlign: 'center' }}>⚖️</div>
-              <h3 style={{ 
-                fontSize: isMobile ? '1.5rem' : '1.8rem', 
-                fontWeight: 400, 
-                marginBottom: '1rem',
-                textAlign: 'center'
-              }}>Beliefs in Action</h3>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
+
+          {/* Right Card */}
+          <div className={styles.heroCard}>
+            <div className={styles.heroCardBg1} />
+            <div className={styles.heroCardBg2} />
+            <div className={styles.heroCardContent}>
+              <div className={styles.heroCardIcon}>⚖️</div>
+              <h3 className={styles.heroCardTitle}>Beliefs in Action</h3>
+              <ul className={styles.heroCardList}>
                 {[
                   'We fired a client once. They deserved it.',
                   'We refunded a project, kept the friendship.',
                   'We say "I don\'t know" daily. It\'s liberating.'
                 ].map((item, i) => (
-                  <li key={i} style={{ 
-                    marginBottom: '1rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    color: '#86868b',
-                    justifyContent: 'center',
-                    fontSize: isMobile ? '0.95rem' : '1rem',
-                  }}>
-                    <span style={{ color: '#0066cc' }}>→</span>
+                  <li key={i} className={styles.heroCardItem}>
+                    <span className={styles.heroCardCheck}>→</span>
                     {item}
                   </li>
                 ))}
@@ -518,43 +292,23 @@ export default function BeliefsPage() {
         </div>
 
         {/* Stats Banner */}
-        <section style={statsGridStyle}>
+        <section className={styles.statsBanner}>
           {stats.map(stat => (
-            <div key={stat.label} style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: isMobile ? '1.5rem' : '2rem', marginBottom: '0.5rem' }}>{stat.icon}</div>
-              <div style={{ 
-                fontSize: isMobile ? '1.8rem' : '2.5rem', 
-                fontWeight: 300, 
-                color: '#0066cc', 
-                marginBottom: '0.3rem' 
-              }}>
-                {stat.value}
-              </div>
-              <div style={{ 
-                color: '#aaa', 
-                fontSize: isMobile ? '0.75rem' : '0.9rem' 
-              }}>{stat.label}</div>
+            <div key={stat.label} className={styles.statItem}>
+              <div className={styles.statIcon}>{stat.icon}</div>
+              <div className={styles.statValue}>{stat.value}</div>
+              <div className={styles.statLabel}>{stat.label}</div>
             </div>
           ))}
         </section>
 
         {/* Navigation Tabs */}
-        <div style={tabsContainerStyle}>
+        <div className={styles.tabsContainer}>
           {['purpose', 'beliefs', 'manifesto', 'practice'].map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              style={{
-                background: 'none',
-                border: 'none',
-                padding: isMobile ? '0.5rem 0.8rem' : '0.5rem 1rem',
-                fontSize: isMobile ? '0.9rem' : '1rem',
-                fontWeight: activeTab === tab ? 600 : 400,
-                color: activeTab === tab ? '#0066cc' : '#86868b',
-                cursor: 'pointer',
-                borderBottom: activeTab === tab ? '2px solid #0066cc' : 'none',
-                textTransform: 'capitalize'
-              }}
+              className={`${styles.tabButton} ${activeTab === tab ? styles.active : ''}`}
             >
               {tab}
             </button>
@@ -563,68 +317,29 @@ export default function BeliefsPage() {
 
         {/* Tab Content */}
         {activeTab === 'purpose' && (
-          <section id="purpose" style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-            <h2 style={{ 
-              fontSize: isMobile ? '2rem' : '2.5rem', 
-              fontWeight: 300, 
-              color: '#1d1d1f', 
-              marginBottom: '2rem',
-              textAlign: 'center'
-            }}>
-              Why We Exist
-            </h2>
-            <div style={purposeGridStyle}>
+          <section id="purpose" style={{ marginBottom: '6rem' }}>
+            <h2 className={styles.sectionTitle}>Why We Exist</h2>
+            <div className={styles.purposeGrid}>
               {ourPurpose.map(item => (
-                <div
-                  key={item.title}
-                  style={{
-                    padding: isMobile ? '1.5rem' : '2rem',
-                    borderRadius: '20px',
-                    background: '#fafafa',
-                    border: '1px solid #e6e6e9'
-                  }}
-                >
-                  <div style={{ fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '1rem' }}>{item.icon}</div>
-                  <h3 style={{ fontSize: isMobile ? '1.3rem' : '1.5rem', marginBottom: '0.5rem', color: '#1d1d1f' }}>
-                    {item.title}
-                  </h3>
-                  <p style={{ color: '#86868b', fontSize: isMobile ? '0.95rem' : '1rem', lineHeight: '1.7' }}>
-                    {item.desc}
-                  </p>
+                <div key={item.title} className={styles.purposeCard}>
+                  <div className={styles.purposeIcon}>{item.icon}</div>
+                  <h3 className={styles.purposeTitle}>{item.title}</h3>
+                  <p className={styles.purposeDesc}>{item.desc}</p>
                 </div>
               ))}
             </div>
 
             {/* Paradoxes */}
             <div style={{ marginTop: '3rem' }}>
-              <h3 style={{ 
-                fontSize: isMobile ? '1.5rem' : '1.8rem', 
-                fontWeight: 300, 
-                color: '#1d1d1f', 
-                marginBottom: '1.5rem',
-                textAlign: 'center'
-              }}>
+              <h3 className={styles.sectionTitle} style={{ fontSize: 'clamp(1.5rem, 4vw, 1.8rem)' }}>
                 The Paradoxes We Embrace
               </h3>
-              <div style={paradoxesGridStyle}>
+              <div className={styles.paradoxesGrid}>
                 {theParadoxes.map(item => (
-                  <div
-                    key={item.title}
-                    style={{
-                      padding: isMobile ? '1.5rem' : '2rem',
-                      borderRadius: '20px',
-                      background: '#fafafa',
-                      border: '1px solid #e6e6e9',
-                      textAlign: 'center'
-                    }}
-                  >
-                    <div style={{ fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '1rem' }}>{item.icon}</div>
-                    <h4 style={{ fontSize: isMobile ? '1.1rem' : '1.2rem', marginBottom: '0.5rem', color: '#1d1d1f' }}>
-                      {item.title}
-                    </h4>
-                    <p style={{ color: '#86868b', fontSize: isMobile ? '0.9rem' : '0.95rem', lineHeight: '1.6' }}>
-                      {item.desc}
-                    </p>
+                  <div key={item.title} className={styles.paradoxCard}>
+                    <div className={styles.paradoxIcon}>{item.icon}</div>
+                    <h4 className={styles.paradoxTitle}>{item.title}</h4>
+                    <p className={styles.paradoxDesc}>{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -633,57 +348,29 @@ export default function BeliefsPage() {
         )}
 
         {activeTab === 'beliefs' && (
-          <section id="beliefs" style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-            <h2 style={{ 
-              fontSize: isMobile ? '2rem' : '2.5rem', 
-              fontWeight: 300, 
-              color: '#1d1d1f', 
-              marginBottom: '1rem',
-              textAlign: 'center'
-            }}>
-              The 10 Things We Actually Believe
-            </h2>
-            <p style={{ 
-              color: '#86868b', 
-              fontSize: isMobile ? '1rem' : '1.2rem', 
-              textAlign: 'center',
-              maxWidth: '800px',
-              margin: '0 auto 2rem',
-              padding: isMobile ? '0 1rem' : '0'
-            }}>
+          <section id="beliefs" style={{ marginBottom: '6rem' }}>
+            <h2 className={styles.sectionTitle}>The 10 Things We Actually Believe</h2>
+            <p className={styles.sectionSubtitle}>
               Not aspirational. Not performative. Just how we operate.
             </p>
-            <div style={beliefsGridStyle}>
+            <div className={styles.beliefsGrid}>
               {theBeliefs.map((belief, index) => (
                 <div
                   key={belief.title}
-                  style={{
-                    padding: isMobile ? '1.5rem' : '2rem',
-                    borderRadius: '20px',
-                    background: '#fafafa',
-                    border: '1px solid #e6e6e9',
-                    borderLeft: `4px solid ${belief.color}`
-                  }}
+                  className={styles.beliefCard}
+                  style={{ borderLeftColor: belief.color }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
-                    <span style={{ fontSize: '1.5rem' }}>{belief.icon}</span>
-                    <span style={{ 
-                      fontSize: '0.8rem',
-                      color: belief.color,
-                      fontWeight: 500,
-                      background: `${belief.color}10`,
-                      padding: '0.2rem 0.8rem',
-                      borderRadius: '20px'
-                    }}>
+                  <div className={styles.beliefHeader}>
+                    <span className={styles.beliefIcon}>{belief.icon}</span>
+                    <span 
+                      className={styles.beliefNumber}
+                      style={{ background: `${belief.color}10`, color: belief.color }}
+                    >
                       #{index + 1}
                     </span>
                   </div>
-                  <h3 style={{ fontSize: isMobile ? '1.2rem' : '1.3rem', marginBottom: '0.5rem', color: '#1d1d1f' }}>
-                    {belief.title}
-                  </h3>
-                  <p style={{ color: '#86868b', fontSize: isMobile ? '0.9rem' : '0.95rem', lineHeight: '1.7' }}>
-                    {belief.desc}
-                  </p>
+                  <h3 className={styles.beliefTitle}>{belief.title}</h3>
+                  <p className={styles.beliefDesc}>{belief.desc}</p>
                 </div>
               ))}
             </div>
@@ -691,58 +378,19 @@ export default function BeliefsPage() {
         )}
 
         {activeTab === 'manifesto' && (
-          <section id="manifesto" style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-            <h2 style={{ 
-              fontSize: isMobile ? '2rem' : '2.5rem', 
-              fontWeight: 300, 
-              color: '#1d1d1f', 
-              marginBottom: '1rem',
-              textAlign: 'center'
-            }}>
-              The PureLatency Manifesto
-            </h2>
-            <p style={{ 
-              color: '#86868b', 
-              fontSize: isMobile ? '1rem' : '1.2rem', 
-              textAlign: 'center',
-              maxWidth: '800px',
-              margin: '0 auto 2rem',
-              padding: isMobile ? '0 1rem' : '0'
-            }}>
+          <section id="manifesto" style={{ marginBottom: '6rem' }}>
+            <h2 className={styles.sectionTitle}>The PureLatency Manifesto</h2>
+            <p className={styles.sectionSubtitle}>
               Short. Unfiltered. Actually followed.
             </p>
-            <div style={manifestoGridStyle}>
+            <div className={styles.manifestoGrid}>
               {theManifesto.map(chapter => (
-                <div
-                  key={chapter.chapter}
-                  style={{
-                    padding: isMobile ? '1.5rem' : '2rem',
-                    borderRadius: '20px',
-                    background: '#fafafa',
-                    border: '1px solid #e6e6e9'
-                  }}
-                >
-                  <h3 style={{ 
-                    fontSize: isMobile ? '1.3rem' : '1.5rem', 
-                    marginBottom: '1rem', 
-                    color: '#0066cc',
-                    borderBottom: '1px solid #e6e6e9',
-                    paddingBottom: '0.5rem'
-                  }}>
-                    {chapter.chapter}
-                  </h3>
-                  <ul style={{ listStyle: 'none', padding: 0 }}>
+                <div key={chapter.chapter} className={styles.manifestoChapter}>
+                  <h3 className={styles.manifestoTitle}>{chapter.chapter}</h3>
+                  <ul className={styles.manifestoList}>
                     {chapter.lines.map(line => (
-                      <li key={line} style={{ 
-                        marginBottom: '0.8rem',
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        gap: '0.5rem',
-                        color: '#86868b',
-                        fontSize: isMobile ? '0.9rem' : '1rem',
-                        lineHeight: '1.6'
-                      }}>
-                        <span style={{ color: '#0066cc', fontSize: '1.2rem' }}>•</span>
+                      <li key={line} className={styles.manifestoItem}>
+                        <span className={styles.manifestoBullet}>•</span>
                         {line}
                       </li>
                     ))}
@@ -754,88 +402,54 @@ export default function BeliefsPage() {
         )}
 
         {activeTab === 'practice' && (
-          <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-            <h2 style={{ 
-              fontSize: isMobile ? '2rem' : '2.5rem', 
-              fontWeight: 300, 
-              color: '#1d1d1f', 
-              marginBottom: '1rem',
-              textAlign: 'center'
-            }}>
-              Beliefs in Practice
-            </h2>
-            <p style={{ 
-              color: '#86868b', 
-              fontSize: isMobile ? '1rem' : '1.2rem', 
-              textAlign: 'center',
-              maxWidth: '800px',
-              margin: '0 auto 2rem',
-              padding: isMobile ? '0 1rem' : '0'
-            }}>
+          <section style={{ marginBottom: '6rem' }}>
+            <h2 className={styles.sectionTitle}>Beliefs in Practice</h2>
+            <p className={styles.sectionSubtitle}>
               How abstract ideas become daily habits
             </p>
             
             {/* Daily Practices */}
-            <div style={practicesGridStyle}>
+            <div className={styles.practicesGrid}>
               {dailyPractices.map(practice => (
-                <div
-                  key={practice.title}
-                  style={{
-                    padding: isMobile ? '1.5rem' : '2rem',
-                    borderRadius: '20px',
-                    background: '#fafafa',
-                    border: '1px solid #e6e6e9',
-                    textAlign: 'center'
-                  }}
-                >
-                  <div style={{ fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '1rem' }}>{practice.icon}</div>
-                  <h3 style={{ fontSize: isMobile ? '1.1rem' : '1.2rem', marginBottom: '0.5rem', color: '#1d1d1f' }}>
-                    {practice.title}
-                  </h3>
-                  <p style={{ color: '#86868b', fontSize: isMobile ? '0.9rem' : '0.95rem', lineHeight: '1.6' }}>
-                    {practice.desc}
-                  </p>
+                <div key={practice.title} className={styles.practiceCard}>
+                  <div className={styles.practiceIcon}>{practice.icon}</div>
+                  <h3 className={styles.practiceTitle}>{practice.title}</h3>
+                  <p className={styles.practiceDesc}>{practice.desc}</p>
                 </div>
               ))}
             </div>
 
             {/* Real Stories */}
             <div style={{ 
-              padding: isMobile ? '1.5rem' : '3rem',
+              padding: 'clamp(1.5rem, 5vw, 3rem)',
               background: '#fafafa',
               borderRadius: '20px',
               border: '1px solid #e6e6e9'
             }}>
-              <h3 style={{ 
-                fontSize: isMobile ? '1.3rem' : '1.5rem', 
-                fontWeight: 300, 
-                color: '#1d1d1f', 
-                marginBottom: '1.5rem',
-                textAlign: 'center'
-              }}>
+              <h3 className={styles.sectionTitle} style={{ fontSize: 'clamp(1.3rem, 4vw, 1.5rem)' }}>
                 When Beliefs Became Real
               </h3>
-              <div style={storiesGridStyle}>
-                <div style={{ position: 'relative' }}>
-                  <span style={{ fontSize: '2.5rem', color: '#0066cc', opacity: 0.2, position: 'absolute', top: '-15px', left: '-5px' }}>"</span>
-                  <p style={{ color: '#86868b', fontSize: isMobile ? '0.9rem' : '0.95rem', lineHeight: '1.8', fontStyle: 'italic', marginBottom: '1rem' }}>
+              <div className={styles.storiesGrid}>
+                <div className={styles.storyItem}>
+                  <span className={styles.storyQuote}>"</span>
+                  <p className={styles.storyText}>
                     "We told a client their project wasn't ready to launch, even though they wanted to. They thanked us later. We'd do it again."
                   </p>
-                  <div style={{ color: '#0066cc', fontWeight: 500, fontSize: '0.9rem' }}>— On Quality Over Speed</div>
+                  <div className={styles.storyAttribution}>— On Quality Over Speed</div>
                 </div>
-                <div style={{ position: 'relative' }}>
-                  <span style={{ fontSize: '2.5rem', color: '#0066cc', opacity: 0.2, position: 'absolute', top: '-15px', left: '-5px' }}>"</span>
-                  <p style={{ color: '#86868b', fontSize: isMobile ? '0.9rem' : '0.95rem', lineHeight: '1.8', fontStyle: 'italic', marginBottom: '1rem' }}>
+                <div className={styles.storyItem}>
+                  <span className={styles.storyQuote}>"</span>
+                  <p className={styles.storyText}>
                     "A junior dev caught a mistake I made. We celebrated it. Ego left, learning happened."
                   </p>
-                  <div style={{ color: '#0066cc', fontWeight: 500, fontSize: '0.9rem' }}>— On No Ego</div>
+                  <div className={styles.storyAttribution}>— On No Ego</div>
                 </div>
-                <div style={{ position: 'relative' }}>
-                  <span style={{ fontSize: '2.5rem', color: '#0066cc', opacity: 0.2, position: 'absolute', top: '-15px', left: '-5px' }}>"</span>
-                  <p style={{ color: '#86868b', fontSize: isMobile ? '0.9rem' : '0.95rem', lineHeight: '1.8', fontStyle: 'italic', marginBottom: '1rem' }}>
+                <div className={styles.storyItem}>
+                  <span className={styles.storyQuote}>"</span>
+                  <p className={styles.storyText}>
                     "We refunded $20k because we under-delivered. The client cried. We kept the friendship."
                   </p>
-                  <div style={{ color: '#0066cc', fontWeight: 500, fontSize: '0.9rem' }}>— On Radical Honesty</div>
+                  <div className={styles.storyAttribution}>— On Radical Honesty</div>
                 </div>
               </div>
             </div>
@@ -843,165 +457,73 @@ export default function BeliefsPage() {
         )}
 
         {/* CTA Section */}
-        <section
-  style={{
-    marginTop: isMobile ? '1.5rem' : '3rem',          // was 2rem / 4rem
-    display: 'flex',
-    justifyContent: 'center',
-    padding: isMobile ? '0 1rem' : '0',
-  }}
->
-  <div
-    style={{
-      width: '100%',
-      maxWidth: '1200px',
-      padding: isMobile ? '2rem 1.25rem' : '2.5rem 1.75rem', // smaller vertical padding
-      borderRadius: '24px',
-      textAlign: 'center',
-      background: `
-        radial-gradient(circle at 20% 30%, #7a3cff 0%, transparent 40%),
-        radial-gradient(circle at 80% 10%, #ff2e88 0%, transparent 40%),
-        linear-gradient(180deg, #0b1c48 0%, #2a1e5c 100%)
-      `,
-      color: '#ffffff',
-    }}
-  >
-    <h2
-      style={{
-        fontSize: isMobile ? '1.7rem' : '2.4rem',     // slightly smaller text
-        fontWeight: 400,
-        marginBottom: '0.5rem',                      // less space below title
-      }}
-    >
-      Contact Us
-    </h2>
-
-    <p
-      style={{
-        fontSize: isMobile ? '0.95rem' : '1.1rem',
-        marginBottom: '1.5rem',                      // less paragraph bottom margin
-        opacity: 0.95,
-        color: '#ffffff',
-      }}
-    >
-      Be always in front line, get in touch today.
-    </p>
-
-    <Link
-      href="/contact"
-      style={{
-        display: 'inline-block',
-        padding: isMobile ? '10px 32px' : '12px 48px', // smaller button
-        borderRadius: '70px 70px 0 70px',
-        border: '2px solid #ffffff',
-        color: '#ffffff',
-        fontWeight: 600,
-        fontSize: isMobile ? '0.95rem' : '1rem',
-        textDecoration: 'none',
-        transition: 'all 0.3s ease',
-        width: isMobile ? '100%' : 'auto',
-        maxWidth: isMobile ? '260px' : 'none',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.background = '#ffffff';
-        e.currentTarget.style.color = '#111';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.background = 'transparent';
-        e.currentTarget.style.color = '#ffffff';
-      }}
-    >
-      Contact Us
-    </Link>
-  </div>
-</section>
-
+        <section className={styles.ctaSection}>
+          <div className={styles.ctaCard}>
+            <h2 className={styles.ctaTitle}>Contact Us</h2>
+            <p className={styles.ctaText}>Be always in front line, get in touch today.</p>
+            <Link href="/contact" className={styles.ctaButton}>
+              Contact Us
+            </Link>
+          </div>
+        </section>
 
         {/* Back to About */}
-        <div style={{ 
-          borderTop: '1px solid #e6e6e9',
-          paddingTop: '2rem',
-          textAlign: 'center',
-          marginTop: '2rem'
-        }}>
-          <Link 
-            href="/about" 
-            style={{ 
-              color: '#86868b', 
-              textDecoration: 'none', 
-              fontSize: isMobile ? '0.85rem' : '0.9rem',
-              display: 'inline-block'
-            }}
-          >
+        <div className={styles.backLinkContainer}>
+          <Link href="/about" className={styles.backLink}>
             ← Back to About
           </Link>
         </div>
       </main>
 
       {/* Footer */}
-      {/* Footer */}
-      <footer
-        style={{
-          background: '#111',
-          color: '#aaa',
-          padding: isMobile ? '3rem 1rem' : '4rem 2rem',
-          marginTop: '4rem'
-        }}
-      >
-        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-          <div style={footerGridStyle}>
+      <footer className={styles.footer}>
+        <div className={styles.footerContainer}>
+          <div className={styles.footerGrid}>
             <div>
-              <div style={{ fontSize: isMobile ? '1.3rem' : '1.5rem', color: '#fff', marginBottom: '1rem' }}>Pure Latency</div>
-              <p style={{ color: '#666', lineHeight: '1.7', fontSize: isMobile ? '0.9rem' : '1rem' }}>
+              <div className={styles.footerLogo}>Pure Latency</div>
+              <p className={styles.footerText}>
                 Building exceptional software that makes a difference.
               </p>
             </div>
             <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Company</h4>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/about" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>About</Link>
+              <h4 className={styles.footerHeading}>Company</h4>
+              <ul className={styles.footerList}>
+                <li className={styles.footerListItem}>
+                  <Link href="/about" className={styles.footerLink}>About</Link>
                 </li>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/careers" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Careers</Link>
+                <li className={styles.footerListItem}>
+                  <Link href="/careers" className={styles.footerLink}>Careers</Link>
                 </li>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/blog" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Blog</Link>
+                <li className={styles.footerListItem}>
+                  <Link href="/blog" className={styles.footerLink}>Blog</Link>
                 </li>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/contact" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Contact</Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Legal</h4>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/privacy" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Privacy</Link>
-                </li>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/terms" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Terms</Link>
+                <li className={styles.footerListItem}>
+                  <Link href="/contact" className={styles.footerLink}>Contact</Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Connect</h4>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
+              <h4 className={styles.footerHeading}>Legal</h4>
+              <ul className={styles.footerList}>
+                <li className={styles.footerListItem}>
+                  <Link href="/privacy" className={styles.footerLink}>Privacy</Link>
+                </li>
+                <li className={styles.footerListItem}>
+                  <Link href="/terms" className={styles.footerLink}>Terms</Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className={styles.footerHeading}>Connect</h4>
+              <ul className={styles.footerList}>
                 {socialMedia.map(social => (
-                  <li key={social.name} style={{ marginBottom: '0.8rem' }}>
+                  <li key={social.name} className={styles.footerListItem}>
                     <a 
                       href={social.href} 
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{ 
-                        color: '#aaa', 
-                        textDecoration: 'none',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        justifyContent: isMobile ? 'center' : 'flex-start',
-                        transition: 'color 0.2s ease',
-                      }}
+                      className={styles.footerSocialLink}
+                      style={{ color: '#aaa' }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.color = social.color;
                       }}
@@ -1012,22 +534,16 @@ export default function BeliefsPage() {
                       <img 
                         src={social.icon} 
                         alt={social.name}
-                        style={{ width: '20px', height: '20px' }}
+                        className={styles.footerSocialIcon}
                       />
-                      <span style={{ fontSize: isMobile ? '0.9rem' : '1rem' }}>{social.name}</span>
+                      <span>{social.name}</span>
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
-          <div style={{ 
-            borderTop: '1px solid #333', 
-            paddingTop: '2rem',
-            textAlign: 'center',
-            color: '#666',
-            fontSize: isMobile ? '0.8rem' : '0.9rem'
-          }}>
+          <div className={styles.footerBottom}>
             © 2026 PureLatency. All rights reserved. Crafted with precision in San Francisco.
           </div>
         </div>

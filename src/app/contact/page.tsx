@@ -2,11 +2,11 @@
 
 import Navbar from "@/components/layout/Navbar";
 import { useState } from "react";
-
 import { collection, addDoc } from "firebase/firestore";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import { db } from "@/firebase";
+import styles from "./Contact.module.css";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -15,7 +15,7 @@ export default function ContactPage() {
     email: "",
     designation: "",
     enquiry: "Collaboration",
-    country: "India", // default (must be in the list)
+    country: "India",
     message: "",
   });
 
@@ -29,10 +29,9 @@ export default function ContactPage() {
     message: "",
   });
 
-  // ==================== COMPLETE COUNTRY LIST (249 entries, ISO 3166‑1) ====================
+  // ==================== COUNTRIES (Åland Islands removed) ====================
   const countries = [
     "Afghanistan",
-    "Åland Islands",
     "Albania",
     "Algeria",
     "American Samoa",
@@ -207,7 +206,6 @@ export default function ContactPage() {
     "Papua New Guinea",
     "Paraguay",
     "Peru",
-    "Philippines",
     "Pitcairn",
     "Poland",
     "Portugal",
@@ -281,7 +279,36 @@ export default function ContactPage() {
     "Yemen",
     "Zambia",
     "Zimbabwe",
-  ].sort(); // alphabetical order
+  ].sort();
+
+  // ==================== ALLOWED COUNTRY CODES FOR PHONE INPUT (Åland Islands AX excluded) ====================
+  const allowedCountryCodes = [
+    "AF", "AL", "DZ", "AS", "AD", "AO", "AI", "AQ", "AG", "AR",
+    "AM", "AW", "AU", "AT", "AZ", "BS", "BH", "BD", "BB", "BY",
+    "BE", "BZ", "BJ", "BM", "BT", "BO", "BQ", "BA", "BW", "BV",
+    "BR", "IO", "BN", "BG", "BF", "BI", "CV", "KH", "CM", "CA",
+    "KY", "CF", "TD", "CL", "CN", "CX", "CC", "CO", "KM", "CG",
+    "CD", "CK", "CR", "CI", "HR", "CU", "CW", "CY", "CZ", "DK",
+    "DJ", "DM", "DO", "EC", "EG", "SV", "GQ", "ER", "EE", "SZ",
+    "ET", "FK", "FO", "FJ", "FI", "FR", "GF", "PF", "TF", "GA",
+    "GM", "GE", "DE", "GH", "GI", "GR", "GL", "GD", "GP", "GU",
+    "GT", "GG", "GN", "GW", "GY", "HT", "HM", "VA", "HN", "HK",
+    "HU", "IS", "IN", "ID", "IR", "IQ", "IE", "IM", "IL", "IT",
+    "JM", "JP", "JE", "JO", "KZ", "KE", "KI", "KP", "KR", "XK",
+    "KW", "KG", "LA", "LV", "LB", "LS", "LR", "LY", "LI", "LT",
+    "LU", "MO", "MG", "MW", "MY", "MV", "ML", "MT", "MH", "MQ",
+    "MR", "MU", "YT", "MX", "FM", "MD", "MC", "MN", "ME", "MS",
+    "MA", "MZ", "MM", "NA", "NR", "NP", "NL", "NC", "NZ", "NI",
+    "NE", "NG", "NU", "NF", "MK", "MP", "NO", "OM", "PK", "PW",
+    "PS", "PA", "PG", "PY", "PE", "PH", "PN", "PL", "PT", "PR",
+    "QA", "RE", "RO", "RU", "RW", "BL", "SH", "KN", "LC", "MF",
+    "PM", "VC", "WS", "SM", "ST", "SA", "SN", "RS", "SC", "SL",
+    "SG", "SX", "SK", "SI", "SB", "SO", "ZA", "GS", "SS", "ES",
+    "LK", "SD", "SR", "SJ", "SE", "CH", "SY", "TW", "TJ", "TZ",
+    "TH", "TL", "TG", "TK", "TO", "TT", "TN", "TR", "TM", "TC",
+    "TV", "UG", "UA", "AE", "GB", "US", "UM", "UY", "UZ", "VU",
+    "VE", "VN", "VG", "VI", "WF", "EH", "YE", "ZM", "ZW"
+  ].sort();
 
   const socialMedia = [
     {
@@ -371,33 +398,27 @@ export default function ContactPage() {
     <>
       <Navbar />
 
-      <section className="relative w-full min-h-screen text-gray-900 bg-white">
+      <section className={styles.container}>
         {/* Social Media Icons */}
-        <div className="absolute top-36 right-2 sm:right-8 flex flex-col sm:flex-row gap-3 sm:gap-6 items-end sm:items-center z-50">
+        <div className={styles.socialIcons}>
           {socialMedia.map((social) => (
             <a
               key={social.name}
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:opacity-80 transition p-3 sm:p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-md"
+              className={styles.socialLink}
               aria-label={social.name}
             >
-              <img
-                src={social.icon}
-                alt=""
-                className="w-6 h-6 sm:w-5 sm:h-5"
-              />
+              <img src={social.icon} alt="" className={styles.socialIcon} />
             </a>
           ))}
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-24 sm:pt-20 pb-20">
-          <h1 className="text-4xl sm:text-5xl font-bold mb-4 sm:mb-6">
-            Contact Us
-          </h1>
+        <div className={styles.contentWrapper}>
+          <h1 className={styles.title}>Contact Us</h1>
 
-          <p className="text-base sm:text-lg text-gray-600 max-w-4xl mb-12 sm:mb-16">
+          <p className={styles.description}>
             We endeavour to respond to your email as soon as possible. When
             sending an enquiry, please fill your contact details and indicate
             the request purpose for our follow-up.
@@ -405,22 +426,19 @@ export default function ContactPage() {
 
           {submitStatus.type && (
             <div
-              className={`mb-6 sm:mb-8 p-4 rounded-lg ${
+              className={`${styles.statusMessage} ${
                 submitStatus.type === "success"
-                  ? "bg-green-50 text-green-800 border border-green-200"
-                  : "bg-red-50 text-red-800 border border-red-200"
+                  ? styles.statusSuccess
+                  : styles.statusError
               }`}
             >
               {submitStatus.message}
             </div>
           )}
 
-          <form
-            onSubmit={handleSubmit}
-            className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12"
-          >
+          <form onSubmit={handleSubmit} className={styles.formGrid}>
             {/* LEFT COLUMN */}
-            <div className="space-y-6 sm:space-y-10">
+            <div className={styles.column}>
               <Input
                 label="Full name *"
                 name="fullName"
@@ -436,15 +454,13 @@ export default function ContactPage() {
                 onChange={handleChange}
               />
 
-              <div>
-                <label className="block text-sm tracking-widest mb-2">
-                  Enquiry Category *
-                </label>
+              <div className={styles.field}>
+                <label className={styles.label}>Enquiry Category *</label>
                 <select
                   name="enquiry"
                   value={formData.enquiry}
                   onChange={handleChange}
-                  className="w-full border-b border-gray-400 focus:outline-none py-3 sm:py-2 text-base"
+                  className={styles.select}
                   required
                 >
                   <option>Collaboration</option>
@@ -455,25 +471,25 @@ export default function ContactPage() {
                 </select>
               </div>
 
-              <div>
-                <label className="block text-sm tracking-widest mb-2">
-                  Phone Number *
-                </label>
+              <div className={styles.field}>
+                <label className={styles.label}>Phone Number *</label>
                 <PhoneInput
                   international
                   defaultCountry="IN"
+                  // @ts-ignore - `countries` prop is valid but TypeScript definitions may not include it
+                  countries={allowedCountryCodes}
                   value={phoneValue}
                   onChange={(value: string | undefined) =>
                     setPhoneValue(value || "")
                   }
-                  className="w-full border-b border-gray-400 focus:outline-none py-3 sm:py-2 text-base"
+                  className={styles.phoneInput}
                   required
                 />
               </div>
             </div>
 
             {/* RIGHT COLUMN */}
-            <div className="space-y-6 sm:space-y-10">
+            <div className={styles.column}>
               <Input
                 label="Email address *"
                 name="email"
@@ -490,15 +506,13 @@ export default function ContactPage() {
                 onChange={handleChange}
               />
 
-              <div>
-                <label className="block text-sm tracking-widest mb-2">
-                  Country *
-                </label>
+              <div className={styles.field}>
+                <label className={styles.label}>Country *</label>
                 <select
                   name="country"
                   value={formData.country}
                   onChange={handleChange}
-                  className="w-full border-b border-gray-400 focus:outline-none py-3 sm:py-2 text-base"
+                  className={styles.select}
                   required
                 >
                   {countries.map((c) => (
@@ -509,32 +523,32 @@ export default function ContactPage() {
             </div>
 
             {/* FULL WIDTH TEXTAREA */}
-            <div className="md:col-span-2 mt-4 sm:mt-8">
-              <label className="block text-sm tracking-widest mb-3">
-                Tell us more about your enquiry *
-              </label>
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                rows={6}
-                className="w-full border border-gray-400 p-4 focus:outline-none text-base"
-                required
-              />
+            <div className={styles.fullWidth}>
+              <div className={styles.field}>
+                <label className={styles.label}>
+                  Tell us more about your enquiry *
+                </label>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={6}
+                  className={styles.textarea}
+                  required
+                />
+              </div>
             </div>
 
             {/* SUBMIT BUTTON */}
-            <div className="md:col-span-2 mt-4 sm:mt-6">
+            <div className={`${styles.fullWidth} ${styles.submitContainer}`}>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-3 bg-black text-white font-semibold hover:opacity-90 transition rounded-md text-base ${
-                  isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+                className={styles.submitButton}
               >
                 {isSubmitting ? "Submitting..." : "Submit Enquiry"}
               </button>
-              <p className="text-xs text-gray-500 mt-2">* Required fields</p>
+              <p className={styles.requiredNote}>* Required fields</p>
             </div>
           </form>
         </div>
@@ -555,19 +569,19 @@ function Input({
   label: string;
   name: string;
   value: string;
-  onChange: any;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
   type?: string;
   required?: boolean;
 }) {
   return (
-    <div>
-      <label className="block text-sm tracking-widest mb-2">{label}</label>
+    <div className={styles.field}>
+      <label className={styles.label}>{label}</label>
       <input
         type={type}
         name={name}
         value={value}
         onChange={onChange}
-        className="w-full border-b border-gray-400 focus:outline-none py-3 sm:py-2 text-base"
+        className={styles.input}
         required={required}
       />
     </div>

@@ -2,21 +2,11 @@
 
 import Link from 'next/link';
 import Navbar from '@/components/layout/Navbar';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import styles from './PartnersOverview.module.css'; // adjust path as needed
 
 export default function PartnersOverviewPage() {
   const [activeTab, setActiveTab] = useState('ecosystem');
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Check if mobile on client side
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   const stats = [
     { value: '25+', label: 'Active Partners', icon: '🤝' },
@@ -169,7 +159,6 @@ export default function PartnersOverviewPage() {
     }
   ];
 
-  // Social media icons with image URLs
   const socialMedia = [
     { 
       name: 'Instagram', 
@@ -184,314 +173,91 @@ export default function PartnersOverviewPage() {
       color: '#1877F2'
     },
     {
-    name: 'Twitter',
-    href: 'https://twitter.com/purelatency', // use your real handle
-    icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg',
-    color: '#000000',
-  }
+      name: 'Twitter',
+      href: 'https://twitter.com/purelatency',
+      icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg',
+      color: '#000000',
+    }
   ];
-
-  // Responsive styles
-  const containerStyle = {
-    maxWidth: '1280px',
-    margin: '0 auto',
-    padding: isMobile ? '5rem 1rem 2rem' : '6rem 2rem 4rem',
-  };
-
-  const heroGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-    gap: isMobile ? '2rem' : '4rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-    alignItems: 'center',
-  };
-
-  const heroTitleStyle = {
-    fontSize: isMobile ? '2.5rem' : '4rem',
-    fontWeight: 300,
-    color: '#1d1d1f',
-    marginBottom: '1.5rem',
-    lineHeight: '1.2',
-    textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-  };
-
-  const statsGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
-    gap: isMobile ? '1.5rem' : '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-    padding: isMobile ? '2rem' : '3rem',
-    background: 'linear-gradient(135deg, #1d1d1f 0%, #2d2d2f 100%)',
-    borderRadius: '20px',
-    color: 'white',
-  };
-
-  const ecosystemGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const approachGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
-    gap: isMobile ? '1.5rem' : '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const benefitsGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const numbersGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const testimonialsGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const footerGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : '2fr 1fr 1fr 1fr',
-    gap: isMobile ? '2rem' : '4rem',
-    marginBottom: '4rem',
-    textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-  };
-
-  const tabsContainerStyle = {
-    display: 'flex',
-    gap: isMobile ? '0.5rem' : '2rem',
-    justifyContent: 'center',
-    marginBottom: '3rem',
-    borderBottom: '1px solid #e6e6e9',
-    paddingBottom: '1rem',
-    flexWrap: 'wrap' as const,
-  };
-
-  const buttonStyle = (isActive: boolean) => ({
-    background: 'none',
-    border: 'none',
-    padding: isMobile ? '0.5rem 0.8rem' : '0.5rem 1rem',
-    fontSize: isMobile ? '0.8rem' : '1rem',
-    fontWeight: isActive ? 600 : 400,
-    color: isActive ? '#0066cc' : '#86868b',
-    cursor: 'pointer',
-    borderBottom: isActive ? '2px solid #0066cc' : 'none',
-    textTransform: 'capitalize' as const,
-    whiteSpace: 'nowrap' as const,
-  });
 
   return (
     <>
       <Navbar />
 
-      <main style={containerStyle}>
-        {/* Social Media - With Icons */}
-        <section style={{ 
-          display: 'flex', 
-          justifyContent: isMobile ? 'center' : 'flex-end', 
-          marginBottom: '2rem',
-          flexWrap: 'wrap'
-        }}>
-          <div style={{ 
-            display: 'flex', 
-            gap: isMobile ? '20px' : '24px',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
+      <main className={styles.container}>
+        {/* Social Media */}
+        <section className={styles.socialSection}>
+          <div className={styles.socialLinks}>
             {socialMedia.map((social) => (
               <a
                 key={social.name}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ 
-                  textDecoration: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  transition: 'transform 0.2s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                }}
+                className={styles.socialLink}
+                style={{ color: social.color }}
               >
                 <img 
                   src={social.icon} 
                   alt={social.name}
-                  style={{ 
-                    width: isMobile ? '24px' : '28px', 
-                    height: isMobile ? '24px' : '28px',
-                  }}
+                  className={styles.socialIcon}
                 />
-                {!isMobile && (
-                  <span style={{ 
-                    color: social.color, 
-                    fontWeight: 500,
-                    fontSize: '0.9rem'
-                  }}>
-                    {social.name}
-                  </span>
-                )}
+                <span className={styles.socialName}>{social.name}</span>
               </a>
             ))}
           </div>
         </section>
 
         {/* Breadcrumb */}
-        <div style={{ 
-          color: '#86868b', 
-          marginBottom: '2rem', 
-          fontSize: isMobile ? '0.85rem' : '0.9rem',
-          textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-        }}>
-          <Link href="/" style={{ color: '#86868b', textDecoration: 'none' }}>Home</Link> / 
-          <Link href="/partners" style={{ color: '#86868b', textDecoration: 'none' }}> Partners</Link> / 
-          <span style={{ color: '#1d1d1f' }}> Overview</span>
+        <div className={styles.breadcrumb}>
+          <Link href="/" className={styles.breadcrumbLink}>Home</Link> / 
+          <Link href="/partners" className={styles.breadcrumbLink}> Partners</Link> / 
+          <span className={styles.breadcrumbCurrent}> Overview</span>
         </div>
 
         {/* Hero Section */}
-        <div style={heroGridStyle}>
+        <div className={styles.heroGrid}>
           <div>
-            <div style={{ 
-              display: 'inline-block',
-              background: 'rgba(0,102,204,0.1)',
-              color: '#0066cc',
-              padding: isMobile ? '0.4rem 1.2rem' : '0.5rem 1.5rem',
-              borderRadius: '30px',
-              fontSize: isMobile ? '0.85rem' : '0.9rem',
-              marginBottom: '1.5rem',
-              textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-              width: isMobile ? '100%' : 'auto',
-            }}>
+            <div className={styles.heroBadge}>
               🌐 Our Partner Ecosystem
             </div>
-            <h1 style={heroTitleStyle}>
+            <h1 className={styles.heroTitle}>
               Stronger together<br />
-              <span style={{ 
-                background: 'linear-gradient(135deg, #0066cc 0%, #7C3AED 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}>
+              <span className={styles.heroTitleGradient}>
                 with the best in class
               </span>
             </h1>
-            <p style={{ 
-              color: '#86868b', 
-              fontSize: isMobile ? '1rem' : '1.2rem', 
-              lineHeight: '1.7', 
-              marginBottom: '2rem',
-              textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-              padding: isMobile ? '0 0.5rem' : '0'
-            }}>
+            <p className={styles.heroText}>
               We believe that great software is built through collaboration. Our partner ecosystem 
               extends our capabilities, deepens our expertise, and ensures our clients always have 
               access to the best technology and talent. Here's how we work with partners and what 
               it means for you.
             </p>
-            <div style={{ 
-              display: 'flex', 
-              gap: '1rem',
-              flexDirection: isMobile ? 'column' : 'row',
-              justifyContent: isMobile ? 'center' : 'flex-start',
-            }}>
-              <Link
-                href="/contact"
-                style={{
-                  background: '#0066cc',
-                  color: 'white',
-                  padding: isMobile ? '0.875rem 1.5rem' : '1rem 2rem',
-                  borderRadius: '40px',
-                  textDecoration: 'none',
-                  fontWeight: 500,
-                  textAlign: 'center' as const,
-                  width: isMobile ? '100%' : 'auto',
-                }}
-              >
+            <div className={styles.buttonGroup}>
+              <Link href="/contact" className={styles.buttonPrimary}>
                 Become a Partner
               </Link>
-              <Link
-                href="#ecosystem"
-                style={{
-                  background: 'transparent',
-                  color: '#1d1d1f',
-                  padding: isMobile ? '0.875rem 1.5rem' : '1rem 2rem',
-                  borderRadius: '40px',
-                  textDecoration: 'none',
-                  border: '1px solid #e6e6e9',
-                  textAlign: 'center' as const,
-                  width: isMobile ? '100%' : 'auto',
-                }}
-              >
+              <Link href="#ecosystem" className={styles.buttonSecondary}>
                 Explore Ecosystem ↓
               </Link>
             </div>
           </div>
-          <div style={{
-            background: 'linear-gradient(135deg, #f5f5f7 0%, #e6e6e9 100%)',
-            borderRadius: '30px',
-            padding: isMobile ? '2rem' : '3rem',
-            position: 'relative',
-            overflow: 'hidden',
-            marginTop: isMobile ? '1rem' : '0',
-          }}>
-            <div style={{
-              position: 'absolute',
-              top: '-50px',
-              right: '-50px',
-              width: isMobile ? '150px' : '200px',
-              height: isMobile ? '150px' : '200px',
-              background: 'rgba(0,102,204,0.1)',
-              borderRadius: '50%'
-            }} />
-            <div style={{
-              position: 'absolute',
-              bottom: '-50px',
-              left: '-50px',
-              width: isMobile ? '150px' : '200px',
-              height: isMobile ? '150px' : '200px',
-              background: 'rgba(124,58,237,0.1)',
-              borderRadius: '50%'
-            }} />
-            <div style={{ position: 'relative', zIndex: 2 }}>
-              <div style={{ fontSize: isMobile ? '2.5rem' : '3rem', marginBottom: '1.5rem', textAlign: 'center' }}>🤝</div>
-              <h3 style={{ 
-                fontSize: isMobile ? '1.5rem' : '1.8rem', 
-                fontWeight: 400, 
-                marginBottom: '1rem',
-                textAlign: 'center'
-              }}>Partner Impact</h3>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
+
+          {/* Right Card */}
+          <div className={styles.heroCard}>
+            <div className={styles.heroCardBg1} />
+            <div className={styles.heroCardBg2} />
+            <div className={styles.heroCardContent}>
+              <div className={styles.heroCardIcon}>🤝</div>
+              <h3 className={styles.heroCardTitle}>Partner Impact</h3>
+              <ul className={styles.heroCardList}>
                 {[
                   '25+ technology partners',
                   '50+ successful joint projects',
                   '100% partner retention rate'
                 ].map((item, i) => (
-                  <li key={i} style={{ 
-                    marginBottom: '1rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    color: '#86868b',
-                    justifyContent: 'center',
-                    fontSize: isMobile ? '0.95rem' : '1rem',
-                  }}>
-                    <span style={{ color: '#0066cc' }}>✓</span>
+                  <li key={i} className={styles.heroCardItem}>
+                    <span className={styles.heroCardCheck}>✓</span>
                     {item}
                   </li>
                 ))}
@@ -501,103 +267,59 @@ export default function PartnersOverviewPage() {
         </div>
 
         {/* Stats Banner */}
-        <section style={statsGridStyle}>
+        <section className={styles.statsBanner}>
           {stats.map(stat => (
-            <div key={stat.label} style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: isMobile ? '1.5rem' : '2rem', marginBottom: '0.5rem' }}>{stat.icon}</div>
-              <div style={{ 
-                fontSize: isMobile ? '1.8rem' : '2.5rem', 
-                fontWeight: 300, 
-                color: '#0066cc', 
-                marginBottom: '0.3rem' 
-              }}>
-                {stat.value}
-              </div>
-              <div style={{ 
-                color: '#aaa', 
-                fontSize: isMobile ? '0.75rem' : '0.9rem' 
-              }}>{stat.label}</div>
+            <div key={stat.label} className={styles.statItem}>
+              <div className={styles.statIcon}>{stat.icon}</div>
+              <div className={styles.statValue}>{stat.value}</div>
+              <div className={styles.statLabel}>{stat.label}</div>
             </div>
           ))}
         </section>
 
         {/* Navigation Tabs */}
-        <div style={tabsContainerStyle}>
+        <div className={styles.tabsContainer}>
           {['ecosystem', 'approach', 'numbers', 'voices'].map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              style={buttonStyle(activeTab === tab)}
+              className={`${styles.tabButton} ${activeTab === tab ? styles.active : ''}`}
             >
-              {tab === 'ecosystem' ? (isMobile ? 'Ecosystem' : 'Ecosystem') : 
-               tab === 'approach' ? (isMobile ? 'Approach' : 'Approach') : 
-               tab === 'numbers' ? (isMobile ? 'Numbers' : 'By the Numbers') : 
-               (isMobile ? 'Voices' : 'Partner Voices')}
+              {tab === 'ecosystem' ? 'Ecosystem' : 
+               tab === 'approach' ? 'Approach' : 
+               tab === 'numbers' ? 'By the Numbers' : 
+               'Partner Voices'}
             </button>
           ))}
         </div>
 
         {/* Tab Content */}
         {activeTab === 'ecosystem' && (
-          <section id="ecosystem" style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-            <h2 style={{ 
-              fontSize: isMobile ? '2rem' : '2.5rem', 
-              fontWeight: 300, 
-              color: '#1d1d1f', 
-              marginBottom: '2rem',
-              textAlign: 'center',
-              padding: isMobile ? '0 1rem' : '0'
-            }}>
-              Our Partner Ecosystem
-            </h2>
-            <div style={ecosystemGridStyle}>
+          <section id="ecosystem" style={{ marginBottom: '6rem' }}>
+            <h2 className={styles.sectionTitle}>Our Partner Ecosystem</h2>
+            <div className={styles.ecosystemGrid}>
               {ecosystem.map(item => (
-                <div
-                  key={item.title}
-                  style={{
-                    padding: isMobile ? '1.5rem' : '2rem',
-                    borderRadius: '20px',
-                    background: '#fafafa',
-                    border: '1px solid #e6e6e9'
-                  }}
-                >
-                  <div style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: '0.5rem', 
-                    marginBottom: '1rem',
-                    flexWrap: 'wrap' as const
-                  }}>
-                    <span style={{ fontSize: isMobile ? '1.8rem' : '2rem' }}>{item.icon}</span>
-                    <h3 style={{ fontSize: isMobile ? '1.2rem' : '1.3rem', color: '#1d1d1f' }}>{item.title}</h3>
+                <div key={item.title} className={styles.ecosystemCard}>
+                  <div className={styles.ecosystemHeader}>
+                    <span className={styles.ecosystemIcon}>{item.icon}</span>
+                    <h3 className={styles.ecosystemTitle}>{item.title}</h3>
                   </div>
-                  <p style={{ color: '#86868b', fontSize: isMobile ? '0.9rem' : '0.95rem', lineHeight: '1.6', marginBottom: '1rem' }}>
-                    {item.desc}
-                  </p>
-                  <div style={{ 
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '0.5rem',
-                    marginBottom: '1rem'
-                  }}>
+                  <p className={styles.ecosystemDesc}>{item.desc}</p>
+                  <div className={styles.ecosystemPartners}>
                     {item.partners.map(partner => (
                       <span
                         key={partner}
+                        className={styles.partnerTag}
                         style={{
-                          background: 'white',
-                          color: item.color,
-                          padding: '0.2rem 0.8rem',
-                          borderRadius: '20px',
-                          fontSize: isMobile ? '0.75rem' : '0.85rem',
-                          border: `1px solid ${item.color}30`,
-                          fontWeight: 500
-                        }}
+                          '--color': item.color,
+                          '--color30': item.color + '30',
+                        } as React.CSSProperties}
                       >
                         {partner}
                       </span>
                     ))}
                   </div>
-                  <p style={{ color: item.color, fontSize: isMobile ? '0.85rem' : '0.9rem', fontWeight: 500 }}>
+                  <p className={styles.ecosystemCount} style={{ color: item.color }}>
                     {item.count}
                   </p>
                 </div>
@@ -609,105 +331,42 @@ export default function PartnersOverviewPage() {
         {activeTab === 'approach' && (
           <>
             {/* Our Approach */}
-            <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-              <h2 style={{ 
-                fontSize: isMobile ? '2rem' : '2.5rem', 
-                fontWeight: 300, 
-                color: '#1d1d1f', 
-                marginBottom: '1rem',
-                textAlign: 'center',
-                padding: isMobile ? '0 1rem' : '0'
-              }}>
-                Our Partnership Approach
-              </h2>
-              <p style={{ 
-                color: '#86868b', 
-                fontSize: isMobile ? '1rem' : '1.2rem', 
-                textAlign: 'center',
-                maxWidth: '800px',
-                margin: '0 auto 2rem',
-                padding: isMobile ? '0 1rem' : '0'
-              }}>
+            <section style={{ marginBottom: '6rem' }}>
+              <h2 className={styles.sectionTitle}>Our Partnership Approach</h2>
+              <p className={styles.sectionSubtitle}>
                 How we build and nurture lasting partnerships
               </p>
-              <div style={approachGridStyle}>
+              <div className={styles.approachGrid}>
                 {theApproach.map((item, index) => (
-                  <div key={item.step} style={{ 
-                    padding: isMobile ? '1.5rem' : '2rem',
-                    borderRadius: '20px',
-                    background: '#fafafa',
-                    border: '1px solid #e6e6e9',
-                    position: 'relative'
-                  }}>
-                    {!isMobile && index < theApproach.length - 1 && (
-                      <div style={{
-                        position: 'absolute',
-                        top: '50%',
-                        right: '-20px',
-                        width: '40px',
-                        height: '2px',
-                        background: '#e6e6e9',
-                        transform: 'translateY(-50%)',
-                        zIndex: 1
-                      }} />
+                  <div key={item.step} className={styles.approachCard}>
+                    {index < theApproach.length - 1 && (
+                      <div className={styles.approachConnector} />
                     )}
-                    <div style={{ fontSize: isMobile ? '1.8rem' : '2rem', marginBottom: '1rem' }}>{item.icon}</div>
-                    <div style={{ 
-                      fontSize: '1.1rem',
-                      color: item.color,
-                      fontWeight: 500,
-                      marginBottom: '0.5rem'
-                    }}>
+                    <div className={styles.approachIcon}>{item.icon}</div>
+                    <div className={styles.approachStep} style={{ color: item.color }}>
                       {item.step}
                     </div>
-                    <h3 style={{ fontSize: isMobile ? '1.1rem' : '1.2rem', marginBottom: '0.5rem', color: '#1d1d1f' }}>
-                      {item.title}
-                    </h3>
-                    <p style={{ color: '#86868b', fontSize: isMobile ? '0.85rem' : '0.9rem', lineHeight: '1.6' }}>
-                      {item.desc}
-                    </p>
+                    <h3 className={styles.approachTitle}>{item.title}</h3>
+                    <p className={styles.approachDesc}>{item.desc}</p>
                   </div>
                 ))}
               </div>
             </section>
 
             {/* Benefits */}
-            <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-              <h2 style={{ 
-                fontSize: isMobile ? '2rem' : '2.5rem', 
-                fontWeight: 300, 
-                color: '#1d1d1f', 
-                marginBottom: '2rem',
-                textAlign: 'center'
-              }}>
-                Who Benefits
-              </h2>
-              <div style={benefitsGridStyle}>
+            <section style={{ marginBottom: '6rem' }}>
+              <h2 className={styles.sectionTitle}>Who Benefits</h2>
+              <div className={styles.benefitsGrid}>
                 {theBenefits.map(benefit => (
-                  <div
-                    key={benefit.title}
-                    style={{
-                      padding: isMobile ? '1.5rem' : '2rem',
-                      borderRadius: '20px',
-                      background: '#fafafa',
-                      border: '1px solid #e6e6e9'
-                    }}
-                  >
-                    <div style={{ fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '1rem' }}>{benefit.icon}</div>
-                    <h3 style={{ fontSize: isMobile ? '1.2rem' : '1.3rem', marginBottom: '1rem', color: benefit.color }}>
+                  <div key={benefit.title} className={styles.benefitCard}>
+                    <div className={styles.benefitIcon}>{benefit.icon}</div>
+                    <h3 className={styles.benefitTitle} style={{ color: benefit.color }}>
                       {benefit.title}
                     </h3>
-                    <ul style={{ listStyle: 'none', padding: 0 }}>
+                    <ul className={styles.benefitList}>
                       {benefit.items.map(item => (
-                        <li key={item} style={{ 
-                          marginBottom: '0.6rem',
-                          display: 'flex',
-                          alignItems: 'flex-start',
-                          gap: '0.5rem',
-                          color: '#86868b',
-                          fontSize: isMobile ? '0.85rem' : '0.9rem'
-                        }}>
-                          <span style={{ color: benefit.color }}>✓</span>
+                        <li key={item} className={styles.benefitItem}>
+                          <span className={styles.benefitCheck} style={{ color: benefit.color }}>✓</span>
                           {item}
                         </li>
                       ))}
@@ -720,53 +379,19 @@ export default function PartnersOverviewPage() {
         )}
 
         {activeTab === 'numbers' && (
-          <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-            <h2 style={{ 
-              fontSize: isMobile ? '2rem' : '2.5rem', 
-              fontWeight: 300, 
-              color: '#1d1d1f', 
-              marginBottom: '1rem',
-              textAlign: 'center',
-              padding: isMobile ? '0 1rem' : '0'
-            }}>
-              By the Numbers
-            </h2>
-            <p style={{ 
-              color: '#86868b', 
-              fontSize: isMobile ? '1rem' : '1.2rem', 
-              textAlign: 'center',
-              maxWidth: '800px',
-              margin: '0 auto 2rem',
-              padding: isMobile ? '0 1rem' : '0'
-            }}>
+          <section style={{ marginBottom: '6rem' }}>
+            <h2 className={styles.sectionTitle}>By the Numbers</h2>
+            <p className={styles.sectionSubtitle}>
               The measurable impact of our partnerships
             </p>
-            <div style={numbersGridStyle}>
+            <div className={styles.numbersGrid}>
               {theNumbers.map(category => (
-                <div
-                  key={category.category}
-                  style={{
-                    padding: isMobile ? '1.5rem' : '2rem',
-                    borderRadius: '20px',
-                    background: '#fafafa',
-                    border: '1px solid #e6e6e9'
-                  }}
-                >
-                  <h3 style={{ 
-                    fontSize: isMobile ? '1.1rem' : '1.2rem', 
-                    marginBottom: '1.2rem', 
-                    color: '#0066cc',
-                    borderBottom: '1px solid #e6e6e9',
-                    paddingBottom: '0.5rem'
-                  }}>
-                    {category.category}
-                  </h3>
+                <div key={category.category} className={styles.numbersCard}>
+                  <h3 className={styles.numbersCategory}>{category.category}</h3>
                   {category.stats.map(stat => (
-                    <div key={stat.label} style={{ marginBottom: '1rem' }}>
-                      <div style={{ fontSize: isMobile ? '1.5rem' : '1.8rem', fontWeight: 300, color: '#1d1d1f' }}>
-                        {stat.value}
-                      </div>
-                      <div style={{ color: '#86868b', fontSize: isMobile ? '0.8rem' : '0.85rem' }}>{stat.label}</div>
+                    <div key={stat.label} className={styles.numberStat}>
+                      <div className={styles.numberValue}>{stat.value}</div>
+                      <div className={styles.numberLabel}>{stat.label}</div>
                     </div>
                   ))}
                 </div>
@@ -776,55 +401,20 @@ export default function PartnersOverviewPage() {
         )}
 
         {activeTab === 'voices' && (
-          <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-            <h2 style={{ 
-              fontSize: isMobile ? '2rem' : '2.5rem', 
-              fontWeight: 300, 
-              color: '#1d1d1f', 
-              marginBottom: '2rem',
-              textAlign: 'center'
-            }}>
-              Partner Voices
-            </h2>
-            <div style={testimonialsGridStyle}>
+          <section style={{ marginBottom: '6rem' }}>
+            <h2 className={styles.sectionTitle}>Partner Voices</h2>
+            <div className={styles.testimonialsGrid}>
               {theTestimonials.map((testimonial, index) => (
-                <div key={index} style={{
-                  padding: isMobile ? '1.5rem' : '2rem',
-                  background: '#fafafa',
-                  borderRadius: '20px',
-                  border: '1px solid #e6e6e9',
-                  position: 'relative'
-                }}>
-                  <span style={{ fontSize: isMobile ? '3rem' : '4rem', color: '#0066cc', opacity: 0.2, position: 'absolute', top: '10px', left: '20px' }}>"</span>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', marginBottom: '1rem' }}>
-                    <div style={{
-                      width: isMobile ? '35px' : '40px',
-                      height: isMobile ? '35px' : '40px',
-                      background: 'linear-gradient(135deg, #0066cc 0%, #7C3AED 100%)',
-                      borderRadius: '8px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'white',
-                      fontSize: isMobile ? '0.8rem' : '0.9rem',
-                      fontWeight: 600
-                    }}>
-                      {testimonial.logo}
-                    </div>
-                    <div>
-                      <strong style={{ color: '#1d1d1f', fontSize: isMobile ? '0.85rem' : '0.9rem' }}>{testimonial.company}</strong>
-                    </div>
+                <div key={index} className={styles.testimonialCard}>
+                  <span className={styles.testimonialQuote}>"</span>
+                  <div className={styles.testimonialHeader}>
+                    <div className={styles.testimonialLogo}>{testimonial.logo}</div>
+                    <div className={styles.testimonialCompany}>{testimonial.company}</div>
                   </div>
-                  <p style={{ color: '#86868b', fontSize: isMobile ? '0.85rem' : '0.95rem', lineHeight: '1.7', marginBottom: '1rem', fontStyle: 'italic' }}>
-                    "{testimonial.quote}"
-                  </p>
+                  <p className={styles.testimonialText}>"{testimonial.quote}"</p>
                   <div>
-                    <p style={{ color: '#1d1d1f', fontSize: isMobile ? '0.85rem' : '0.9rem', fontWeight: 500 }}>
-                      {testimonial.author}
-                    </p>
-                    <p style={{ color: '#86868b', fontSize: isMobile ? '0.75rem' : '0.8rem' }}>
-                      {testimonial.role}
-                    </p>
+                    <p className={styles.testimonialAuthor}>{testimonial.author}</p>
+                    <p className={styles.testimonialRole}>{testimonial.role}</p>
                   </div>
                 </div>
               ))}
@@ -833,164 +423,73 @@ export default function PartnersOverviewPage() {
         )}
 
         {/* CTA Section */}
-       <section
-  style={{
-    marginTop: isMobile ? '1.5rem' : '3rem',          // was 2rem / 4rem
-    display: 'flex',
-    justifyContent: 'center',
-    padding: isMobile ? '0 1rem' : '0',
-  }}
->
-  <div
-    style={{
-      width: '100%',
-      maxWidth: '1200px',
-      padding: isMobile ? '2rem 1.25rem' : '2.5rem 1.75rem', // smaller vertical padding
-      borderRadius: '24px',
-      textAlign: 'center',
-      background: `
-        radial-gradient(circle at 20% 30%, #7a3cff 0%, transparent 40%),
-        radial-gradient(circle at 80% 10%, #ff2e88 0%, transparent 40%),
-        linear-gradient(180deg, #0b1c48 0%, #2a1e5c 100%)
-      `,
-      color: '#ffffff',
-    }}
-  >
-    <h2
-      style={{
-        fontSize: isMobile ? '1.7rem' : '2.4rem',     // slightly smaller text
-        fontWeight: 400,
-        marginBottom: '0.5rem',                      // less space below title
-      }}
-    >
-      Contact Us
-    </h2>
-
-    <p
-      style={{
-        fontSize: isMobile ? '0.95rem' : '1.1rem',
-        marginBottom: '1.5rem',                      // less paragraph bottom margin
-        opacity: 0.95,
-        color: '#ffffff',
-      }}
-    >
-      Be always in front line, get in touch today.
-    </p>
-
-    <Link
-      href="/contact"
-      style={{
-        display: 'inline-block',
-        padding: isMobile ? '10px 32px' : '12px 48px', // smaller button
-        borderRadius: '70px 70px 0 70px',
-        border: '2px solid #ffffff',
-        color: '#ffffff',
-        fontWeight: 600,
-        fontSize: isMobile ? '0.95rem' : '1rem',
-        textDecoration: 'none',
-        transition: 'all 0.3s ease',
-        width: isMobile ? '100%' : 'auto',
-        maxWidth: isMobile ? '260px' : 'none',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.background = '#ffffff';
-        e.currentTarget.style.color = '#111';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.background = 'transparent';
-        e.currentTarget.style.color = '#ffffff';
-      }}
-    >
-      Contact Us
-    </Link>
-  </div>
-</section>
-
+        <section className={styles.ctaSection}>
+          <div className={styles.ctaCard}>
+            <h2 className={styles.ctaTitle}>Contact Us</h2>
+            <p className={styles.ctaText}>Be always in front line, get in touch today.</p>
+            <Link href="/contact" className={styles.ctaButton}>
+              Contact Us
+            </Link>
+          </div>
+        </section>
 
         {/* Back to Partners */}
-        <div style={{ 
-          borderTop: '1px solid #e6e6e9',
-          paddingTop: '2rem',
-          textAlign: 'center',
-          marginTop: '2rem'
-        }}>
-          <Link 
-            href="/partners" 
-            style={{ 
-              color: '#86868b', 
-              textDecoration: 'none', 
-              fontSize: isMobile ? '0.85rem' : '0.9rem',
-              display: 'inline-block'
-            }}
-          >
+        <div className={styles.backLinkContainer}>
+          <Link href="/partners" className={styles.backLink}>
             ← Back to Partners
           </Link>
         </div>
       </main>
 
-    {/* Footer */}
-      <footer
-        style={{
-          background: '#111',
-          color: '#aaa',
-          padding: isMobile ? '3rem 1rem' : '4rem 2rem',
-          marginTop: '4rem'
-        }}
-      >
-        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-          <div style={footerGridStyle}>
+      {/* Footer */}
+      <footer className={styles.footer}>
+        <div className={styles.footerContainer}>
+          <div className={styles.footerGrid}>
             <div>
-              <div style={{ fontSize: isMobile ? '1.3rem' : '1.5rem', color: '#fff', marginBottom: '1rem' }}>Pure Latency</div>
-              <p style={{ color: '#666', lineHeight: '1.7', fontSize: isMobile ? '0.9rem' : '1rem' }}>
+              <div className={styles.footerLogo}>Pure Latency</div>
+              <p className={styles.footerText}>
                 Building exceptional software that makes a difference.
               </p>
             </div>
             <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Company</h4>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/about" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>About</Link>
+              <h4 className={styles.footerHeading}>Company</h4>
+              <ul className={styles.footerList}>
+                <li className={styles.footerListItem}>
+                  <Link href="/about" className={styles.footerLink}>About</Link>
                 </li>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/careers" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Careers</Link>
+                <li className={styles.footerListItem}>
+                  <Link href="/careers" className={styles.footerLink}>Careers</Link>
                 </li>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/blog" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Blog</Link>
+                <li className={styles.footerListItem}>
+                  <Link href="/blog" className={styles.footerLink}>Blog</Link>
                 </li>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/contact" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Contact</Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Legal</h4>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/privacy" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Privacy</Link>
-                </li>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/terms" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Terms</Link>
+                <li className={styles.footerListItem}>
+                  <Link href="/contact" className={styles.footerLink}>Contact</Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Connect</h4>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
+              <h4 className={styles.footerHeading}>Legal</h4>
+              <ul className={styles.footerList}>
+                <li className={styles.footerListItem}>
+                  <Link href="/privacy" className={styles.footerLink}>Privacy</Link>
+                </li>
+                <li className={styles.footerListItem}>
+                  <Link href="/terms" className={styles.footerLink}>Terms</Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className={styles.footerHeading}>Connect</h4>
+              <ul className={styles.footerList}>
                 {socialMedia.map(social => (
-                  <li key={social.name} style={{ marginBottom: '0.8rem' }}>
+                  <li key={social.name} className={styles.footerListItem}>
                     <a 
                       href={social.href} 
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{ 
-                        color: '#aaa', 
-                        textDecoration: 'none',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        justifyContent: isMobile ? 'center' : 'flex-start',
-                        transition: 'color 0.2s ease',
-                      }}
+                      className={styles.footerSocialLink}
+                      style={{ color: '#aaa' }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.color = social.color;
                       }}
@@ -1001,22 +500,16 @@ export default function PartnersOverviewPage() {
                       <img 
                         src={social.icon} 
                         alt={social.name}
-                        style={{ width: '20px', height: '20px' }}
+                        className={styles.footerSocialIcon}
                       />
-                      <span style={{ fontSize: isMobile ? '0.9rem' : '1rem' }}>{social.name}</span>
+                      <span>{social.name}</span>
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
-          <div style={{ 
-            borderTop: '1px solid #333', 
-            paddingTop: '2rem',
-            textAlign: 'center',
-            color: '#666',
-            fontSize: isMobile ? '0.8rem' : '0.9rem'
-          }}>
+          <div className={styles.footerBottom}>
             © 2026 PureLatency. All rights reserved. Crafted with precision in San Francisco.
           </div>
         </div>

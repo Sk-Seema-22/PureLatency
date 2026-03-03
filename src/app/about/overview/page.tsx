@@ -2,21 +2,11 @@
 
 import Link from 'next/link';
 import Navbar from '@/components/layout/Navbar';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import styles from './Overview.module.css'; // adjust path as needed
 
 export default function OverviewPage() {
   const [activeTab, setActiveTab] = useState('essence');
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Check if mobile on client side
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   const stats = [
     { value: '7', label: 'Time Zones Covered', icon: '🌐' },
@@ -224,7 +214,6 @@ export default function OverviewPage() {
     }
   ];
 
-  // Social media icons with image URLs
   const socialMedia = [
     { 
       name: 'Instagram', 
@@ -238,315 +227,91 @@ export default function OverviewPage() {
       icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg',
       color: '#1877F2'
     },
-     { 
+    { 
       name: 'Twitter', 
       href: 'https://twitter.com/purelatency',
       icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg',
       color: '#000000'
     }
-   
   ];
-
-  // Responsive styles
-  const containerStyle = {
-    maxWidth: '1280px',
-    margin: '0 auto',
-    padding: isMobile ? '5rem 1rem 2rem' : '6rem 2rem 4rem',
-  };
-
-  const heroGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-    gap: isMobile ? '2rem' : '4rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-    alignItems: 'center',
-  };
-
-  const heroTitleStyle = {
-    fontSize: isMobile ? '2.5rem' : '4rem',
-    fontWeight: 300,
-    color: '#1d1d1f',
-    marginBottom: '1.5rem',
-    lineHeight: '1.2',
-    textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-  };
-
-  const statsGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
-    gap: isMobile ? '1.5rem' : '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-    padding: isMobile ? '2rem' : '3rem',
-    background: 'linear-gradient(135deg, #1d1d1f 0%, #2d2d2f 100%)',
-    borderRadius: '20px',
-    color: 'white',
-  };
-
-  const essenceGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const originGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
-    gap: isMobile ? '1.5rem' : '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const foundersGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const philosophyGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const voicesGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const spaceGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const unexpectedGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const footerGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : '2fr 1fr 1fr 1fr',
-    gap: isMobile ? '2rem' : '4rem',
-    marginBottom: '4rem',
-    textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-  };
-
-  const tabsContainerStyle = {
-    display: 'flex',
-    gap: isMobile ? '0.5rem' : '2rem',
-    justifyContent: 'center',
-    marginBottom: '3rem',
-    borderBottom: '1px solid #e6e6e9',
-    paddingBottom: '1rem',
-    flexWrap: 'wrap' as const,
-  };
 
   return (
     <>
       <Navbar />
 
-      <main style={containerStyle}>
-        {/* Social Media - With Icons */}
-        <section style={{ 
-          display: 'flex', 
-          justifyContent: isMobile ? 'center' : 'flex-end', 
-          marginBottom: '2rem',
-          flexWrap: 'wrap'
-        }}>
-          <div style={{ 
-            display: 'flex', 
-            gap: isMobile ? '20px' : '24px',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
+      <main className={styles.container}>
+        {/* Social Media */}
+        <section className={styles.socialSection}>
+          <div className={styles.socialLinks}>
             {socialMedia.map((social) => (
               <a
                 key={social.name}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ 
-                  textDecoration: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  transition: 'transform 0.2s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                }}
+                className={styles.socialLink}
+                style={{ color: social.color }}
               >
                 <img 
                   src={social.icon} 
                   alt={social.name}
-                  style={{ 
-                    width: isMobile ? '24px' : '28px', 
-                    height: isMobile ? '24px' : '28px',
-                  }}
+                  className={styles.socialIcon}
                 />
-                {!isMobile && (
-                  <span style={{ 
-                    color: social.color, 
-                    fontWeight: 500,
-                    fontSize: '0.9rem'
-                  }}>
-                    {social.name}
-                  </span>
-                )}
+                <span className={styles.socialName}>{social.name}</span>
               </a>
             ))}
           </div>
         </section>
 
         {/* Breadcrumb */}
-        <div style={{ 
-          color: '#86868b', 
-          marginBottom: '2rem', 
-          fontSize: isMobile ? '0.85rem' : '0.9rem',
-          textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-        }}>
-          <Link href="/" style={{ color: '#86868b', textDecoration: 'none' }}>Home</Link> / 
-          <Link href="/about" style={{ color: '#86868b', textDecoration: 'none' }}> About</Link> / 
-          <span style={{ color: '#1d1d1f' }}> Overview</span>
+        <div className={styles.breadcrumb}>
+          <Link href="/" className={styles.breadcrumbLink}>Home</Link> / 
+          <Link href="/about" className={styles.breadcrumbLink}> About</Link> / 
+          <span className={styles.breadcrumbCurrent}> Overview</span>
         </div>
 
         {/* Hero Section */}
-        <div style={heroGridStyle}>
+        <div className={styles.heroGrid}>
           <div>
-            <div style={{ 
-              display: 'inline-block',
-              background: 'rgba(0,102,204,0.1)',
-              color: '#0066cc',
-              padding: isMobile ? '0.4rem 1.2rem' : '0.5rem 1.5rem',
-              borderRadius: '30px',
-              fontSize: isMobile ? '0.85rem' : '0.9rem',
-              marginBottom: '1.5rem',
-              textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-              width: isMobile ? '100%' : 'auto',
-            }}>
+            <div className={styles.heroBadge}>
               💫 Not Your Average Tech Company
             </div>
-            <h1 style={heroTitleStyle}>
+            <h1 className={styles.heroTitle}>
               We're different<br />
-              <span style={{ 
-                background: 'linear-gradient(135deg, #0066cc 0%, #7C3AED 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}>
+              <span className={styles.heroTitleGradient}>
                 on purpose
               </span>
             </h1>
-            <p style={{ 
-              color: '#86868b', 
-              fontSize: isMobile ? '1rem' : '1.2rem', 
-              lineHeight: '1.7', 
-              marginBottom: '2rem',
-              textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-            }}>
+            <p className={styles.heroText}>
               PureLatency wasn't started to get rich. It was started to build things differently. 
               No bureaucracy. No egos. Just really good people solving really hard problems, 
               at a pace that makes sense.
             </p>
-            <div style={{ 
-              display: 'flex', 
-              gap: '1rem',
-              flexDirection: isMobile ? 'column' : 'row',
-              justifyContent: isMobile ? 'center' : 'flex-start',
-            }}>
-              <Link
-                href="/contact"
-                style={{
-                  background: '#0066cc',
-                  color: 'white',
-                  padding: isMobile ? '0.875rem 1.5rem' : '1rem 2rem',
-                  borderRadius: '40px',
-                  textDecoration: 'none',
-                  fontWeight: 500,
-                  textAlign: 'center' as const,
-                  width: isMobile ? '100%' : 'auto',
-                }}
-              >
+            <div className={styles.buttonGroup}>
+              <Link href="/contact" className={styles.buttonPrimary}>
                 Come Say Hello
               </Link>
-              <Link
-                href="#essence"
-                style={{
-                  background: 'transparent',
-                  color: '#1d1d1f',
-                  padding: isMobile ? '0.875rem 1.5rem' : '1rem 2rem',
-                  borderRadius: '40px',
-                  textDecoration: 'none',
-                  border: '1px solid #e6e6e9',
-                  textAlign: 'center' as const,
-                  width: isMobile ? '100%' : 'auto',
-                }}
-              >
+              <Link href="#essence" className={styles.buttonSecondary}>
                 Understand Our Vibe ↓
               </Link>
             </div>
           </div>
-          <div style={{
-            background: 'linear-gradient(135deg, #f5f5f7 0%, #e6e6e9 100%)',
-            borderRadius: '30px',
-            padding: isMobile ? '2rem' : '3rem',
-            position: 'relative',
-            overflow: 'hidden',
-            marginTop: isMobile ? '1rem' : '0',
-          }}>
-            <div style={{
-              position: 'absolute',
-              top: '-50px',
-              right: '-50px',
-              width: isMobile ? '150px' : '200px',
-              height: isMobile ? '150px' : '200px',
-              background: 'rgba(0,102,204,0.1)',
-              borderRadius: '50%'
-            }} />
-            <div style={{
-              position: 'absolute',
-              bottom: '-50px',
-              left: '-50px',
-              width: isMobile ? '150px' : '200px',
-              height: isMobile ? '150px' : '200px',
-              background: 'rgba(124,58,237,0.1)',
-              borderRadius: '50%'
-            }} />
-            <div style={{ position: 'relative', zIndex: 2 }}>
-              <div style={{ fontSize: isMobile ? '2.5rem' : '3rem', marginBottom: '1.5rem', textAlign: 'center' }}>🎲</div>
-              <h3 style={{ 
-                fontSize: isMobile ? '1.5rem' : '1.8rem', 
-                fontWeight: 400, 
-                marginBottom: '1rem',
-                textAlign: 'center'
-              }}>The Un-Slide Deck</h3>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
+
+          {/* Right Card */}
+          <div className={styles.heroCard}>
+            <div className={styles.heroCardBg1} />
+            <div className={styles.heroCardBg2} />
+            <div className={styles.heroCardContent}>
+              <div className={styles.heroCardIcon}>🎲</div>
+              <h3 className={styles.heroCardTitle}>The Un-Slide Deck</h3>
+              <ul className={styles.heroCardList}>
                 {[
                   "We code. We don't just manage.",
                   'No salespeople. Just engineers.',
                   'Honest timelines. No BS.'
                 ].map((item, i) => (
-                  <li key={i} style={{ 
-                    marginBottom: '1rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    color: '#86868b',
-                    justifyContent: 'center',
-                    fontSize: isMobile ? '0.95rem' : '1rem',
-                  }}>
-                    <span style={{ color: '#0066cc' }}>→</span>
+                  <li key={i} className={styles.heroCardItem}>
+                    <span className={styles.heroCardCheck}>→</span>
                     {item}
                   </li>
                 ))}
@@ -556,43 +321,23 @@ export default function OverviewPage() {
         </div>
 
         {/* Stats Banner */}
-        <section style={statsGridStyle}>
+        <section className={styles.statsBanner}>
           {stats.map(stat => (
-            <div key={stat.label} style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: isMobile ? '1.5rem' : '2rem', marginBottom: '0.5rem' }}>{stat.icon}</div>
-              <div style={{ 
-                fontSize: isMobile ? '1.8rem' : '2.5rem', 
-                fontWeight: 300, 
-                color: '#0066cc', 
-                marginBottom: '0.3rem' 
-              }}>
-                {stat.value}
-              </div>
-              <div style={{ 
-                color: '#aaa', 
-                fontSize: isMobile ? '0.75rem' : '0.9rem' 
-              }}>{stat.label}</div>
+            <div key={stat.label} className={styles.statItem}>
+              <div className={styles.statIcon}>{stat.icon}</div>
+              <div className={styles.statValue}>{stat.value}</div>
+              <div className={styles.statLabel}>{stat.label}</div>
             </div>
           ))}
         </section>
 
         {/* Navigation Tabs */}
-        <div style={tabsContainerStyle}>
+        <div className={styles.tabsContainer}>
           {['essence', 'origin', 'philosophy', 'vibes'].map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              style={{
-                background: 'none',
-                border: 'none',
-                padding: isMobile ? '0.5rem 0.8rem' : '0.5rem 1rem',
-                fontSize: isMobile ? '0.9rem' : '1rem',
-                fontWeight: activeTab === tab ? 600 : 400,
-                color: activeTab === tab ? '#0066cc' : '#86868b',
-                cursor: 'pointer',
-                borderBottom: activeTab === tab ? '2px solid #0066cc' : 'none',
-                textTransform: 'capitalize'
-              }}
+              className={`${styles.tabButton} ${activeTab === tab ? styles.active : ''}`}
             >
               {tab}
             </button>
@@ -601,34 +346,14 @@ export default function OverviewPage() {
 
         {/* Tab Content */}
         {activeTab === 'essence' && (
-          <section id="essence" style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-            <h2 style={{ 
-              fontSize: isMobile ? '2rem' : '2.5rem', 
-              fontWeight: 300, 
-              color: '#1d1d1f', 
-              marginBottom: '2rem',
-              textAlign: 'center'
-            }}>
-              The Essence of PureLatency
-            </h2>
-            <div style={essenceGridStyle}>
+          <section id="essence" style={{ marginBottom: '6rem' }}>
+            <h2 className={styles.sectionTitle}>The Essence of PureLatency</h2>
+            <div className={styles.essenceGrid}>
               {coreEssence.map(item => (
-                <div
-                  key={item.title}
-                  style={{
-                    padding: isMobile ? '1.5rem' : '2rem',
-                    borderRadius: '20px',
-                    background: '#fafafa',
-                    border: '1px solid #e6e6e9'
-                  }}
-                >
-                  <div style={{ fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '1rem' }}>{item.icon}</div>
-                  <h3 style={{ fontSize: isMobile ? '1.3rem' : '1.5rem', marginBottom: '0.5rem', color: '#1d1d1f' }}>
-                    {item.title}
-                  </h3>
-                  <p style={{ color: '#86868b', fontSize: isMobile ? '0.95rem' : '1rem', lineHeight: '1.7' }}>
-                    {item.desc}
-                  </p>
+                <div key={item.title} className={styles.essenceCard}>
+                  <div className={styles.essenceIcon}>{item.icon}</div>
+                  <h3 className={styles.essenceTitle}>{item.title}</h3>
+                  <p className={styles.essenceDesc}>{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -638,115 +363,43 @@ export default function OverviewPage() {
         {activeTab === 'origin' && (
           <>
             {/* Origin Story */}
-            <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-              <h2 style={{ 
-                fontSize: isMobile ? '2rem' : '2.5rem', 
-                fontWeight: 300, 
-                color: '#1d1d1f', 
-                marginBottom: '1rem',
-                textAlign: 'center'
-              }}>
-                How We Started
-              </h2>
-              <p style={{ 
-                color: '#86868b', 
-                fontSize: isMobile ? '1rem' : '1.2rem', 
-                textAlign: 'center',
-                maxWidth: '800px',
-                margin: '0 auto 2rem',
-                padding: isMobile ? '0 1rem' : '0'
-              }}>
+            <section style={{ marginBottom: '6rem' }}>
+              <h2 className={styles.sectionTitle}>How We Started</h2>
+              <p className={styles.sectionSubtitle}>
                 It began with a napkin, a leaky ceiling, and five friends who believed work could be better
               </p>
-              <div style={originGridStyle}>
+              <div className={styles.originGrid}>
                 {originStory.map((item, index) => (
-                  <div key={item.title} style={{ 
-                    padding: isMobile ? '1.5rem' : '2rem',
-                    borderRadius: '20px',
-                    background: '#fafafa',
-                    border: '1px solid #e6e6e9',
-                    position: 'relative'
-                  }}>
-                    {!isMobile && index < originStory.length - 1 && (
-                      <div style={{
-                        position: 'absolute',
-                        top: '50%',
-                        right: '-20px',
-                        width: '40px',
-                        height: '2px',
-                        background: '#e6e6e9',
-                        transform: 'translateY(-50%)',
-                        zIndex: 1
-                      }} />
-                    )}
-                    <div style={{ fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '1rem' }}>{item.icon}</div>
-                    <div style={{ 
-                      fontSize: '0.9rem',
-                      color: item.color,
-                      fontWeight: 500,
-                      marginBottom: '0.5rem'
-                    }}>
+                  <div key={item.title} className={styles.originCard}>
+                    {index < originStory.length - 1 && <div className={styles.originConnector} />}
+                    <div className={styles.originIcon}>{item.icon}</div>
+                    <div className={styles.originYear} style={{ color: item.color }}>
                       {item.year}
                     </div>
-                    <h3 style={{ fontSize: isMobile ? '1.2rem' : '1.3rem', marginBottom: '0.5rem', color: '#1d1d1f' }}>
-                      {item.title}
-                    </h3>
-                    <p style={{ color: '#86868b', fontSize: isMobile ? '0.9rem' : '0.95rem', lineHeight: '1.6' }}>
-                      {item.desc}
-                    </p>
+                    <h3 className={styles.originTitle}>{item.title}</h3>
+                    <p className={styles.originDesc}>{item.desc}</p>
                   </div>
                 ))}
               </div>
             </section>
 
             {/* The Founders */}
-            <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-              <h2 style={{ 
-                fontSize: isMobile ? '2rem' : '2.5rem', 
-                fontWeight: 300, 
-                color: '#1d1d1f', 
-                marginBottom: '1rem',
-                textAlign: 'center'
-              }}>
-                The Five Who Stayed
-              </h2>
-              <p style={{ 
-                color: '#86868b', 
-                fontSize: isMobile ? '1rem' : '1.2rem', 
-                textAlign: 'center',
-                maxWidth: '800px',
-                margin: '0 auto 2rem',
-                padding: isMobile ? '0 1rem' : '0'
-              }}>
+            <section style={{ marginBottom: '6rem' }}>
+              <h2 className={styles.sectionTitle}>The Five Who Stayed</h2>
+              <p className={styles.sectionSubtitle}>
                 We could have taken easier paths. We chose this one.
               </p>
-              <div style={foundersGridStyle}>
+              <div className={styles.foundersGrid}>
                 {theFounders.map(founder => (
-                  <div
-                    key={founder.name}
-                    style={{
-                      padding: isMobile ? '1.5rem' : '2rem',
-                      borderRadius: '20px',
-                      background: '#fafafa',
-                      border: '1px solid #e6e6e9'
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                      <span style={{ fontSize: '1.8rem' }}>{founder.trait}</span>
-                      <span style={{ 
-                        fontSize: '0.9rem',
-                        color: founder.color,
-                        fontWeight: 500
-                      }}>
+                  <div key={founder.name} className={styles.founderCard}>
+                    <div className={styles.founderHeader}>
+                      <span className={styles.founderTrait}>{founder.trait}</span>
+                      <span className={styles.founderRole} style={{ color: founder.color }}>
                         {founder.role}
                       </span>
                     </div>
-                    <h3 style={{ fontSize: isMobile ? '1.2rem' : '1.3rem', marginBottom: '0.3rem', color: '#1d1d1f' }}>
-                      {founder.name}
-                    </h3>
-                    <p style={{ color: '#86868b', fontSize: '0.9rem', lineHeight: '1.6' }}>
-                      {founder.bio}
-                    </p>
+                    <h3 className={styles.founderName}>{founder.name}</h3>
+                    <p className={styles.founderBio}>{founder.bio}</p>
                   </div>
                 ))}
               </div>
@@ -757,50 +410,20 @@ export default function OverviewPage() {
         {activeTab === 'philosophy' && (
           <>
             {/* Work Philosophy */}
-            <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-              <h2 style={{ 
-                fontSize: isMobile ? '2rem' : '2.5rem', 
-                fontWeight: 300, 
-                color: '#1d1d1f', 
-                marginBottom: '1rem',
-                textAlign: 'center'
-              }}>
-                How We Actually Work
-              </h2>
-              <p style={{ 
-                color: '#86868b', 
-                fontSize: isMobile ? '1rem' : '1.2rem', 
-                textAlign: 'center',
-                maxWidth: '800px',
-                margin: '0 auto 2rem',
-                padding: isMobile ? '0 1rem' : '0'
-              }}>
+            <section style={{ marginBottom: '6rem' }}>
+              <h2 className={styles.sectionTitle}>How We Actually Work</h2>
+              <p className={styles.sectionSubtitle}>
                 No mission statements. Just how we show up every day.
               </p>
-              <div style={philosophyGridStyle}>
+              <div className={styles.philosophyGrid}>
                 {workPhilosophy.map(item => (
-                  <div
-                    key={item.title}
-                    style={{
-                      padding: isMobile ? '1.5rem' : '2rem',
-                      borderRadius: '20px',
-                      background: '#fafafa',
-                      border: '1px solid #e6e6e9',
-                      textAlign: 'center'
-                    }}
-                  >
-                    <div style={{ fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '1rem' }}>{item.icon}</div>
-                    <h3 style={{ fontSize: isMobile ? '1.1rem' : '1.2rem', marginBottom: '0.5rem', color: '#1d1d1f' }}>
-                      {item.title}
-                    </h3>
-                    <p style={{ color: '#86868b', fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '1rem' }}>
-                      {item.desc}
-                    </p>
+                  <div key={item.title} className={styles.philosophyCard}>
+                    <div className={styles.philosophyIcon}>{item.icon}</div>
+                    <h3 className={styles.philosophyTitle}>{item.title}</h3>
+                    <p className={styles.philosophyDesc}>{item.desc}</p>
                     <div>
-                      <div style={{ fontSize: isMobile ? '1.5rem' : '1.8rem', fontWeight: 300, color: '#0066cc' }}>
-                        {item.stat}
-                      </div>
-                      <div style={{ color: '#86868b', fontSize: '0.8rem' }}>{item.statDesc}</div>
+                      <div className={styles.philosophyStat}>{item.stat}</div>
+                      <div className={styles.philosophyStatDesc}>{item.statDesc}</div>
                     </div>
                   </div>
                 ))}
@@ -808,32 +431,16 @@ export default function OverviewPage() {
             </section>
 
             {/* Client Voices */}
-            <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-              <h2 style={{ 
-                fontSize: isMobile ? '2rem' : '2.5rem', 
-                fontWeight: 300, 
-                color: '#1d1d1f', 
-                marginBottom: '2rem',
-                textAlign: 'center'
-              }}>
-                What People Say (When We're Not in the Room)
-              </h2>
-              <div style={voicesGridStyle}>
+            <section style={{ marginBottom: '6rem' }}>
+              <h2 className={styles.sectionTitle}>What People Say (When We're Not in the Room)</h2>
+              <div className={styles.voicesGrid}>
                 {clientVoices.map((voice, index) => (
-                  <div key={index} style={{
-                    padding: isMobile ? '1.5rem' : '2rem',
-                    background: '#fafafa',
-                    borderRadius: '20px',
-                    border: '1px solid #e6e6e9',
-                    position: 'relative'
-                  }}>
-                    <span style={{ fontSize: isMobile ? '3rem' : '4rem', color: '#0066cc', opacity: 0.2, position: 'absolute', top: '10px', left: '20px' }}>"</span>
-                    <p style={{ color: '#1d1d1f', fontSize: isMobile ? '0.95rem' : '1rem', lineHeight: '1.8', marginBottom: '1.5rem', position: 'relative', zIndex: 2, fontStyle: 'italic' }}>
-                      {voice.quote}
-                    </p>
+                  <div key={index} className={styles.voiceCard}>
+                    <span className={styles.voiceQuoteMark}>"</span>
+                    <p className={styles.voiceText}>{voice.quote}</p>
                     <div>
-                      <strong style={{ color: '#1d1d1f', fontSize: isMobile ? '0.95rem' : '1rem' }}>{voice.author}</strong>
-                      <p style={{ color: '#86868b', fontSize: '0.85rem' }}>
+                      <div className={styles.voiceAuthor}>{voice.author}</div>
+                      <p className={styles.voiceMeta}>
                         {voice.role}, {voice.company}
                       </p>
                     </div>
@@ -847,85 +454,35 @@ export default function OverviewPage() {
         {activeTab === 'vibes' && (
           <>
             {/* The Space */}
-            <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-              <h2 style={{ 
-                fontSize: isMobile ? '2rem' : '2.5rem', 
-                fontWeight: 300, 
-                color: '#1d1d1f', 
-                marginBottom: '1rem',
-                textAlign: 'center'
-              }}>
-                Where We Create
-              </h2>
-              <p style={{ 
-                color: '#86868b', 
-                fontSize: isMobile ? '1rem' : '1.2rem', 
-                textAlign: 'center',
-                maxWidth: '800px',
-                margin: '0 auto 2rem',
-                padding: isMobile ? '0 1rem' : '0'
-              }}>
+            <section style={{ marginBottom: '6rem' }}>
+              <h2 className={styles.sectionTitle}>Where We Create</h2>
+              <p className={styles.sectionSubtitle}>
                 Our offices reflect who we are — a little weird, a lot functional
               </p>
-              <div style={spaceGridStyle}>
+              <div className={styles.spaceGrid}>
                 {theSpace.map(place => (
-                  <div
-                    key={place.location}
-                    style={{
-                      padding: isMobile ? '1.5rem' : '2rem',
-                      background: '#fafafa',
-                      borderRadius: '20px',
-                      border: '1px solid #e6e6e9'
-                    }}
-                  >
-                    <div style={{ fontSize: isMobile ? '2.5rem' : '3rem', marginBottom: '1rem' }}>{place.icon}</div>
-                    <h3 style={{ fontSize: isMobile ? '1.3rem' : '1.5rem', marginBottom: '0.2rem', color: '#1d1d1f' }}>
-                      {place.location}
-                    </h3>
-                    <p style={{ color: place.color, fontSize: '0.9rem', marginBottom: '1rem', fontStyle: 'italic' }}>
+                  <div key={place.location} className={styles.spaceCard}>
+                    <div className={styles.spaceIcon}>{place.icon}</div>
+                    <h3 className={styles.spaceLocation}>{place.location}</h3>
+                    <p className={styles.spaceVibe} style={{ color: place.color }}>
                       {place.vibe}
                     </p>
-                    <p style={{ color: '#86868b', fontSize: '0.85rem', lineHeight: '1.6' }}>
-                      ✨ {place.feature}
-                    </p>
+                    <p className={styles.spaceFeature}>✨ {place.feature}</p>
                   </div>
                 ))}
               </div>
             </section>
 
             {/* The Unexpected */}
-            <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-              <h2 style={{ 
-                fontSize: isMobile ? '2rem' : '2.5rem', 
-                fontWeight: 300, 
-                color: '#1d1d1f', 
-                marginBottom: '2rem',
-                textAlign: 'center'
-              }}>
-                Things You Didn't Expect
-              </h2>
-              <div style={unexpectedGridStyle}>
+            <section style={{ marginBottom: '6rem' }}>
+              <h2 className={styles.sectionTitle}>Things You Didn't Expect</h2>
+              <div className={styles.unexpectedGrid}>
                 {theUnexpected.map(item => (
-                  <div
-                    key={item.title}
-                    style={{
-                      padding: isMobile ? '1.2rem' : '1.5rem',
-                      background: '#fafafa',
-                      borderRadius: '20px',
-                      border: '1px solid #e6e6e9',
-                      textAlign: 'center'
-                    }}
-                  >
-                    <div style={{ fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '0.5rem' }}>{item.icon}</div>
-                    <h3 style={{ fontSize: isMobile ? '1.1rem' : '1.2rem', marginBottom: '0.3rem', color: '#1d1d1f' }}>
-                      {item.title}
-                    </h3>
-                    <p style={{ color: '#86868b', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
-                      {item.desc}
-                    </p>
-                    <p style={{ color: '#0066cc', fontSize: '0.75rem', fontWeight: 500 }}>
-                      {item.detail}
-                    </p>
+                  <div key={item.title} className={styles.unexpectedCard}>
+                    <div className={styles.unexpectedIcon}>{item.icon}</div>
+                    <h3 className={styles.unexpectedTitle}>{item.title}</h3>
+                    <p className={styles.unexpectedDesc}>{item.desc}</p>
+                    <p className={styles.unexpectedDetail}>{item.detail}</p>
                   </div>
                 ))}
               </div>
@@ -934,163 +491,73 @@ export default function OverviewPage() {
         )}
 
         {/* CTA Section */}
-       <section
-  style={{
-    marginTop: isMobile ? '1.5rem' : '3rem',          // was 2rem / 4rem
-    display: 'flex',
-    justifyContent: 'center',
-    padding: isMobile ? '0 1rem' : '0',
-  }}
->
-  <div
-    style={{
-      width: '100%',
-      maxWidth: '1200px',
-      padding: isMobile ? '2rem 1.25rem' : '2.5rem 1.75rem', // smaller vertical padding
-      borderRadius: '24px',
-      textAlign: 'center',
-      background: `
-        radial-gradient(circle at 20% 30%, #7a3cff 0%, transparent 40%),
-        radial-gradient(circle at 80% 10%, #ff2e88 0%, transparent 40%),
-        linear-gradient(180deg, #0b1c48 0%, #2a1e5c 100%)
-      `,
-      color: '#ffffff',
-    }}
-  >
-    <h2
-      style={{
-        fontSize: isMobile ? '1.7rem' : '2.4rem',     // slightly smaller text
-        fontWeight: 400,
-        marginBottom: '0.5rem',                      // less space below title
-      }}
-    >
-      Contact Us
-    </h2>
-
-    <p
-      style={{
-        fontSize: isMobile ? '0.95rem' : '1.1rem',
-        marginBottom: '1.5rem',                      // less paragraph bottom margin
-        opacity: 0.95,
-        color: '#ffffff',
-      }}
-    >
-      Be always in front line, get in touch today.
-    </p>
-
-    <Link
-      href="/contact"
-      style={{
-        display: 'inline-block',
-        padding: isMobile ? '10px 32px' : '12px 48px', // smaller button
-        borderRadius: '70px 70px 0 70px',
-        border: '2px solid #ffffff',
-        color: '#ffffff',
-        fontWeight: 600,
-        fontSize: isMobile ? '0.95rem' : '1rem',
-        textDecoration: 'none',
-        transition: 'all 0.3s ease',
-        width: isMobile ? '100%' : 'auto',
-        maxWidth: isMobile ? '260px' : 'none',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.background = '#ffffff';
-        e.currentTarget.style.color = '#111';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.background = 'transparent';
-        e.currentTarget.style.color = '#ffffff';
-      }}
-    >
-      Contact Us
-    </Link>
-  </div>
-</section>
-
+        <section className={styles.ctaSection}>
+          <div className={styles.ctaCard}>
+            <h2 className={styles.ctaTitle}>Contact Us</h2>
+            <p className={styles.ctaText}>Be always in front line, get in touch today.</p>
+            <Link href="/contact" className={styles.ctaButton}>
+              Contact Us
+            </Link>
+          </div>
+        </section>
 
         {/* Back to About */}
-        <div style={{ 
-          borderTop: '1px solid #e6e6e9',
-          paddingTop: '2rem',
-          textAlign: 'center',
-          marginTop: '2rem'
-        }}>
-          <Link 
-            href="/about" 
-            style={{ 
-              color: '#86868b', 
-              textDecoration: 'none', 
-              fontSize: isMobile ? '0.85rem' : '0.9rem',
-              display: 'inline-block'
-            }}
-          >
+        <div className={styles.backLinkContainer}>
+          <Link href="/about" className={styles.backLink}>
             ← Back to About
           </Link>
         </div>
       </main>
-{/* Footer */}
-      <footer
-        style={{
-          background: '#111',
-          color: '#aaa',
-          padding: isMobile ? '3rem 1rem' : '4rem 2rem',
-          marginTop: '4rem'
-        }}
-      >
-        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-          <div style={footerGridStyle}>
+
+      {/* Footer */}
+      <footer className={styles.footer}>
+        <div className={styles.footerContainer}>
+          <div className={styles.footerGrid}>
             <div>
-              <div style={{ fontSize: isMobile ? '1.3rem' : '1.5rem', color: '#fff', marginBottom: '1rem' }}>Pure Latency</div>
-              <p style={{ color: '#666', lineHeight: '1.7', fontSize: isMobile ? '0.9rem' : '1rem' }}>
+              <div className={styles.footerLogo}>Pure Latency</div>
+              <p className={styles.footerText}>
                 Building exceptional software that makes a difference.
               </p>
             </div>
             <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Company</h4>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/about" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>About</Link>
+              <h4 className={styles.footerHeading}>Company</h4>
+              <ul className={styles.footerList}>
+                <li className={styles.footerListItem}>
+                  <Link href="/about" className={styles.footerLink}>About</Link>
                 </li>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/careers" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Careers</Link>
+                <li className={styles.footerListItem}>
+                  <Link href="/careers" className={styles.footerLink}>Careers</Link>
                 </li>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/blog" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Blog</Link>
+                <li className={styles.footerListItem}>
+                  <Link href="/blog" className={styles.footerLink}>Blog</Link>
                 </li>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/contact" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Contact</Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Legal</h4>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/privacy" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Privacy</Link>
-                </li>
-                <li style={{ marginBottom: '0.5rem' }}>
-                  <Link href="/terms" style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>Terms</Link>
+                <li className={styles.footerListItem}>
+                  <Link href="/contact" className={styles.footerLink}>Contact</Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Connect</h4>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
+              <h4 className={styles.footerHeading}>Legal</h4>
+              <ul className={styles.footerList}>
+                <li className={styles.footerListItem}>
+                  <Link href="/privacy" className={styles.footerLink}>Privacy</Link>
+                </li>
+                <li className={styles.footerListItem}>
+                  <Link href="/terms" className={styles.footerLink}>Terms</Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className={styles.footerHeading}>Connect</h4>
+              <ul className={styles.footerList}>
                 {socialMedia.map(social => (
-                  <li key={social.name} style={{ marginBottom: '0.8rem' }}>
+                  <li key={social.name} className={styles.footerListItem}>
                     <a 
                       href={social.href} 
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{ 
-                        color: '#aaa', 
-                        textDecoration: 'none',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        justifyContent: isMobile ? 'center' : 'flex-start',
-                        transition: 'color 0.2s ease',
-                      }}
+                      className={styles.footerSocialLink}
+                      style={{ color: '#aaa' }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.color = social.color;
                       }}
@@ -1101,22 +568,16 @@ export default function OverviewPage() {
                       <img 
                         src={social.icon} 
                         alt={social.name}
-                        style={{ width: '20px', height: '20px' }}
+                        className={styles.footerSocialIcon}
                       />
-                      <span style={{ fontSize: isMobile ? '0.9rem' : '1rem' }}>{social.name}</span>
+                      <span>{social.name}</span>
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
-          <div style={{ 
-            borderTop: '1px solid #333', 
-            paddingTop: '2rem',
-            textAlign: 'center',
-            color: '#666',
-            fontSize: isMobile ? '0.8rem' : '0.9rem'
-          }}>
+          <div className={styles.footerBottom}>
             © 2026 PureLatency. All rights reserved. Crafted with precision in San Francisco.
           </div>
         </div>
