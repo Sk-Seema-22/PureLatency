@@ -12,6 +12,8 @@ const Footer: React.FC = () => {
         { label: 'Data and AI', href: '/services/data-ai' },
         { label: 'Cloud and DevOps', href: '/services/cloud-devops' },
         { label: 'Infrastructure', href: '/services/infrastructure' },
+        { label: 'Quantum Compute', href: '/services/quantum-compute' },
+        { label: 'Fiber Optics', href: '/services/fiber-optics' },
       ]
     },
     {

@@ -1,21 +1,10 @@
 'use client';
+
 import Navbar from '@/components/layout/Navbar';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import styles from './Overview.module.css'; // adjust path as needed
 
 export default function Overview() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Check if mobile on client side
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
   const coreServices = [
     {
       title: 'Applications',
@@ -149,7 +138,6 @@ export default function Overview() {
     'OTDR', 'OS2', 'OM4', 'DWDM', 'MPO/MTP'
   ];
 
-  // Social media icons with image URLs
   const socialMedia = [
     { 
       name: 'Instagram', 
@@ -171,275 +159,82 @@ export default function Overview() {
     }
   ];
 
-  // Responsive styles
-  const containerStyle = {
-    maxWidth: '1280px',
-    margin: '0 auto',
-    padding: isMobile ? '5rem 1rem 2rem' : '6rem 2rem 4rem',
-  };
-
-  const heroGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-    gap: isMobile ? '2rem' : '4rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-    alignItems: 'center',
-  };
-
-  const heroTitleStyle = {
-    fontSize: isMobile ? '2.5rem' : '4rem',
-    fontWeight: 300,
-    color: '#1d1d1f',
-    marginBottom: '1.5rem',
-    lineHeight: '1.2',
-    textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-  };
-
-  const statsGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
-    gap: isMobile ? '1.5rem' : '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-    padding: isMobile ? '2rem' : '3rem',
-    background: 'linear-gradient(135deg, #1d1d1f 0%, #2d2d2f 100%)',
-    borderRadius: '20px',
-    color: 'white',
-  };
-
-  const servicesGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const approachGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
-    gap: isMobile ? '1.5rem' : '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const differentiatorsGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const testimonialsGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-    gap: '2rem',
-    marginBottom: isMobile ? '3rem' : '6rem',
-  };
-
-  const footerGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : '2fr 1fr 1fr 1fr',
-    gap: isMobile ? '2rem' : '4rem',
-    marginBottom: '4rem',
-    textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-  };
-
   return (
     <>
       <Navbar />
 
-      <main style={containerStyle}>
-        {/* Social Media - With Icons */}
-        <section style={{ 
-          display: 'flex', 
-          justifyContent: isMobile ? 'center' : 'flex-end', 
-          marginBottom: '2rem',
-          flexWrap: 'wrap'
-        }}>
-          <div style={{ 
-            display: 'flex', 
-            gap: isMobile ? '20px' : '24px',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
+      <main className={styles.container}>
+        {/* Social Media */}
+        <section className={styles.socialSection}>
+          <div className={styles.socialLinks}>
             {socialMedia.map((social) => (
               <a
                 key={social.name}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ 
-                  textDecoration: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  transition: 'transform 0.2s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                }}
+                className={styles.socialLink}
+                style={{ color: social.color }}
               >
                 <img 
                   src={social.icon} 
                   alt={social.name}
-                  style={{ 
-                    width: isMobile ? '24px' : '28px', 
-                    height: isMobile ? '24px' : '28px',
-                  }}
+                  className={styles.socialIcon}
                 />
-                {!isMobile && (
-                  <span style={{ 
-                    color: social.color, 
-                    fontWeight: 500,
-                    fontSize: '0.9rem'
-                  }}>
-                    {social.name}
-                  </span>
-                )}
+                <span className={styles.socialName}>{social.name}</span>
               </a>
             ))}
           </div>
         </section>
 
         {/* Breadcrumb */}
-        <div style={{ 
-          color: '#86868b', 
-          marginBottom: '2rem', 
-          fontSize: isMobile ? '0.85rem' : '0.9rem',
-          textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-        }}>
-          <Link href="/" style={{ color: '#86868b', textDecoration: 'none' }}>Home</Link> / 
-          <span style={{ color: '#1d1d1f' }}> Services</span>
+        <div className={styles.breadcrumb}>
+          <Link href="/" className={styles.breadcrumbLink}>Home</Link> / 
+          <span className={styles.breadcrumbCurrent}> Services</span>
         </div>
 
         {/* Hero Section */}
-        <div style={heroGridStyle}>
+        <div className={styles.heroGrid}>
           <div>
-            <div style={{ 
-              display: 'inline-block',
-              background: 'rgba(0,102,204,0.1)',
-              color: '#0066cc',
-              padding: isMobile ? '0.4rem 1.2rem' : '0.5rem 1.5rem',
-              borderRadius: '30px',
-              fontSize: isMobile ? '0.85rem' : '0.9rem',
-              marginBottom: '1.5rem',
-              textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-              width: isMobile ? '100%' : 'auto',
-            }}>
+            <div className={styles.heroBadge}>
               🚀 Comprehensive Digital Solutions
             </div>
-            <h1 style={heroTitleStyle}>
+            <h1 className={styles.heroTitle}>
               Transform your vision<br />
-              <span style={{ 
-                background: 'linear-gradient(135deg, #0066cc 0%, #7C3AED 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}>
+              <span className={styles.heroTitleGradient}>
                 into digital reality
               </span>
             </h1>
-            <p style={{ 
-              color: '#86868b', 
-              fontSize: isMobile ? '1rem' : '1.2rem', 
-              lineHeight: '1.7', 
-              marginBottom: '2rem',
-              textAlign: (isMobile ? 'center' : 'left') as 'center' | 'left',
-              padding: isMobile ? '0 0.5rem' : '0'
-            }}>
+            <p className={styles.heroText}>
               We offer a comprehensive suite of digital services designed to help you build, 
               scale, and optimize your technology. From applications to infrastructure, 
               we deliver solutions that drive real business results.
             </p>
-            <div style={{ 
-              display: 'flex', 
-              gap: '1rem',
-              flexDirection: isMobile ? 'column' : 'row',
-              justifyContent: isMobile ? 'center' : 'flex-start',
-            }}>
-              <Link
-                href="/contact"
-                style={{
-                  background: '#0066cc',
-                  color: 'white',
-                  padding: isMobile ? '0.875rem 1.5rem' : '1rem 2rem',
-                  borderRadius: '40px',
-                  textDecoration: 'none',
-                  fontWeight: 500,
-                  textAlign: 'center' as const,
-                  width: isMobile ? '100%' : 'auto',
-                }}
-              >
+            <div className={styles.buttonGroup}>
+              <Link href="/contact" className={styles.buttonPrimary}>
                 Start Your Project
               </Link>
-              <Link
-                href="#services"
-                style={{
-                  background: 'transparent',
-                  color: '#1d1d1f',
-                  padding: isMobile ? '0.875rem 1.5rem' : '1rem 2rem',
-                  borderRadius: '40px',
-                  textDecoration: 'none',
-                  border: '1px solid #e6e6e9',
-                  textAlign: 'center' as const,
-                  width: isMobile ? '100%' : 'auto',
-                }}
-              >
+              <Link href="#services" className={styles.buttonSecondary}>
                 Explore Services ↓
               </Link>
             </div>
           </div>
-          <div style={{
-            background: 'linear-gradient(135deg, #f5f5f7 0%, #e6e6e9 100%)',
-            borderRadius: '30px',
-            padding: isMobile ? '2rem' : '3rem',
-            position: 'relative',
-            overflow: 'hidden',
-            marginTop: isMobile ? '1rem' : '0',
-          }}>
-            <div style={{
-              position: 'absolute',
-              top: '-50px',
-              right: '-50px',
-              width: isMobile ? '150px' : '200px',
-              height: isMobile ? '150px' : '200px',
-              background: 'rgba(0,102,204,0.1)',
-              borderRadius: '50%'
-            }} />
-            <div style={{
-              position: 'absolute',
-              bottom: '-50px',
-              left: '-50px',
-              width: isMobile ? '150px' : '200px',
-              height: isMobile ? '150px' : '200px',
-              background: 'rgba(124,58,237,0.1)',
-              borderRadius: '50%'
-            }} />
-            <div style={{ position: 'relative', zIndex: 2 }}>
-              <div style={{ fontSize: isMobile ? '2.5rem' : '3rem', marginBottom: '1.5rem', textAlign: 'center' }}>⚡</div>
-              <h3 style={{ 
-                fontSize: isMobile ? '1.5rem' : '1.8rem', 
-                fontWeight: 400, 
-                marginBottom: '1rem',
-                textAlign: 'center'
-              }}>The PureLatency Advantage</h3>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
+
+          {/* Right Card */}
+          <div className={styles.heroCard}>
+            <div className={styles.heroCardBg1} />
+            <div className={styles.heroCardBg2} />
+            <div className={styles.heroCardContent}>
+              <div className={styles.heroCardIcon}>⚡</div>
+              <h3 className={styles.heroCardTitle}>The PureLatency Advantage</h3>
+              <ul className={styles.heroCardList}>
                 {[
                   '50+ successful projects',
                   '100% client satisfaction',
                   '10+ years of expertise'
                 ].map((item, i) => (
-                  <li key={i} style={{ 
-                    marginBottom: '1rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    color: '#86868b',
-                    justifyContent: 'center',
-                    fontSize: isMobile ? '0.95rem' : '1rem',
-                  }}>
-                    <span style={{ color: '#0066cc' }}>✓</span>
+                  <li key={i} className={styles.heroCardItem}>
+                    <span className={styles.heroCardCheck}>✓</span>
                     {item}
                   </li>
                 ))}
@@ -449,104 +244,42 @@ export default function Overview() {
         </div>
 
         {/* Stats Banner */}
-        <section style={statsGridStyle}>
+        <section className={styles.statsBanner}>
           {stats.map(stat => (
-            <div key={stat.label} style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: isMobile ? '1.5rem' : '2rem', marginBottom: '0.5rem' }}>{stat.icon}</div>
-              <div style={{ 
-                fontSize: isMobile ? '1.8rem' : '2.5rem', 
-                fontWeight: 300, 
-                color: '#0066cc', 
-                marginBottom: '0.3rem' 
-              }}>
-                {stat.value}
-              </div>
-              <div style={{ 
-                color: '#aaa', 
-                fontSize: isMobile ? '0.75rem' : '0.9rem' 
-              }}>{stat.label}</div>
+            <div key={stat.label} className={styles.statItem}>
+              <div className={styles.statIcon}>{stat.icon}</div>
+              <div className={styles.statValue}>{stat.value}</div>
+              <div className={styles.statLabel}>{stat.label}</div>
             </div>
           ))}
         </section>
 
         {/* Core Services */}
-        <section id="services" style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-          <h2 style={{ 
-            fontSize: isMobile ? '2rem' : '2.5rem', 
-            fontWeight: 300, 
-            color: '#1d1d1f', 
-            marginBottom: '1rem',
-            textAlign: 'center',
-            padding: isMobile ? '0 1rem' : '0'
-          }}>
-            Our Core Services
-          </h2>
-          <p style={{ 
-            color: '#86868b', 
-            fontSize: isMobile ? '1rem' : '1.2rem', 
-            textAlign: 'center',
-            maxWidth: '800px',
-            margin: '0 auto 2rem',
-            padding: isMobile ? '0 1rem' : '0'
-          }}>
+        <section id="services" style={{ marginBottom: '6rem' }}>
+          <h2 className={styles.sectionTitle}>Our Core Services</h2>
+          <p className={styles.sectionSubtitle}>
             Comprehensive digital solutions tailored to your unique business needs
           </p>
-          <div style={servicesGridStyle}>
+          <div className={styles.servicesGrid}>
             {coreServices.map(service => (
               <Link
                 key={service.title}
                 href={service.href}
-                style={{ textDecoration: 'none' }}
+                className={styles.serviceCard}
+                style={{ '--service-color': service.color } as React.CSSProperties}
               >
-                <div
-                  style={{
-                    padding: isMobile ? '1.5rem' : '2rem',
-                    borderRadius: '20px',
-                    background: 'white',
-                    border: '1px solid #e6e6e9',
-                    transition: 'transform 0.2s, border-color 0.2s',
-                    cursor: 'pointer',
-                    height: '100%'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isMobile) {
-                      e.currentTarget.style.borderColor = service.color;
-                      e.currentTarget.style.transform = 'translateY(-4px)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isMobile) {
-                      e.currentTarget.style.borderColor = '#e6e6e9';
-                      e.currentTarget.style.transform = 'translateY(0)';
-                    }
-                  }}
-                >
-                  <div style={{ fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '1rem' }}>{service.icon}</div>
-                  <h3 style={{ fontSize: isMobile ? '1.2rem' : '1.3rem', marginBottom: '0.5rem', color: '#1d1d1f' }}>
-                    {service.title}
-                  </h3>
-                  <p style={{ color: '#86868b', fontSize: isMobile ? '0.85rem' : '0.95rem', lineHeight: '1.6', marginBottom: '1rem' }}>
-                    {service.desc}
-                  </p>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
-                    {service.metrics.map(metric => (
-                      <span
-                        key={metric}
-                        style={{
-                          background: '#f5f5f7',
-                          color: '#666',
-                          padding: '0.2rem 0.6rem',
-                          borderRadius: '20px',
-                          fontSize: '0.7rem'
-                        }}
-                      >
-                        {metric}
-                      </span>
-                    ))}
-                  </div>
-                  <div style={{ color: service.color, fontWeight: 500, fontSize: '0.9rem' }}>
-                    Learn more →
-                  </div>
+                <div className={styles.serviceIcon}>{service.icon}</div>
+                <h3 className={styles.serviceTitle}>{service.title}</h3>
+                <p className={styles.serviceDesc}>{service.desc}</p>
+                <div className={styles.serviceMetrics}>
+                  {service.metrics.map(metric => (
+                    <span key={metric} className={styles.serviceMetric}>
+                      {metric}
+                    </span>
+                  ))}
+                </div>
+                <div className={styles.serviceLink} style={{ color: service.color }}>
+                  Learn more →
                 </div>
               </Link>
             ))}
@@ -554,115 +287,42 @@ export default function Overview() {
         </section>
 
         {/* Our Approach */}
-        <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-          <h2 style={{ 
-            fontSize: isMobile ? '2rem' : '2.5rem', 
-            fontWeight: 300, 
-            color: '#1d1d1f', 
-            marginBottom: '1rem',
-            textAlign: 'center',
-            padding: isMobile ? '0 1rem' : '0'
-          }}>
-            Our Approach
-          </h2>
-          <p style={{ 
-            color: '#86868b', 
-            fontSize: isMobile ? '1rem' : '1.2rem', 
-            textAlign: 'center',
-            maxWidth: '800px',
-            margin: '0 auto 2rem',
-            padding: isMobile ? '0 1rem' : '0'
-          }}>
+        <section style={{ marginBottom: '6rem' }}>
+          <h2 className={styles.sectionTitle}>Our Approach</h2>
+          <p className={styles.sectionSubtitle}>
             A proven methodology that ensures successful project delivery
           </p>
-          <div style={approachGridStyle}>
+          <div className={styles.approachGrid}>
             {approach.map((phase, index) => (
-              <div key={phase.phase} style={{ 
-                textAlign: 'center',
-                padding: isMobile ? '1.5rem' : '2rem',
-                borderRadius: '20px',
-                background: '#fafafa',
-                border: '1px solid #e6e6e9',
-                position: 'relative'
-              }}>
-                {!isMobile && index < approach.length - 1 && (
-                  <div style={{
-                    position: 'absolute',
-                    top: '50%',
-                    right: '-20px',
-                    width: '40px',
-                    height: '2px',
-                    background: '#e6e6e9',
-                    transform: 'translateY(-50%)',
-                    zIndex: 1
-                  }} />
-                )}
-                <div style={{ fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '1rem' }}>{phase.icon}</div>
-                <div style={{ 
-                  fontSize: '1rem',
-                  color: phase.color,
-                  fontWeight: 500,
-                  marginBottom: '0.5rem'
-                }}>
-                  Phase {index + 1}
-                </div>
-                <h3 style={{ fontSize: isMobile ? '1.2rem' : '1.3rem', marginBottom: '0.8rem', color: '#1d1d1f' }}>
-                  {phase.phase}
-                </h3>
-                <p style={{ color: '#86868b', fontSize: isMobile ? '0.85rem' : '0.95rem', lineHeight: '1.6' }}>
-                  {phase.desc}
-                </p>
+              <div
+                key={phase.phase}
+                className={styles.approachItem}
+                style={{ '--phase-color': phase.color } as React.CSSProperties}
+              >
+                <div className={styles.approachIcon}>{phase.icon}</div>
+                <div className={styles.approachPhaseNum}>Phase {index + 1}</div>
+                <h3 className={styles.approachTitle}>{phase.phase}</h3>
+                <p className={styles.approachDesc}>{phase.desc}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* What Sets Us Apart */}
-        <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-          <h2 style={{ 
-            fontSize: isMobile ? '2rem' : '2.5rem', 
-            fontWeight: 300, 
-            color: '#1d1d1f', 
-            marginBottom: '1rem',
-            textAlign: 'center',
-            padding: isMobile ? '0 1rem' : '0'
-          }}>
-            What Sets Us Apart
-          </h2>
-          <p style={{ 
-            color: '#86868b', 
-            fontSize: isMobile ? '1rem' : '1.2rem', 
-            textAlign: 'center',
-            maxWidth: '800px',
-            margin: '0 auto 2rem',
-            padding: isMobile ? '0 1rem' : '0'
-          }}>
+        <section style={{ marginBottom: '6rem' }}>
+          <h2 className={styles.sectionTitle}>What Sets Us Apart</h2>
+          <p className={styles.sectionSubtitle}>
             Why clients choose PureLatency for their most important projects
           </p>
-          <div style={differentiatorsGridStyle}>
+          <div className={styles.differentiatorsGrid}>
             {differentiators.map(diff => (
-              <div
-                key={diff.title}
-                style={{
-                  padding: isMobile ? '1.5rem' : '2rem',
-                  borderRadius: '20px',
-                  background: '#fafafa',
-                  border: '1px solid #e6e6e9',
-                  textAlign: 'center'
-                }}
-              >
-                <div style={{ fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '1rem' }}>{diff.icon}</div>
-                <h3 style={{ fontSize: isMobile ? '1.1rem' : '1.2rem', marginBottom: '0.5rem', color: '#1d1d1f' }}>
-                  {diff.title}
-                </h3>
-                <p style={{ color: '#86868b', fontSize: isMobile ? '0.85rem' : '0.95rem', lineHeight: '1.6', marginBottom: '1rem' }}>
-                  {diff.desc}
-                </p>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: isMobile ? '1.5rem' : '1.8rem', fontWeight: 300, color: '#0066cc' }}>
-                    {diff.stat}
-                  </div>
-                  <div style={{ color: '#86868b', fontSize: isMobile ? '0.75rem' : '0.85rem' }}>{diff.statDesc}</div>
+              <div key={diff.title} className={styles.diffCard}>
+                <div className={styles.diffIcon}>{diff.icon}</div>
+                <h3 className={styles.diffTitle}>{diff.title}</h3>
+                <p className={styles.diffDesc}>{diff.desc}</p>
+                <div>
+                  <div className={styles.diffStat}>{diff.stat}</div>
+                  <div className={styles.diffStatDesc}>{diff.statDesc}</div>
                 </div>
               </div>
             ))}
@@ -670,49 +330,14 @@ export default function Overview() {
         </section>
 
         {/* Technology Stack */}
-        <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-          <h2 style={{ 
-            fontSize: isMobile ? '2rem' : '2.5rem', 
-            fontWeight: 300, 
-            color: '#1d1d1f', 
-            marginBottom: '1.5rem',
-            textAlign: 'center',
-            padding: isMobile ? '0 1rem' : '0'
-          }}>
-            Our Technology Ecosystem
-          </h2>
-          <p style={{ 
-            color: '#86868b', 
-            fontSize: isMobile ? '1rem' : '1.2rem', 
-            textAlign: 'center',
-            maxWidth: '800px',
-            margin: '0 auto 2rem',
-            padding: isMobile ? '0 1rem' : '0'
-          }}>
+        <section style={{ marginBottom: '6rem' }}>
+          <h2 className={styles.sectionTitle}>Our Technology Ecosystem</h2>
+          <p className={styles.sectionSubtitle}>
             We leverage the best tools and frameworks to build exceptional solutions
           </p>
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: isMobile ? '0.5rem' : '1rem',
-            padding: isMobile ? '1.5rem' : '2rem',
-            background: '#fafafa',
-            borderRadius: '20px'
-          }}>
+          <div className={styles.techStack}>
             {technologies.map(tech => (
-              <span
-                key={tech}
-                style={{
-                  background: 'white',
-                  color: '#1d1d1f',
-                  padding: isMobile ? '0.4rem 0.8rem' : '0.6rem 1.2rem',
-                  borderRadius: '30px',
-                  fontSize: isMobile ? '0.8rem' : '0.9rem',
-                  border: '1px solid #e6e6e9',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
-                }}
-              >
+              <span key={tech} className={styles.techItem}>
                 {tech}
               </span>
             ))}
@@ -720,173 +345,68 @@ export default function Overview() {
         </section>
 
         {/* Testimonials */}
-        <section style={{ marginBottom: isMobile ? '3rem' : '6rem' }}>
-          <h2 style={{ 
-            fontSize: isMobile ? '2rem' : '2.5rem', 
-            fontWeight: 300, 
-            color: '#1d1d1f', 
-            marginBottom: '1.5rem',
-            textAlign: 'center',
-            padding: isMobile ? '0 1rem' : '0'
-          }}>
-            What Our Clients Say
-          </h2>
-          <div style={testimonialsGridStyle}>
-            <div style={{
-              padding: isMobile ? '1.5rem' : '2rem',
-              background: '#fafafa',
-              borderRadius: '20px',
-              border: '1px solid #e6e6e9',
-              position: 'relative'
-            }}>
-              <span style={{ fontSize: isMobile ? '3rem' : '4rem', color: '#0066cc', opacity: 0.2, position: 'absolute', top: '10px', left: '20px' }}>"</span>
-              <p style={{ color: '#1d1d1f', fontSize: isMobile ? '0.95rem' : '1rem', lineHeight: '1.8', marginBottom: '1.5rem', position: 'relative', zIndex: 2 }}>
+        <section style={{ marginBottom: '6rem' }}>
+          <h2 className={styles.sectionTitle}>What Our Clients Say</h2>
+          <div className={styles.testimonialsGrid}>
+            <div className={styles.testimonialCard}>
+              <span className={styles.testimonialQuote}>"</span>
+              <p className={styles.testimonialText}>
                 PureLatency transformed our digital presence with a beautiful, high-performance web application. Their team's expertise and collaborative approach made all the difference.
               </p>
               <div>
-                <strong style={{ color: '#1d1d1f', fontSize: isMobile ? '0.95rem' : '1rem' }}>Sarah Chen</strong>
-                <p style={{ color: '#86868b', fontSize: isMobile ? '0.85rem' : '0.9rem', margin: '0.2rem 0 0 0' }}>Product Lead, InnovateTech</p>
+                <div className={styles.testimonialAuthor}>Sarah Chen</div>
+                <p className={styles.testimonialRole}>Product Lead, InnovateTech</p>
               </div>
             </div>
-            <div style={{
-              padding: isMobile ? '1.5rem' : '2rem',
-              background: '#fafafa',
-              borderRadius: '20px',
-              border: '1px solid #e6e6e9',
-              position: 'relative'
-            }}>
-              <span style={{ fontSize: isMobile ? '3rem' : '4rem', color: '#0066cc', opacity: 0.2, position: 'absolute', top: '10px', left: '20px' }}>"</span>
-              <p style={{ color: '#1d1d1f', fontSize: isMobile ? '0.95rem' : '1rem', lineHeight: '1.8', marginBottom: '1.5rem', position: 'relative', zIndex: 2 }}>
+            <div className={styles.testimonialCard}>
+              <span className={styles.testimonialQuote}>"</span>
+              <p className={styles.testimonialText}>
                 The infrastructure PureLatency built for us is rock-solid. We've seen zero downtime and 40% cost savings since migrating to their cloud architecture.
               </p>
               <div>
-                <strong style={{ color: '#1d1d1f', fontSize: isMobile ? '0.95rem' : '1rem' }}>Michael Rodriguez</strong>
-                <p style={{ color: '#86868b', fontSize: isMobile ? '0.85rem' : '0.9rem', margin: '0.2rem 0 0 0' }}>CTO, FinScale</p>
+                <div className={styles.testimonialAuthor}>Michael Rodriguez</div>
+                <p className={styles.testimonialRole}>CTO, FinScale</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Contact Section */}
-       <section
-  style={{
-    marginTop: isMobile ? '1.5rem' : '3rem',          // was 2rem / 4rem
-    display: 'flex',
-    justifyContent: 'center',
-    padding: isMobile ? '0 1rem' : '0',
-  }}
->
-  <div
-    style={{
-      width: '100%',
-      maxWidth: '1200px',
-      padding: isMobile ? '2rem 1.25rem' : '2.5rem 1.75rem', // smaller vertical padding
-      borderRadius: '24px',
-      textAlign: 'center',
-      background: `
-        radial-gradient(circle at 20% 30%, #7a3cff 0%, transparent 40%),
-        radial-gradient(circle at 80% 10%, #ff2e88 0%, transparent 40%),
-        linear-gradient(180deg, #0b1c48 0%, #2a1e5c 100%)
-      `,
-      color: '#ffffff',
-    }}
-  >
-    <h2
-      style={{
-        fontSize: isMobile ? '1.7rem' : '2.4rem',     // slightly smaller text
-        fontWeight: 400,
-        marginBottom: '0.5rem',                      // less space below title
-      }}
-    >
-      Contact Us
-    </h2>
-
-    <p
-      style={{
-        fontSize: isMobile ? '0.95rem' : '1.1rem',
-        marginBottom: '1.5rem',                      // less paragraph bottom margin
-        opacity: 0.95,
-        color: '#ffffff',
-      }}
-    >
-      Be always in front line, get in touch today.
-    </p>
-
-    <Link
-      href="/contact"
-      style={{
-        display: 'inline-block',
-        padding: isMobile ? '10px 32px' : '12px 48px', // smaller button
-        borderRadius: '70px 70px 0 70px',
-        border: '2px solid #ffffff',
-        color: '#ffffff',
-        fontWeight: 600,
-        fontSize: isMobile ? '0.95rem' : '1rem',
-        textDecoration: 'none',
-        transition: 'all 0.3s ease',
-        width: isMobile ? '100%' : 'auto',
-        maxWidth: isMobile ? '260px' : 'none',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.background = '#ffffff';
-        e.currentTarget.style.color = '#111';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.background = 'transparent';
-        e.currentTarget.style.color = '#ffffff';
-      }}
-    >
-      Contact Us
-    </Link>
-  </div>
-</section>
-
+        {/* CTA Section */}
+        <section className={styles.ctaSection}>
+          <div className={styles.ctaCard}>
+            <h2 className={styles.ctaTitle}>Contact Us</h2>
+            <p className={styles.ctaText}>Be always in front line, get in touch today.</p>
+            <Link href="/contact" className={styles.ctaButton}>
+              Contact Us
+            </Link>
+          </div>
+        </section>
 
         {/* Back to Home */}
-        <div style={{ 
-          borderTop: '1px solid #e6e6e9',
-          paddingTop: '2rem',
-          textAlign: 'center',
-          marginTop: '2rem'
-        }}>
-          <Link 
-            href="/" 
-            style={{ 
-              color: '#86868b', 
-              textDecoration: 'none', 
-              fontSize: isMobile ? '0.85rem' : '0.9rem',
-              display: 'inline-block'
-            }}
-          >
+        <div className={styles.backLinkContainer}>
+          <Link href="/" className={styles.backLink}>
             ← Back to Home
           </Link>
         </div>
       </main>
 
       {/* Footer */}
-      <footer
-        style={{
-          background: '#111',
-          color: '#aaa',
-          padding: isMobile ? '3rem 1rem' : '4rem 2rem',
-          marginTop: '4rem'
-        }}
-      >
-        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-          <div style={footerGridStyle}>
+      <footer className={styles.footer}>
+        <div className={styles.footerContainer}>
+          <div className={styles.footerGrid}>
             <div>
-              <div style={{ fontSize: isMobile ? '1.3rem' : '1.5rem', color: '#fff', marginBottom: '1rem' }}>Pure Latency</div>
-              <p style={{ color: '#666', lineHeight: '1.7', fontSize: isMobile ? '0.9rem' : '1rem' }}>
+              <div className={styles.footerLogo}>Pure Latency</div>
+              <p className={styles.footerText}>
                 Transforming businesses through intelligent technology. 
                 We build solutions that drive real results.
               </p>
             </div>
             <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Services</h4>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
+              <h4 className={styles.footerHeading}>Services</h4>
+              <ul className={styles.footerList}>
                 {coreServices.slice(0, 5).map(service => (
-                  <li key={service.title} style={{ marginBottom: '0.5rem' }}>
-                    <Link href={service.href} style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>
+                  <li key={service.title} className={styles.footerListItem}>
+                    <Link href={service.href} className={styles.footerLink}>
                       {service.title}
                     </Link>
                   </li>
@@ -894,54 +414,53 @@ export default function Overview() {
               </ul>
             </div>
             <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Company</h4>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
-                {['About', 'Careers', 'Blog', 'Contact'].map(item => (
-                  <li key={item} style={{ marginBottom: '0.5rem' }}>
-                    <Link href={`/${item.toLowerCase()}`} style={{ color: '#aaa', textDecoration: 'none', fontSize: isMobile ? '0.9rem' : '1rem' }}>
-                      {item}
-                    </Link>
-                  </li>
-                ))}
+              <h4 className={styles.footerHeading}>Company</h4>
+              <ul className={styles.footerList}>
+                <li className={styles.footerListItem}>
+                  <Link href="/about" className={styles.footerLink}>About</Link>
+                </li>
+                <li className={styles.footerListItem}>
+                  <Link href="/careers" className={styles.footerLink}>Careers</Link>
+                </li>
+                <li className={styles.footerListItem}>
+                  <Link href="/blog" className={styles.footerLink}>Blog</Link>
+                </li>
+                <li className={styles.footerListItem}>
+                  <Link href="/contact" className={styles.footerLink}>Contact</Link>
+                </li>
               </ul>
             </div>
             <div>
-              <h4 style={{ color: '#fff', marginBottom: '1rem', fontSize: isMobile ? '1.1rem' : '1.2rem' }}>Connect</h4>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
+              <h4 className={styles.footerHeading}>Connect</h4>
+              <ul className={styles.footerList}>
                 {socialMedia.map(social => (
-                  <li key={social.name} style={{ marginBottom: '0.5rem' }}>
+                  <li key={social.name} className={styles.footerListItem}>
                     <a 
                       href={social.href} 
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{ 
-                        color: '#aaa', 
-                        textDecoration: 'none',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        justifyContent: isMobile ? 'center' : 'flex-start',
+                      className={styles.footerSocialLink}
+                      style={{ color: '#aaa' }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = social.color;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color = '#aaa';
                       }}
                     >
                       <img 
                         src={social.icon} 
                         alt={social.name}
-                        style={{ width: '20px', height: '20px' }}
+                        className={styles.footerSocialIcon}
                       />
-                      <span style={{ fontSize: isMobile ? '0.9rem' : '1rem' }}>{social.name}</span>
+                      <span>{social.name}</span>
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
-          <div style={{ 
-            borderTop: '1px solid #333', 
-            paddingTop: '2rem',
-            textAlign: 'center',
-            color: '#666',
-            fontSize: isMobile ? '0.8rem' : '0.9rem'
-          }}>
+          <div className={styles.footerBottom}>
             © 2026 PureLatency. All rights reserved. Crafted with precision in San Francisco.
           </div>
         </div>
