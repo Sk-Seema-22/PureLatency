@@ -606,6 +606,8 @@ export default function Overview() {
             textAlign: 'center',
             padding: '140px 20px',
             marginTop: '40px',
+
+            
             borderRadius: '24px',
             background: `
               radial-gradient(circle at 20% 30%, #7a3cff 0%, transparent 40%),
