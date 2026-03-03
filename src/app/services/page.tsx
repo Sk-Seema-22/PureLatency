@@ -55,7 +55,7 @@ export default function ServicesPage() {
       metrics: ['10k+ miles deployed', '99.99% uptime', 'Future-proof']
     },
     {
-      title: 'Quantum Computer',
+      title: 'Quantum Compute',
       href: '/services/quantum-computer',
       desc: 'Cutting-edge quantum computing solutions for complex problem-solving, from drug discovery to financial modeling.',
       icon: '⚛️',
