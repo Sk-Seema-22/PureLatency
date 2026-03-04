@@ -45,7 +45,7 @@ const Footer: React.FC = () => {
               Pure Latency
             </Link>
             <p className="text-gray-400 mb-4">
-              Leading digital and technology services company in Singapore and Southeast Asia.
+              "Invisible, Create the Impossible."
             </p>
             <div className="flex space-x-4">
               <a href="https://instagram.com/purelatency" className="text-gray-400 hover:text-white transition-colors">

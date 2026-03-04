@@ -23,7 +23,7 @@ const Services: React.FC = () => {
       category: 'Web Development',
       title: 'E-Commerce Solutions',
       description: 'Full-featured online stores with payment integration, inventory management, and analytics.',
-      tags: ['Payment Gateway', 'Cart & Checkout', 'Admin Dashboard', 'SEO Optimized'],
+      tags: ['Payment Gateway', 'Cart & Checkout', ' Dashboard', 'SEO Optimized'],
       link: '/services/web-development/ecommerce'
     },
     {
