@@ -20,7 +20,7 @@ export default function EnterprisePage() {
       { value: '50+', label: 'Enterprise Clients', icon: '🏢' },
       { value: '99.99%', label: 'Average Uptime', icon: '📊' },
       { value: '40%', label: 'Cost Reduction', icon: '💰' },
-      { value: '10+', label: 'Years Experience', icon: '⏳' }
+      { value: '1+', label: 'Years Experience', icon: '⏳' }
     ]
   };
 

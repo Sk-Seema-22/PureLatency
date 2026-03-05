@@ -60,7 +60,7 @@ export default function WebDevelopmentPage() {
     { number: '50+', label: 'Websites Delivered' },
     { number: '100%', label: 'Client Satisfaction' },
     { number: '24/7', label: 'Support Available' },
-    { number: '5+', label: 'Years Experience' }
+    { number: '1+', label: 'Years Experience' }
   ];
 
   const process = [

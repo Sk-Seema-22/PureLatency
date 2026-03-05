@@ -28,256 +28,65 @@ export default function ContactPage() {
     message: "",
   });
 
-  // ==================== COUNTRIES ====================
+  // ==================== COUNTRIES FOR DROPDOWN ====================
   const countries = [
-    "Afghanistan",
-    "Albania",
-    "Algeria",
-    "American Samoa",
-    "Andorra",
-    "Angola",
-    "Anguilla",
-    "Antarctica",
-    "Antigua and Barbuda",
-    "Argentina",
-    "Armenia",
-    "Aruba",
-    "Australia",
-    "Austria",
-    "Azerbaijan",
-    "Bahamas",
-    "Bahrain",
-    "Bangladesh",
-    "Barbados",
-    "Belarus",
-    "Belgium",
-    "Belize",
-    "Benin",
-    "Bermuda",
-    "Bhutan",
-    "Bolivia",
-    "Bonaire, Sint Eustatius and Saba",
-    "Bosnia and Herzegovina",
-    "Botswana",
-    "Bouvet Island",
-    "Brazil",
-    "British Indian Ocean Territory",
-    "Brunei Darussalam",
-    "Bulgaria",
-    "Burkina Faso",
-    "Burundi",
-    "Cabo Verde",
-    "Cambodia",
-    "Cameroon",
-    "Canada",
-    "Cayman Islands",
-    "Central African Republic",
-    "Chad",
-    "Chile",
-    "China",
-    "Christmas Island",
-    "Cocos (Keeling) Islands",
-    "Colombia",
-    "Comoros",
-    "Congo",
-    "Congo, Democratic Republic of the",
-    "Cook Islands",
-    "Costa Rica",
-    "Côte d'Ivoire",
-    "Croatia",
-    "Cuba",
-    "Curaçao",
-    "Cyprus",
-    "Czech Republic",
-    "Denmark",
-    "Djibouti",
-    "Dominica",
-    "Dominican Republic",
-    "Ecuador",
-    "Egypt",
-    "El Salvador",
-    "Equatorial Guinea",
-    "Eritrea",
-    "Estonia",
-    "Eswatini",
-    "Ethiopia",
-    "Falkland Islands (Malvinas)",
-    "Faroe Islands",
-    "Fiji",
-    "Finland",
-    "France",
-    "French Guiana",
-    "French Polynesia",
-    "French Southern Territories",
-    "Gabon",
-    "Gambia",
-    "Georgia",
-    "Germany",
-    "Ghana",
-    "Gibraltar",
-    "Greece",
-    "Greenland",
-    "Grenada",
-    "Guadeloupe",
-    "Guam",
-    "Guatemala",
-    "Guernsey",
-    "Guinea",
-    "Guinea-Bissau",
-    "Guyana",
-    "Haiti",
-    "Heard Island and McDonald Islands",
-    "Holy See (Vatican City State)",
-    "Honduras",
-    "Hong Kong",
-    "Hungary",
-    "Iceland",
-    "India",
-    "Indonesia",
-    "Iran",
-    "Iraq",
-    "Ireland",
-    "Isle of Man",
-    "Israel",
-    "Italy",
-    "Jamaica",
-    "Japan",
-    "Jersey",
-    "Jordan",
-    "Kazakhstan",
-    "Kenya",
-    "Kiribati",
-    "Korea, North",
-    "Korea, South",
-    "Kosovo",
-    "Kuwait",
-    "Kyrgyzstan",
-    "Lao People's Democratic Republic",
-    "Latvia",
-    "Lebanon",
-    "Lesotho",
-    "Liberia",
-    "Libya",
-    "Liechtenstein",
-    "Lithuania",
-    "Luxembourg",
-    "Macao",
-    "Madagascar",
-    "Malawi",
-    "Malaysia",
-    "Maldives",
-    "Mali",
-    "Malta",
-    "Marshall Islands",
-    "Martinique",
-    "Mauritania",
-    "Mauritius",
-    "Mayotte",
-    "Mexico",
-    "Micronesia",
-    "Moldova",
-    "Monaco",
-    "Mongolia",
-    "Montenegro",
-    "Montserrat",
-    "Morocco",
-    "Mozambique",
-    "Myanmar",
-    "Namibia",
-    "Nauru",
-    "Nepal",
-    "Netherlands",
-    "New Caledonia",
-    "New Zealand",
-    "Nicaragua",
-    "Niger",
-    "Nigeria",
-    "Niue",
-    "Norfolk Island",
-    "North Macedonia",
-    "Northern Mariana Islands",
-    "Norway",
-    "Oman",
-    "Pakistan",
-    "Palau",
-    "Palestine, State of",
-    "Panama",
-    "Papua New Guinea",
-    "Paraguay",
-    "Peru",
-    "Pitcairn",
-    "Poland",
-    "Portugal",
-    "Puerto Rico",
-    "Qatar",
-    "Réunion",
-    "Romania",
-    "Russian Federation",
-    "Rwanda",
-    "Saint Barthélemy",
-    "Saint Helena, Ascension and Tristan da Cunha",
-    "Saint Kitts and Nevis",
-    "Saint Lucia",
-    "Saint Martin (French part)",
-    "Saint Pierre and Miquelon",
-    "Saint Vincent and the Grenadines",
-    "Samoa",
-    "San Marino",
-    "Sao Tome and Principe",
-    "Saudi Arabia",
-    "Senegal",
-    "Serbia",
-    "Seychelles",
-    "Sierra Leone",
-    "Singapore",
-    "Sint Maarten (Dutch part)",
-    "Slovakia",
-    "Slovenia",
-    "Solomon Islands",
-    "Somalia",
-    "South Africa",
-    "South Georgia and the South Sandwich Islands",
-    "South Sudan",
-    "Spain",
-    "Sri Lanka",
-    "Sudan",
-    "Suriname",
-    "Svalbard and Jan Mayen",
-    "Sweden",
-    "Switzerland",
-    "Syrian Arab Republic",
-    "Taiwan",
-    "Tajikistan",
-    "Tanzania",
-    "Thailand",
-    "Timor-Leste",
-    "Togo",
-    "Tokelau",
-    "Tonga",
-    "Trinidad and Tobago",
-    "Tunisia",
-    "Turkey",
-    "Turkmenistan",
-    "Turks and Caicos Islands",
-    "Tuvalu",
-    "Uganda",
-    "Ukraine",
-    "United Arab Emirates",
-    "United Kingdom",
-    "United States",
-    "United States Minor Outlying Islands",
-    "Uruguay",
-    "Uzbekistan",
-    "Vanuatu",
-    "Venezuela",
-    "Vietnam",
-    "Virgin Islands, British",
-    "Virgin Islands, U.S.",
-    "Wallis and Futuna",
-    "Western Sahara",
-    "Yemen",
-    "Zambia",
-    "Zimbabwe",
+    "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra",
+    "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina",
+    "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan",
+    "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus",
+    "Belgium", "Belize", "Benin", "Bermuda", "Bhutan",
+    "Bolivia", "Bonaire, Sint Eustatius and Saba", "Bosnia and Herzegovina",
+    "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory",
+    "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi",
+    "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Cayman Islands",
+    "Central African Republic", "Chad", "Chile", "China",
+    "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros",
+    "Congo", "Congo, Democratic Republic of the", "Cook Islands",
+    "Costa Rica", "Côte d'Ivoire", "Croatia", "Cuba", "Curaçao",
+    "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica",
+    "Dominican Republic", "Ecuador", "Egypt", "El Salvador",
+    "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia",
+    "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland",
+    "France", "French Guiana", "French Polynesia", "French Southern Territories",
+    "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar",
+    "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala",
+    "Guernsey", "Guinea", "Guinea-Bissau", "Guyana", "Haiti",
+    "Heard Island and McDonald Islands", "Holy See (Vatican City State)",
+    "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia",
+    "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy",
+    "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya",
+    "Kiribati", "Korea, North", "Korea, South", "Kosovo", "Kuwait",
+    "Kyrgyzstan", "Lao People's Democratic Republic", "Latvia", "Lebanon",
+    "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania",
+    "Luxembourg", "Macao", "Madagascar", "Malawi", "Malaysia",
+    "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique",
+    "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia",
+    "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat",
+    "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal",
+    "Netherlands", "New Caledonia", "New Zealand", "Nicaragua", "Niger",
+    "Nigeria", "Niue", "Norfolk Island", "North Macedonia",
+    "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau",
+    "Palestine, State of", "Panama", "Papua New Guinea", "Paraguay",
+    "Peru", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar",
+    "Réunion", "Romania", "Russian Federation", "Rwanda",
+    "Saint Barthélemy", "Saint Helena, Ascension and Tristan da Cunha",
+    "Saint Kitts and Nevis", "Saint Lucia", "Saint Martin (French part)",
+    "Saint Pierre and Miquelon", "Saint Vincent and the Grenadines",
+    "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia",
+    "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore",
+    "Sint Maarten (Dutch part)", "Slovakia", "Slovenia",
+    "Solomon Islands", "Somalia", "South Africa",
+    "South Georgia and the South Sandwich Islands", "South Sudan",
+    "Spain", "Sri Lanka", "Sudan", "Suriname", "Svalbard and Jan Mayen",
+    "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan",
+    "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo",
+    "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey",
+    "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda",
+    "Ukraine", "United Arab Emirates", "United Kingdom", "United States",
+    "United States Minor Outlying Islands", "Uruguay", "Uzbekistan",
+    "Vanuatu", "Venezuela", "Vietnam", "Virgin Islands, British",
+    "Virgin Islands, U.S.", "Wallis and Futuna", "Western Sahara",
+    "Yemen", "Zambia", "Zimbabwe",
   ].sort();
 
   // ==================== ALLOWED COUNTRY CODES FOR PHONE INPUT ====================
@@ -343,65 +152,66 @@ export default function ContactPage() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  console.log("Submit clicked");  // debug
-  console.log("Form data:", formData, "Phone:", phoneValue); // debug
+    e.preventDefault(); // ✅ prevent page reload
+    console.log("Submit clicked");
+    console.log("Form data:", formData, "Phone:", phoneValue);
 
-  setIsSubmitting(true);
-  setSubmitStatus({ type: null, message: "" });
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: "" });
 
-  try {
-    if (!phoneValue) {
-      throw new Error("Phone number is required");
+    try {
+      if (!phoneValue) {
+        throw new Error("Phone number is required");
+      }
+
+      if (!formData.fullName || !formData.email || !formData.message) {
+        throw new Error("Please fill all required fields.");
+      }
+
+      const submissionData = {
+        ...formData,
+        phoneNumber: phoneValue,
+        submittedAt: new Date().toISOString(),
+        status: "new",
+        userAgent:
+          typeof navigator !== "undefined" ? navigator.userAgent : "",
+        timestamp: new Date().getTime(),
+      };
+
+      console.log("Submitting to Firestore:", submissionData);
+
+      const docRef = await addDoc(collection(db, "contacts"), submissionData);
+      console.log("Document written with ID:", docRef.id);
+
+      setSubmitStatus({
+        type: "success",
+        message: "Thank you for your enquiry! We'll get back to you soon.",
+      });
+
+      // Reset form
+      setFormData({
+        fullName: "",
+        organisation: "",
+        email: "",
+        designation: "",
+        enquiry: "Collaboration",
+        country: "United States",
+        message: "",
+      });
+      setPhoneValue("");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setSubmitStatus({
+        type: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Something went wrong. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-
-    if (!formData.fullName || !formData.email || !formData.message) {
-      throw new Error("Please fill all required fields.");
-    }
-
-    const submissionData = {
-      ...formData,
-      phoneNumber: phoneValue,
-      submittedAt: new Date().toISOString(),
-      status: "new",
-      userAgent:
-        typeof navigator !== "undefined" ? navigator.userAgent : "",
-      timestamp: new Date().getTime(),
-    };
-
-    console.log("Submitting to Firestore:", submissionData); // debug
-
-    const docRef = await addDoc(collection(db, "contacts"), submissionData);
-    console.log("Document written with ID:", docRef.id);
-
-    setSubmitStatus({
-      type: "success",
-      message: "Thank you for your enquiry! We'll get back to you soon.",
-    });
-
-    setFormData({
-      fullName: "",
-      organisation: "",
-      email: "",
-      designation: "",
-      enquiry: "Collaboration",
-      country: "United States",
-      message: "",
-    });
-    setPhoneValue("");
-  } catch (error) {
-    console.error("Error submitting form:", error);
-    setSubmitStatus({
-      type: "error",
-      message:
-        error instanceof Error
-          ? error.message
-          : "Something went wrong. Please try again.",
-    });
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+  };
 
   return (
     <>
@@ -486,7 +296,7 @@ export default function ContactPage() {
                   value={phoneValue}
                   onChange={(value) => setPhoneValue(value || "")}
                   defaultCountry="US"
-                  country={allowedCountryCodes}
+                  onlyCountries={allowedCountryCodes} // ✅ corrected prop for v2
                   className={styles.phoneInput}
                   required
                 />
