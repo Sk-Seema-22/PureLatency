@@ -1,8 +1,9 @@
 'use client';
 
 import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer'; // ✅ Import the shared Footer
 import Link from 'next/link';
-import styles from './Products.module.css'; // adjust path as needed
+import styles from './Products.module.css';
 
 export default function ProductsPage() {
   const products = [
@@ -308,7 +309,7 @@ export default function ProductsPage() {
                 href={product.status === 'Live' ? `/products/${product.id}` : '#'}
                 className={styles.productCard}
                 style={{
-                  borderColor: '1px solid #e6e6e9', // default, overridden on hover
+                  borderColor: '1px solid #e6e6e9',
                   opacity: product.status === 'Coming Soon' ? 0.8 : 1,
                 }}
               >
@@ -441,74 +442,8 @@ export default function ProductsPage() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className={styles.footer}>
-        <div className={styles.footerContainer}>
-          <div className={styles.footerGrid}>
-            <div>
-              <div className={styles.footerLogo}>Pure Latency</div>
-              <p className={styles.footerText}>
-                Building software that solves real problems and makes work better.
-              </p>
-            </div>
-            <div>
-              <h4 className={styles.footerHeading}>Products</h4>
-              <ul className={styles.footerList}>
-                {products.map((product) => (
-                  <li key={product.id} className={styles.footerListItem}>
-                    <Link href={`/products/${product.id}`} className={styles.footerLink}>
-                      {product.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className={styles.footerHeading}>Company</h4>
-              <ul className={styles.footerList}>
-                {['About', 'Careers', 'Blog', 'Contact'].map((item) => (
-                  <li key={item} className={styles.footerListItem}>
-                    <Link href={`/${item.toLowerCase()}`} className={styles.footerLink}>
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className={styles.footerHeading}>Connect</h4>
-              <ul className={styles.footerList}>
-                {socialMedia.map((social) => (
-                  <li key={social.name} className={styles.footerListItem}>
-                    <a
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.footerSocialLink}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.color = social.color;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.color = '#aaa';
-                      }}
-                    >
-                      <img
-                        src={social.icon}
-                        alt={social.name}
-                        className={styles.footerSocialIcon}
-                      />
-                      <span>{social.name}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className={styles.footerBottom}>
-            © 2026 PureLatency. All rights reserved. Crafted with precision in San Francisco.
-          </div>
-        </div>
-      </footer>
+      {/* ✅ Use the shared Footer component */}
+      <Footer />
     </>
   );
 }

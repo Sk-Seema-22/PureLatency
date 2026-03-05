@@ -1,5 +1,4 @@
 "use client";
-
 import Navbar from "@/components/layout/Navbar";
 import { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
@@ -16,7 +15,7 @@ export default function ContactPage() {
     email: "",
     designation: "",
     enquiry: "Collaboration",
-    country: "India",
+    country: "United States",
     message: "",
   });
 
@@ -30,7 +29,7 @@ export default function ContactPage() {
     message: "",
   });
 
-  // ==================== COUNTRIES (Åland Islands removed) ====================
+  // ==================== COUNTRIES ====================
   const countries = [
     "Afghanistan",
     "Albania",
@@ -282,7 +281,7 @@ export default function ContactPage() {
     "Zimbabwe",
   ].sort();
 
-  // ==================== ALLOWED COUNTRY CODES FOR PHONE INPUT (Åland Islands AX excluded) ====================
+  // ==================== ALLOWED COUNTRY CODES FOR PHONE INPUT ====================
   const allowedCountryCodes = [
     "AF", "AL", "DZ", "AS", "AD", "AO", "AI", "AQ", "AG", "AR",
     "AM", "AW", "AU", "AT", "AZ", "BS", "BH", "BD", "BB", "BY",
@@ -308,7 +307,7 @@ export default function ContactPage() {
     "LK", "SD", "SR", "SJ", "SE", "CH", "SY", "TW", "TJ", "TZ",
     "TH", "TL", "TG", "TK", "TO", "TT", "TN", "TR", "TM", "TC",
     "TV", "UG", "UA", "AE", "GB", "US", "UM", "UY", "UZ", "VU",
-    "VE", "VN", "VG", "VI", "WF", "EH", "YE", "ZM", "ZW"
+    "VE", "VN", "VG", "VI", "WF", "EH", "YE", "ZM", "ZW",
   ].sort();
 
   const socialMedia = [
@@ -345,55 +344,66 @@ export default function ContactPage() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus({ type: null, message: "" });
+  e.preventDefault();
+  console.log("Submit clicked");  // debug
+  console.log("Form data:", formData, "Phone:", phoneValue); // debug
 
-    try {
-      if (!phoneValue) {
-        throw new Error("Phone number is required");
-      }
+  setIsSubmitting(true);
+  setSubmitStatus({ type: null, message: "" });
 
-      const submissionData = {
-        ...formData,
-        phoneNumber: phoneValue,
-        submittedAt: new Date().toISOString(),
-        status: "new",
-        userAgent: navigator.userAgent,
-        timestamp: new Date().getTime(),
-      };
-
-      const docRef = await addDoc(collection(db, "contacts"), submissionData);
-      console.log("Document written with ID: ", docRef.id);
-
-      setSubmitStatus({
-        type: "success",
-        message: "Thank you for your enquiry! We'll get back to you soon.",
-      });
-
-      setFormData({
-        fullName: "",
-        organisation: "",
-        email: "",
-        designation: "",
-        enquiry: "Collaboration",
-        country: "India",
-        message: "",
-      });
-      setPhoneValue("");
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      setSubmitStatus({
-        type: "error",
-        message:
-          error instanceof Error
-            ? error.message
-            : "Something went wrong. Please try again.",
-      });
-    } finally {
-      setIsSubmitting(false);
+  try {
+    if (!phoneValue) {
+      throw new Error("Phone number is required");
     }
-  };
+
+    if (!formData.fullName || !formData.email || !formData.message) {
+      throw new Error("Please fill all required fields.");
+    }
+
+    const submissionData = {
+      ...formData,
+      phoneNumber: phoneValue,
+      submittedAt: new Date().toISOString(),
+      status: "new",
+      userAgent:
+        typeof navigator !== "undefined" ? navigator.userAgent : "",
+      timestamp: new Date().getTime(),
+    };
+
+    console.log("Submitting to Firestore:", submissionData); // debug
+
+    const docRef = await addDoc(collection(db, "contacts"), submissionData);
+    console.log("Document written with ID:", docRef.id);
+
+    setSubmitStatus({
+      type: "success",
+      message: "Thank you for your enquiry! We'll get back to you soon.",
+    });
+
+    setFormData({
+      fullName: "",
+      organisation: "",
+      email: "",
+      designation: "",
+      enquiry: "Collaboration",
+      country: "United States",
+      message: "",
+    });
+    setPhoneValue("");
+  } catch (error) {
+    console.error("Error submitting form:", error);
+    setSubmitStatus({
+      type: "error",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
+    });
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   return (
     <>
@@ -475,14 +485,10 @@ export default function ContactPage() {
               <div className={styles.field}>
                 <label className={styles.label}>Phone Number *</label>
                 <PhoneInput
-                  international
-                  defaultCountry="IN"
-                  // @ts-ignore - `countries` prop is valid but TypeScript definitions may not include it
-                  countries={allowedCountryCodes}
                   value={phoneValue}
-                  onChange={(value: string | undefined) =>
-                    setPhoneValue(value || "")
-                  }
+                  onChange={(value) => setPhoneValue(value || "")}
+                  defaultCountry="US"
+                  country={allowedCountryCodes}
                   className={styles.phoneInput}
                   required
                 />

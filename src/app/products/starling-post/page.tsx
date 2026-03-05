@@ -4,6 +4,7 @@ import Navbar from '@/components/layout/Navbar';
 import Link from 'next/link';
 import { useState } from 'react';
 import styles from './StarlingPost.module.css'; // adjust path as needed
+import Footer from '@/components/layout/Footer';
 
 export default function StarlingPostPage() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -488,75 +489,7 @@ export default function StarlingPostPage() {
       </main>
 
       {/* Footer */}
-      <footer className={styles.footer}>
-        <div className={styles.footerContainer}>
-          <div className={styles.footerGrid}>
-            <div>
-              <div className={styles.footerLogo}>Pure Latency</div>
-              <p className={styles.footerText}>
-                Building software that solves real problems and makes work better.
-              </p>
-            </div>
-            <div>
-              <h4 className={styles.footerHeading}>Product</h4>
-              <ul className={styles.footerList}>
-                <li className={styles.footerListItem}>
-                  <Link href="/products/starling-post" className={styles.footerLink}>
-                    Starling Post
-                  </Link>
-                </li>
-                <li className={styles.footerListItem}>
-                  <Link href="/products/nexus-flow" className={styles.footerLink}>
-                    Nexus Flow
-                  </Link>
-                </li>
-                <li className={styles.footerListItem}>
-                  <Link href="/products/aether-ai" className={styles.footerLink}>
-                    Aether AI
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className={styles.footerHeading}>Company</h4>
-              <ul className={styles.footerList}>
-                {['About', 'Careers', 'Blog', 'Contact'].map(item => (
-                  <li key={item} className={styles.footerListItem}>
-                    <Link href={`/${item.toLowerCase()}`} className={styles.footerLink}>
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className={styles.footerHeading}>Connect</h4>
-              <ul className={styles.footerList}>
-                {socialMedia.map(social => (
-                  <li key={social.name} className={styles.footerListItem}>
-                    <a 
-                      href={social.href} 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.footerSocialLink}
-                    >
-                      <img 
-                        src={social.icon} 
-                        alt={social.name}
-                        className={styles.footerSocialIcon}
-                      />
-                      <span>{social.name}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className={styles.footerBottom}>
-            © 2026 PureLatency. All rights reserved. Crafted with precision in San Francisco.
-          </div>
-        </div>
-      </footer>
+      <Footer/>
     </>
   );
 }

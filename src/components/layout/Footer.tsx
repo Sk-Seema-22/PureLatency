@@ -41,13 +41,16 @@ const Footer: React.FC = () => {
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           <div className="lg:col-span-2">
-            <Link href="/" className="text-2xl font-bold text-white mb-4 block">
-              Pure Latency
-            </Link>
-            <p className="text-gray-400 mb-4">
-              "Invisible, Create the Impossible."
-            </p>
-            <div className="flex space-x-4">
+          <Link
+  href="/"
+  className="text-2xl font-bold text-white block mb-0 leading-tight"
+>
+  Pure Latency
+</Link>
+
+<p className="text-gray-400 -mt-3">
+  "Invisible, Create the Impossible."
+</p>         <div className="flex space-x-4">
               <a href="https://instagram.com/purelatency" className="text-gray-400 hover:text-white transition-colors">
                 <i className="fab fa-instagram text-xl"></i>
               </a>

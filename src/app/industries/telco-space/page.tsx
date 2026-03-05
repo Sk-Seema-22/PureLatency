@@ -4,6 +4,7 @@ import Navbar from '@/components/layout/Navbar';
 import Link from 'next/link';
 import { useState } from 'react';
 import styles from './TelcoSpace.module.css'; // adjust path as needed
+import Footer from '@/components/layout/Footer';
 
 export default function TelcoSpacePage() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -584,74 +585,8 @@ export default function TelcoSpacePage() {
       </main>
 
       {/* Footer */}
-      <footer className={styles.footer}>
-        <div className={styles.footerContainer}>
-          <div className={styles.footerGrid}>
-            <div>
-              <div className={styles.footerLogo}>Pure Latency</div>
-              <p className={styles.footerText}>
-                Connecting the world through space and telecommunications.
-              </p>
-            </div>
-            <div>
-              <h4 className={styles.footerHeading}>Solutions</h4>
-              <ul className={styles.footerList}>
-                {solutions.slice(0, 4).map(solution => (
-                  <li key={solution.title} className={styles.footerListItem}>
-                    <Link href="#solutions" className={styles.footerLink}>
-                      {solution.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className={styles.footerHeading}>Company</h4>
-              <ul className={styles.footerList}>
-                {['About', 'Careers', 'Blog', 'Contact'].map(item => (
-                  <li key={item} className={styles.footerListItem}>
-                    <Link href={`/${item.toLowerCase()}`} className={styles.footerLink}>
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className={styles.footerHeading}>Connect</h4>
-              <ul className={styles.footerList}>
-                {socialMedia.map(social => (
-                  <li key={social.name} className={styles.footerListItem}>
-                    <a 
-                      href={social.href} 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.footerSocialLink}
-                      style={{ color: '#aaa' }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.color = social.color;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.color = '#aaa';
-                      }}
-                    >
-                      <img 
-                        src={social.icon} 
-                        alt={social.name}
-                        className={styles.footerSocialIcon}
-                      />
-                      <span>{social.name}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className={styles.footerBottom}>
-            © 2026 PureLatency. All rights reserved. Crafted with precision in San Francisco.
-          </div>
-        </div>
-      </footer>
+    
+      <Footer/>
     </>
   );
 }

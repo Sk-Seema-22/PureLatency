@@ -32,10 +32,12 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
+  // Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? 'hidden' : 'unset';
     return () => {
@@ -96,19 +98,14 @@ const Navbar: React.FC = () => {
         { label: 'Purpose and Beliefs', href: '/about/beliefs' },
         { label: 'Milestones', href: '/about/milestones' },
       ],
-    },
-    {
-      label: 'Partners',
-      href: '/partners',
-      dropdown: [{ label: 'Overview', href: '/partners' }],
-    },
+    }
   ];
 
   const socialMedia = [
     { name: 'Instagram', href: 'https://instagram.com/purelatency', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg' },
     { name: 'Facebook', href: 'https://facebook.com/purelatency', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg' },
     { name: 'Twitter',
-      href: 'https://twitter.com/pureltency',
+      href: 'https://twitter.com/purelatency',
       icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg',
       color: '#000000'
     }
@@ -125,6 +122,7 @@ const Navbar: React.FC = () => {
     }, 150);
   };
 
+  // Styles (unchanged except where noted)
   const navStyle: React.CSSProperties = {
     position: 'fixed',
     top: 0,
@@ -186,21 +184,9 @@ const Navbar: React.FC = () => {
     background: active ? '#f9fafb' : 'transparent',
   });
 
-  // Desktop Contact Us button – more space below text
-  const contactButtonStyle: React.CSSProperties = {
-  background: '#0066cc',
-  color: 'white',
-  padding: '0.75rem 1.5rem',   // equal top & bottom
-  borderRadius: '40px',
-  textDecoration: 'none',
-  fontWeight: 500,
-  fontSize: '0.875rem',
-  lineHeight: 1,               // avoid extra vertical space
-  display: !mounted || isMobile ? 'none' : 'inline-block',
-};
   const mobileMenuButtonStyle: React.CSSProperties = {
     display: !mounted || isMobile ? 'block' : 'none',
-    fontSize: '1.5rem',
+    fontSize  : '1.5rem',
     padding: '0.5rem',
     borderRadius: '8px',
     border: 'none',
@@ -209,14 +195,16 @@ const Navbar: React.FC = () => {
     color: '#374151',
   };
 
+  // 🔧 FIX: Add isolation and higher z-index to the overlay (optional) and panel
   const overlayStyle: React.CSSProperties = {
     position: 'fixed',
     inset: 0,
     background: 'rgba(0,0,0,0.2)',
     backdropFilter: 'blur(4px)',
-    zIndex: 40,
+    zIndex: 40,          // stays below panel
   };
 
+  // 🔧 FIX: Create a new stacking context and ensure panel is above everything
   const mobileMenuPanelStyle: React.CSSProperties = {
     position: 'fixed',
     top: 0,
@@ -226,9 +214,11 @@ const Navbar: React.FC = () => {
     background: 'white',
     boxShadow:
       '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)',
-    zIndex: 50,
+    zIndex: 9999,        // temporarily raised to be safe
+    isolation: 'isolate', // creates new stacking context
     overflowY: 'auto',
     animation: 'slideIn 0.3s ease-out forwards',
+    pointerEvents: 'auto', // ensure clicks are captured
   };
 
   const mobileHeaderStyle: React.CSSProperties = {
@@ -267,21 +257,18 @@ const Navbar: React.FC = () => {
     marginBottom: '0.5rem',
   });
 
-  // Mobile Contact Us button – more space below text
   const mobileContactButtonStyle: React.CSSProperties = {
-  display: 'block',
-  width: '100%',
-  textAlign: 'center',
-  background: '#0066cc',
-  color: 'white',
-  padding: '0.9rem 1rem',      // equal top & bottom
-  borderRadius: '40px',
-  textDecoration: 'none',
-  fontWeight: 500,
-  fontSize: '0.9rem',
-  lineHeight: 1,               // center text vertically
-  marginTop: '2rem',
-};
+    display: 'inline-block',
+    background: '#0066cc',
+    color: '#ffffff',
+    padding: '10px 24px',
+    borderRadius: '999px',
+    textDecoration: 'none',
+    fontWeight: 500,
+    fontSize: '1rem',
+    letterSpacing: '0.5px',
+    textAlign: 'center',
+  };
 
   const mobileSocialStyle: React.CSSProperties = {
     display: 'flex',
@@ -368,7 +355,7 @@ const Navbar: React.FC = () => {
               ))}
             </div>
 
-            <Link href="/contact" style={contactButtonStyle}>
+            <Link href="/contact" style={mobileContactButtonStyle}>
               Contact Us
             </Link>
 
@@ -390,6 +377,7 @@ const Navbar: React.FC = () => {
         {/* Mobile menu panel */}
         {isMobileMenuOpen && (
           <>
+            {/* Overlay – click to close */}
             <div
               style={overlayStyle}
               onClick={() => setIsMobileMenuOpen(false)}
@@ -400,6 +388,8 @@ const Navbar: React.FC = () => {
               role="dialog"
               aria-modal="true"
               aria-label="Mobile navigation menu"
+              // 🔧 FIX: ensure clicks inside panel don't propagate to overlay
+              onClick={(e) => e.stopPropagation()}
             >
               <div style={mobileHeaderStyle}>
                 <Link
