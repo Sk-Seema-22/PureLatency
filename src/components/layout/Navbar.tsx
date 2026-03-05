@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import styles from './Navbar.module.css'; // adjust path as needed
+import styles from './Navbar.module.css';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -163,7 +163,7 @@ const Navbar: React.FC = () => {
               ))}
             </div>
 
-            {/* Desktop Contact Button */}
+            {/* Desktop Contact Button (small) */}
             <Link href="/contact" className={styles.desktopContactButton}>
               Contact Us
             </Link>
@@ -231,6 +231,7 @@ const Navbar: React.FC = () => {
                 </div>
               ))}
 
+              {/* Mobile Contact Button (small) */}
               <Link
                 href="/contact"
                 className={styles.mobileContactButton}

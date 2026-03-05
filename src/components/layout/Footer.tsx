@@ -30,7 +30,6 @@ const Footer: React.FC = () => {
         { label: 'About Us', href: '/about' },
         { label: 'Purpose and Beliefs', href: '/about/purpose' },
         { label: 'Milestones', href: '/about/milestones' },
-        { label: 'Partners', href: '/partners' },
         { label: 'Contact Us', href: '/contact' },
       ]
     }

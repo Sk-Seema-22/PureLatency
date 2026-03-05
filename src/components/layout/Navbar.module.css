@@ -119,18 +119,18 @@
   background: #f9fafb;
 }
 
-/* Desktop Contact Button */
+/* Desktop Contact Button (smaller) */
 .desktopContactButton {
   display: none;
   align-items: center;
   justify-content: center;
   background: #0066cc;
   color: #ffffff;
-  padding: 10px 22px;
+  padding: 6px 16px;          /* reduced */
   border-radius: 999px;
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.8rem;           /* reduced */
   letter-spacing: 0.3px;
   transition: background 0.2s;
 }
@@ -242,16 +242,16 @@
   color: #0066cc;
 }
 
-/* Mobile Contact Button */
+/* Mobile Contact Button (smaller) */
 .mobileContactButton {
   display: block;
   background: #0066cc;
   color: #ffffff;
-  padding: 8px 18px;
+  padding: 6px 14px;           /* reduced */
   border-radius: 999px;
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.875rem;
+  font-size: 0.8rem;            /* reduced */
   text-align: center;
   transition: background 0.2s;
 }
