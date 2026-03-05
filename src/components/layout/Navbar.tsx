@@ -32,12 +32,10 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? 'hidden' : 'unset';
     return () => {
@@ -122,12 +120,11 @@ const Navbar: React.FC = () => {
     }, 150);
   };
 
-  // ✅ FIXED: Nav z-index set to 50 (standard)
   const navStyle: React.CSSProperties = {
     position: 'fixed',
     top: 0,
     width: '100%',
-    zIndex: 50,  // Explicitly set
+    zIndex: 50,
     transition: 'all 0.3s',
     background: isScrolled ? 'rgba(255,255,255,0.95)' : 'transparent',
     backdropFilter: isScrolled ? 'blur(8px)' : 'none',
@@ -200,10 +197,9 @@ const Navbar: React.FC = () => {
     inset: 0,
     background: 'rgba(0,0,0,0.2)',
     backdropFilter: 'blur(4px)',
-    zIndex: 40,  // Below panel (60)
+    zIndex: 40,
   };
 
-  // ✅ FIXED: Reduced z-index to 60 (above nav/overlay), keeps isolation
   const mobileMenuPanelStyle: React.CSSProperties = {
     position: 'fixed',
     top: 0,
@@ -213,7 +209,7 @@ const Navbar: React.FC = () => {
     background: 'white',
     boxShadow:
       '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)',
-    zIndex: 60,  // Reduced from 9999, still highest
+    zIndex: 60,
     isolation: 'isolate',
     overflowY: 'auto',
     animation: 'slideIn 0.3s ease-out forwards',
@@ -256,17 +252,31 @@ const Navbar: React.FC = () => {
     marginBottom: '0.5rem',
   });
 
-  // ✅ FIXED: Smaller button size (both desktop/mobile)
-  const mobileContactButtonStyle: React.CSSProperties = {
-    display: 'inline-block',
+  /* ✅ Desktop Contact Button */
+  const desktopContactButtonStyle: React.CSSProperties = {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     background: '#0066cc',
     color: '#ffffff',
-    padding: '8px 20px',  // Reduced: was '10px 24px'
+    padding: '10px 22px',
     borderRadius: '999px',
     textDecoration: 'none',
     fontWeight: 500,
-    fontSize: '0.9375rem',  // Reduced: was '1rem'
-    letterSpacing: '0.5px',
+    fontSize: '0.9rem',
+    letterSpacing: '0.3px',
+  };
+
+  /* ✅ Mobile Contact Button */
+  const mobileContactButtonStyle: React.CSSProperties = {
+    display: 'block',
+    background: '#0066cc',
+    color: '#ffffff',
+    padding: '8px 18px',
+    borderRadius: '999px',
+    textDecoration: 'none',
+    fontWeight: 500,
+    fontSize: '0.875rem',
     textAlign: 'center',
   };
 
@@ -290,11 +300,8 @@ const Navbar: React.FC = () => {
       <nav style={navStyle} aria-label="Main navigation">
         <div style={containerStyle}>
           <div style={headerStyle}>
-            <Link
-              href="/"
-              style={{ display: 'flex', alignItems: 'center' }}
-              aria-label="Home"
-            >
+            
+            <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
               <Image
                 src="/images/logo.png"
                 alt="Pure Latency Logo"
@@ -309,42 +316,25 @@ const Navbar: React.FC = () => {
               />
             </Link>
 
-            {/* Desktop navigation */}
-            <div style={desktopNavStyle} role="list">
+            <div style={desktopNavStyle}>
               {navItems.map((item) => (
                 <div
                   key={item.label}
                   style={{ position: 'relative' }}
                   onMouseEnter={() => handleMouseEnter(item.label)}
                   onMouseLeave={handleMouseLeave}
-                  role="listitem"
                 >
-                  <Link
-                    href={item.href}
-                    style={navLinkStyle(isParentActive(item))}
-                    aria-expanded={activeDropdown === item.label}
-                    aria-haspopup={item.dropdown ? 'true' : undefined}
-                  >
+                  <Link href={item.href} style={navLinkStyle(isParentActive(item))}>
                     {item.label}
-                    {item.dropdown && (
-                      <i
-                        className="fas fa-chevron-down"
-                        style={{
-                          fontSize: '0.75rem',
-                          marginLeft: '0.25rem',
-                        }}
-                        aria-hidden="true"
-                      />
-                    )}
                   </Link>
+
                   {item.dropdown && activeDropdown === item.label && (
-                    <div style={dropdownStyle} role="menu">
+                    <div style={dropdownStyle}>
                       {item.dropdown.map((drop) => (
                         <Link
                           key={drop.label}
                           href={drop.href}
                           style={dropdownItemStyle(isActive(drop.href))}
-                          role="menuitem"
                         >
                           {drop.label}
                         </Link>
@@ -355,143 +345,21 @@ const Navbar: React.FC = () => {
               ))}
             </div>
 
-            <Link href="/contact" style={mobileContactButtonStyle}>
+            {/* ✅ Desktop Contact Button */}
+            <Link href="/contact" style={desktopContactButtonStyle}>
               Contact Us
             </Link>
 
-            {/* Mobile menu button */}
             <button
               style={mobileMenuButtonStyle}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={isMobileMenuOpen}
             >
-              <i
-                className={`fas fa-${isMobileMenuOpen ? 'times' : 'bars'}`}
-                aria-hidden="true"
-              />
+              ☰
             </button>
+
           </div>
         </div>
-
-        {/* Mobile menu panel */}
-        {isMobileMenuOpen && (
-          <>
-            {/* Overlay – click to close */}
-            <div
-              style={overlayStyle}
-              onClick={() => setIsMobileMenuOpen(false)}
-              aria-hidden="true"
-            />
-            <div
-              style={mobileMenuPanelStyle}
-              role="dialog"
-              aria-modal="true"
-              aria-label="Mobile navigation menu"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div style={mobileHeaderStyle}>
-                <Link
-                  href="/"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  aria-label="Home"
-                >
-                  <Image
-                    src="/images/logo.png"
-                    alt="Pure Latency Logo"
-                    width={140}
-                    height={45}
-                    style={{ objectFit: 'contain' }}
-                  />
-                </Link>
-                <button
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    fontSize: '1.5rem',
-                    cursor: 'pointer',
-                  }}
-                  aria-label="Close menu"
-                >
-                  <i className="fas fa-times" aria-hidden="true" />
-                </button>
-              </div>
-
-              <div style={mobileNavStyle}>
-                {navItems.map((item) => (
-                  <div key={item.label} style={mobileNavItemStyle}>
-                    <Link
-                      href={item.href}
-                      style={mobileNavLinkStyle(isParentActive(item))}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                    {item.dropdown && (
-                      <div style={{ paddingLeft: '1rem' }}>
-                        {item.dropdown.map((drop) => (
-                          <Link
-                            key={drop.label}
-                            href={drop.href}
-                            style={mobileDropdownItemStyle(isActive(drop.href))}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            {drop.label}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              <div style={{ padding: '0 1.5rem' }}>
-                <Link
-                  href="/contact"
-                  style={mobileContactButtonStyle}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Contact Us
-                </Link>
-              </div>
-
-              <div style={mobileSocialStyle}>
-                {socialMedia.map((social) => (
-                  <a
-                    key={social.name}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.name}
-                    style={{ display: 'flex' }}
-                    className="social-icon"
-                  >
-                    <img
-                      src={social.icon}
-                      alt=""
-                      style={mobileSocialImgStyle}
-                    />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </>
-        )}
       </nav>
-      <style jsx>{`
-        @keyframes slideIn {
-          from {
-            transform: translateX(100%);
-          }
-          to {
-            transform: translateX(0);
-          }
-        }
-        .social-icon:hover img {
-          filter: brightness(1) !important;
-        }
-      `}</style>
     </>
   );
 };
