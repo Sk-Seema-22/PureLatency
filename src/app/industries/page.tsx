@@ -45,9 +45,10 @@ export default function IndustriesPage() {
     }
   ];
 
+  // Updated stats to reflect actual experience
   const stats = [
-    { value: '15+', label: 'Years Combined Experience', icon: '⏳' },
-    { value: '100+', label: 'Industry Projects', icon: '🏆' },
+    { value: '1+', label: 'Year Experience', icon: '⏳' },
+    { value: '2+', label: 'Industry Projects', icon: '🏆' },
     { value: '100%', label: 'Compliance Success', icon: '✓' },
     { value: '24/7', label: 'Dedicated Support', icon: '🌙' }
   ];
@@ -113,13 +114,14 @@ export default function IndustriesPage() {
     }
   ];
 
+  // Updated differentiators to reflect current experience
   const differentiators = [
     {
       title: 'Industry-Specific Expertise',
       desc: 'Deep domain knowledge in enterprise, government, and aerospace sectors.',
       icon: '🎯',
-      stat: '15+',
-      statDesc: 'years average experience'
+      stat: '1',
+      statDesc: 'year experience'
     },
     {
       title: 'Security-First Approach',
@@ -130,17 +132,17 @@ export default function IndustriesPage() {
     },
     {
       title: 'Proven Track Record',
-      desc: 'Successful projects for Fortune 500 companies and government agencies.',
+      desc: 'Successful projects for early-stage clients and proof-of-concepts.',
       icon: '📊',
-      stat: '100+',
+      stat: '2',
       statDesc: 'successful projects'
     },
     {
       title: 'Long-Term Partnership',
       desc: 'We work alongside your team for ongoing success and evolution.',
       icon: '🤝',
-      stat: '5+',
-      statDesc: 'average engagement years'
+      stat: '1+',
+      statDesc: 'year engagement'
     }
   ];
 
@@ -247,7 +249,7 @@ export default function IndustriesPage() {
             </div>
           </div>
 
-          {/* Right Card */}
+          {/* Right Card - updated to reflect 2 projects and 1 year */}
           <div className={styles.heroCard}>
             <div className={styles.heroCardBg1} />
             <div className={styles.heroCardBg2} />
@@ -256,8 +258,8 @@ export default function IndustriesPage() {
               <h3 className={styles.heroCardTitle}>Trusted by Industry Leaders</h3>
               <ul className={styles.heroCardList}>
                 {[
-                  '100+ industry projects delivered',
-                  '15+ years combined experience',
+                  '2+ industry projects delivered',
+                  '1+ year combined experience',
                   '100% compliance success rate'
                 ].map((item, i) => (
                   <li key={i} className={styles.heroCardItem}>
@@ -270,7 +272,7 @@ export default function IndustriesPage() {
           </div>
         </div>
 
-        {/* Stats Banner */}
+        {/* Stats Banner - updated to 1 year, 2 projects */}
         <section className={styles.statsBanner}>
           {stats.map(stat => (
             <div key={stat.label} className={styles.statItem}>
@@ -391,7 +393,7 @@ export default function IndustriesPage() {
           </div>
         </section>
 
-        {/* Why Choose Us */}
+        {/* Why Choose Us - updated to 1 year, 2 projects */}
         <section style={{ marginBottom: '6rem' }}>
           <h2 className={styles.sectionTitle}>Why Industry Leaders Trust Us</h2>
           <p className={styles.sectionSubtitle}>
@@ -461,7 +463,6 @@ export default function IndustriesPage() {
       </main>
 
       {/* Footer */}
-     
       <Footer/>
     </>
   );
